@@ -6,9 +6,26 @@ public class Person {
 	protected String lastName;
 	protected String eMail;
 	protected String password;
+	protected int ID;
+	protected int role;
+	
+	
+	public int getID() {
+		return ID;
+	}
 
-	
-	
+	public void setID(int iD) {
+		ID = iD;
+	}
+
+	public int getRole() {
+		return role;
+	}
+
+	public void setRole(int role) {
+		this.role = role;
+	}
+
 	public  Person(){
 		
 	}
