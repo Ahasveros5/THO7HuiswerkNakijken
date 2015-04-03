@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
+http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+	version="2.4">
+	
+	<init-param>
+  		<param-name>nl.hu.nlThemaOpdracht4</param-name>
+ 		 <param-value>THO4</param-value>
+	</init-param>
+	
+	<servlet>
+		<servlet-name>AutoRegistratieServlet</servlet-name>
+		<servlet-class>nl.hu.ThemaOpdracht4.AutoRegistratieServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AutoRegistratieServlet</servlet-name>
+		<url-pattern>/AutoRegistratieServlet.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>KlantRegistratieServlet</servlet-name>
+		<servlet-class>nl.hu.ThemaOpdracht4.KlantRegistratieServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>KlantRegistratieServlet</servlet-name>
+		<url-pattern>/KlantRegistratieServlet.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>LoginServlet</servlet-name>
+		<servlet-class>nl.hu.ThemaOpdracht4.LoginServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LoginServlet</servlet-name>
+		<url-pattern>/LoginServlet.do</url-pattern>
+	</servlet-mapping>
+	
+		<servlet>
+		<servlet-name>LogoutServlet</servlet-name>
+		<servlet-class>nl.hu.ThemaOpdracht4.LogoutServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LogoutServlet</servlet-name>
+		<url-pattern>/LogoutServlet.do</url-pattern>
+	</servlet-mapping>
+	
+</web-app>
