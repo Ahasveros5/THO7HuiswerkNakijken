@@ -1,4 +1,4 @@
-package huiswerknakijken.hu.util;
+package huiswerknakijken.hu.Util;
 
 import java.sql.Connection;
 

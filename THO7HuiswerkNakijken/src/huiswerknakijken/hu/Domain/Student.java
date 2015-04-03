@@ -4,6 +4,7 @@ public class Student extends Person {
 
 	private Class mainClass;
 
+
 	public Class getMainClass() {
 		return mainClass;
 	}

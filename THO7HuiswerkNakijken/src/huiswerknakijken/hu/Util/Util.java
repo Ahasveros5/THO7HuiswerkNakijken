@@ -1,4 +1,4 @@
-package huiswerknakijken.hu.util;
+package huiswerknakijken.hu.Util;
 
 public class Util {
 	
