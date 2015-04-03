@@ -1,4 +1,4 @@
-package nl.hu.ThemaOpdracht4;
+package huiswerknakijken.hu.Servlets;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

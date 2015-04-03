@@ -11,6 +11,7 @@ public class Person {
 	protected boolean male;
 	protected String password;
 	protected int ID;
+	protected int role;
 	
 	public  Person(){
 		
@@ -22,7 +23,6 @@ public class Person {
 	public void setID(int id){
 		ID = id;
 	}
-	
 	
 	public String getBirthDate() {
 		return birthdate;

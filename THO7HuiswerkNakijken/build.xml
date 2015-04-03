@@ -1,4 +1,4 @@
-<project name="THO4" default="deploy" basedir=".">
+<project name="THO7HuiswerkNakijken" default="deploy" basedir=".">
 <property name="war_dir" location="war" />
 <property name="deploy_dir" location="C:\xampp\tomcat\webapps" />
 <target name="init" description="remove war-file" >
