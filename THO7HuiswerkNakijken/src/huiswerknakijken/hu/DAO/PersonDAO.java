@@ -3,7 +3,7 @@ package huiswerknakijken.hu.DAO;
 import huiswerknakijken.hu.Domain.Person;
 import huiswerknakijken.hu.Domain.Student;
 import huiswerknakijken.hu.Domain.Teacher;
-import huiswerknakijken.hu.util.OracleConnectionPool;
+import huiswerknakijken.hu.Util.OracleConnectionPool;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
