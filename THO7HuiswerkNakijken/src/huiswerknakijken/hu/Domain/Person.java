@@ -6,11 +6,18 @@ public class Person {
 	protected String lastName;
 	protected String eMail;
 	protected String password;
+	protected int ID = -1; //null value
 	
 	public  Person(){
 		
 	}
 	
+	public int getID(){
+		return ID;
+	}
+	public void setID(int id){
+		ID = id;
+	}
 	public String getFirstName() {
 		return firstName;
 	}

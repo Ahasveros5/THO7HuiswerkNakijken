@@ -1,18 +1,15 @@
 package huiswerknakijken.hu.DAO;
 
+import huiswerknakijken.hu.Domain.Student;
+import huiswerknakijken.hu.util.OracleConnectionPool;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-
-import huiswerknakijken.hu.Domain.Student;
-import huiswerknakijken.hu.util.OracleConnectionPool;
-import huiswerknakijken.hu.util.Util;
 
 public class StudentDAO implements DAOInterface<Student> {
 	public List<Student> retrieveAll(int layerLevel) {
@@ -20,7 +17,7 @@ public class StudentDAO implements DAOInterface<Student> {
 		ArrayList<Student> Students = null;
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
-			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Students");
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Person");
 			rs = statement.executeQuery();
 			Students = resultSetExtractor(rs, layerLevel, connection);
 			statement.close();
@@ -38,7 +35,7 @@ public class StudentDAO implements DAOInterface<Student> {
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
 			PreparedStatement statement = null;
-			statement = connection.prepareStatement("SELECT * FROM Students WHERE lower(email) LIKE lower(?) AND lower(first_name) LIKE lower(?) AND lower(last_name) LIKE lower(?)");
+			statement = connection.prepareStatement("SELECT * FROM Person WHERE lower(email) LIKE lower(?) AND lower(first_name) LIKE lower(?) AND lower(last_name) LIKE lower(?)");
 
 			statement.setString(2, "%"+email+"%");
 			statement.setString(3, "%"+firstName+"%");
@@ -72,21 +69,32 @@ public class StudentDAO implements DAOInterface<Student> {
 		}
 		try {
 
-			String sql = "INSERT INTO StudentS(first_name, last_name, email, password) VALUES (?,?,?,?)";
-			String generatedColumns[] = { "Student_ID" };
-			PreparedStatement statement = connection.prepareStatement(sql, generatedColumns);
+			String sql;
+			PreparedStatement statement;
+			if(s.getID() == -1){
+				String generatedColumns[] = { "Person_ID" };
+				sql = "INSERT INTO Person(first_name, last_name, email, password) VALUES (?,?,?,?)";
+				statement = connection.prepareStatement(sql, generatedColumns);
+				System.out.println("ATTENTION:: While adding student generating new ID.");
+			}
+			else{
+				sql = "INSERT INTO Person(first_name, last_name, email, password,id) VALUES (?,?,?,?,?)";
+				statement = connection.prepareStatement(sql);
+				statement.setInt(5, s.getID());
+			}
 			statement.setString(1, s.getFirstName());
 			statement.setString(2, s.getLastName());
 			statement.setString(3, s.getEmail());
 			statement.setString(4, s.getPassword());
 			statement.executeUpdate();
-			//int StudentID = 0;
+			int ID = -1;
 
-			/*ResultSet rsid = statement.getGeneratedKeys();
+			ResultSet rsid = statement.getGeneratedKeys();
 			if (rsid != null && rsid.next()) {
-				StudentID = rsid.getInt(1);
-				u.setStudentid(StudentID);
-			}*/
+				ID = rsid.getInt(1);
+				s.setID(ID);
+			}
+			
 			statement.close();
 
 
@@ -119,12 +127,12 @@ public class StudentDAO implements DAOInterface<Student> {
 		//Service.getService().getStudents().put(u.getStudentid(), u);
 		try {
 			connection.setAutoCommit(false);
-			PreparedStatement statement = connection.prepareStatement("UPDATE Students SET first_name=?, last_name=?, email=?, password=? WHERE id=?");
+			PreparedStatement statement = connection.prepareStatement("UPDATE PERSON SET first_name=?, last_name=?, email=?, password=? WHERE id=?");
 			statement.setString(1, s.getFirstName());
 			statement.setString(2, s.getLastName());
 			statement.setString(3, s.getEmail());
 			statement.setString(4, s.getPassword());
-			statement.setInt(5, s.getStudentID());
+			statement.setInt(5, s.getID());
 			statement.executeUpdate();
 			statement.close();
 
@@ -148,7 +156,7 @@ public class StudentDAO implements DAOInterface<Student> {
 		Student retrievedStudent = new Student();
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
-			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Students WHERE id = ?");
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Person WHERE id = ?");
 			statement.setInt(1, id);
 			ResultSet rs = statement.executeQuery();
 			ArrayList<Student> Student = resultSetExtractor(rs, layerLevel, connection);
@@ -166,7 +174,7 @@ public class StudentDAO implements DAOInterface<Student> {
 	public Student retrieve(int id, int layerLevel, Connection connection) {
 		Student retrievedStudent = new Student();
 		try {
-			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Students WHERE id=?");
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Person WHERE id=?");
 			statement.setInt(1, id);
 			ResultSet rs = statement.executeQuery();
 			ArrayList<Student> Student = resultSetExtractor(rs, layerLevel, connection);
@@ -175,7 +183,6 @@ public class StudentDAO implements DAOInterface<Student> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 		return retrievedStudent;
 
 	}
@@ -184,7 +191,7 @@ public class StudentDAO implements DAOInterface<Student> {
 		Student retrievedStudent = null;
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
-			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Students WHERE email=?");
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM PERSON WHERE email=?");
 			statement.setString(1, s);
 			ResultSet rs = statement.executeQuery();
 			ArrayList<Student> eU = resultSetExtractor(rs, layerLevel, connection);
@@ -224,7 +231,7 @@ public class StudentDAO implements DAOInterface<Student> {
 		try {
 			while (rs.next()) {
 				boolean notInCache = true;
-				int StudentID = rs.getInt("Student_id");
+				int ID = rs.getInt("id");
 				/*if (cacheStudents.containsKey(StudentID)) {
 					Student cacheStudent = cacheStudents.get(StudentID);
 					if (cacheStudent.getLayerLevel() >= layerLevel) {
@@ -234,7 +241,7 @@ public class StudentDAO implements DAOInterface<Student> {
 				}*/
 				if (notInCache) {
 					Student u = new Student();
-					u.setStudentID(StudentID);
+					u.setID(ID);
 					u.setFirstName(rs.getString("first_name"));
 					u.setLastName(rs.getString("last_name"));
 					u.setEmail(rs.getString("email"));
