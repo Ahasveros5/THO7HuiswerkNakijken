@@ -75,19 +75,20 @@ public class PersonDAO implements DAOInterface<Person> {
 			PreparedStatement statement;
 			if(s.getID() == -1){
 				String generatedColumns[] = { "Person_ID" };
-				sql = "INSERT INTO Person(first_name, last_name, email, password) VALUES (?,?,?,?)";
+				sql = "INSERT INTO Person(first_name, last_name, email, password, role) VALUES (?,?,?,?,?)";
 				statement = connection.prepareStatement(sql, generatedColumns);
 				System.out.println("ATTENTION:: While adding Person generating new ID.");
 			}
 			else{
-				sql = "INSERT INTO Person(first_name, last_name, email, password,id) VALUES (?,?,?,?,?)";
+				sql = "INSERT INTO Person(first_name, last_name, email, password, role, id) VALUES (?,?,?,?,?,?)";
 				statement = connection.prepareStatement(sql);
-				statement.setInt(5, s.getID());
+				statement.setInt(6, s.getID());
 			}
 			statement.setString(1, s.getFirstName());
 			statement.setString(2, s.getLastName());
 			statement.setString(3, s.getEmail());
 			statement.setString(4, s.getPassword());
+			statement.setInt(5, s.getRole());
 			statement.executeUpdate();
 			int ID = -1;
 
