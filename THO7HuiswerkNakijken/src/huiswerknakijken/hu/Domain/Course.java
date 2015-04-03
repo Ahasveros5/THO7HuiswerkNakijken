@@ -1,4 +1,4 @@
-package hu.huiswerknakijken.Domain;
+package huiswerknakijken.hu.Domain;
 
 import java.util.ArrayList;
 

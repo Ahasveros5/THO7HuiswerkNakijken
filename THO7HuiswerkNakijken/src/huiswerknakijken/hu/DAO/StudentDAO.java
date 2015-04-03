@@ -1,18 +1,16 @@
 package huiswerknakijken.hu.DAO;
 
+import huiswerknakijken.hu.Domain.Student;
+import huiswerknakijken.hu.util.OracleConnectionPool;
+import huiswerknakijken.hu.util.Util;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-
-import huiswerknakijken.hu.domein.Student;
-import huiswerknakijken.hu.util.OracleConnectionPool;
-import huiswerknakijken.hu.util.Util;
 
 public class StudentDAO implements DAOInterface<Student> {
 	public List<Student> retrieveAll(int layerLevel) {

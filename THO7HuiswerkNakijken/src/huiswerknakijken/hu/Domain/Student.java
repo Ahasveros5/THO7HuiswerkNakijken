@@ -1,4 +1,4 @@
-package hu.huiswerknakijken.Domain;
+package huiswerknakijken.hu.Domain;
 
 public class Student extends Person {
 
