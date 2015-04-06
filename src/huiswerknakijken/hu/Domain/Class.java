@@ -11,13 +11,21 @@ public class Class {
 	private ArrayList<Teacher> teachers = new ArrayList<Teacher>();
 	private Course course;
 	private int classID;
-	private int name;
+	private String name;
+	
+	public Class(){
+		
+	}
+	
+	public Class(String name){
+		this.name = name;
+	}
 	
 	public ArrayList<Student> getStudents() {
 		return students;
 	}
-	public void setStudents(ArrayList<Student> students) {
-		this.students = students;
+	public void setStudents(ArrayList<? extends Person> students) {
+		this.students = (ArrayList<Student>) students;
 	}
 	public ArrayList<Teacher> getTeacher() {
 		return teachers;
@@ -37,11 +45,11 @@ public class Class {
 	public void setClassID(int classID) {
 		this.classID = classID;
 	}
-	public int getName() {
+	public String getName() {
 		return name;
 	}
-	public void setName(int className) {
-		this.name = className;
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	

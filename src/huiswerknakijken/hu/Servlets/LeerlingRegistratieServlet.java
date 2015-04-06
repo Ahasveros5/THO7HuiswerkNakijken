@@ -2,6 +2,7 @@ package huiswerknakijken.hu.Servlets;
 
 import huiswerknakijken.hu.DAO.PersonDAO;
 import huiswerknakijken.hu.Domain.Person;
+import huiswerknakijken.hu.Domain.Person.UserRole;
 import huiswerknakijken.hu.Domain.Student;
 
 import java.io.IOException;
@@ -58,7 +59,7 @@ public class LeerlingRegistratieServlet extends HttpServlet {
 				p.setFirstName(naam);
 				p.setLastName(achternaam);
 				p.setID(studentnr);
-				p.setRole(1);
+				p.setRole(UserRole.Student);
 				dao.add(p); 
 				
 				rd = req.getRequestDispatcher("loginpage.jsp");

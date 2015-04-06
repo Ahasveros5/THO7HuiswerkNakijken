@@ -1,7 +1,6 @@
 package huiswerknakijken.hu.DAO;
 
 import huiswerknakijken.hu.Domain.Class;
-import huiswerknakijken.hu.Domain.Person;
 import huiswerknakijken.hu.Util.OracleConnectionPool;
 
 import java.sql.Connection;

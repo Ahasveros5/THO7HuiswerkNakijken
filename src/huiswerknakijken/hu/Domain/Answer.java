@@ -3,7 +3,7 @@ package huiswerknakijken.hu.Domain;
 public class Answer 
 {
 	private String answer;
-	private boolean correct;
+	private Correct correct;
 	private Question question;
 	
 	public String getAnswer() {
@@ -12,10 +12,10 @@ public class Answer
 	public void setAnswer(String answer) {
 		this.answer = answer;
 	}
-	public boolean isCorrect() {
+	public Correct getCorrect() { // 0 = correct, 1 = not correct
 		return correct;
 	}
-	public void setCorrect(boolean correct) {
+	public void setCorrect(Correct correct) {
 		this.correct = correct;
 	}
 	public Question getQuestion() {
@@ -24,5 +24,12 @@ public class Answer
 	public void setQuestion(Question question) {
 		this.question = question;
 	}
-	
+	public enum Correct
+	{
+		True,
+		False,
+		None
+	}
 }
+
+
