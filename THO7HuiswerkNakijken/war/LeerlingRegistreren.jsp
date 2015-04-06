@@ -51,9 +51,6 @@
 			  <input type="text" size="25" name="invoer_achternaam" /><br />
               <label><b>Studentnummer:</b></label>
 			  <input type="text" size="25" name="invoer_studentnr" /><br />
-</fieldset><br />
-			  <fieldset id="deelnemer">
-			 
 			  <label><b>E-mailadres:</b></label>
 			  <input type="text" size="25" name="invoer_email" /> <br />
 			  <label><b>E-mailadres:</b><span>Ter Bevestiging</span></label>
@@ -62,11 +59,10 @@
 			  <input type="password" size="25" name="invoer_ww" /><br />
 			  <label><b>Wachtwoord:</b><span>Ter Bevestiging</span></label>
 			  <input type="password" size="25" name="invoer_wwb" /> <br/>
+			  </form>
 			  </fieldset>
-			  
-			  
 			  <input class="button" type="submit" name="knop" value="Registreren!" />
-		   </form>		
+		
            
      </div>
     </div>
