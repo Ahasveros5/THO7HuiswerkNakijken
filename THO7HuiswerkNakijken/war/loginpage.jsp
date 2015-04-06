@@ -49,15 +49,5 @@
    		<input type="password" size="25" name="ww_login" /><br />
    		
    		<input class="button" type="submit" name="knop" value="Inloggen" />
-   	</div>
-   	
-   	</form>
-   	
-   	
-   	
-   	
-   	
-   	
-   	
-   	
-   	
+   		</form>
+   	</div>  	
