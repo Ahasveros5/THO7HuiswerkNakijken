@@ -96,10 +96,10 @@ public class PersonDAO implements DAOInterface<Person> {
 					statement = connection.prepareStatement(sql);
 					statement.setInt(6, s.getID());
 					Student st = (Student)s;
-					if (st.getMainClass() != null)
+					if(st.getMainClass() != null)
 						statement.setInt(7,st.getMainClass().getClassID());
 					else
-						statement.setInt(7,-1);
+						statement.setInt(7,0);
 				} else{
 					sql = "INSERT INTO Person(first_name, last_name, email, password, role, id) VALUES (?,?,?,?,?,?)";
 					statement = connection.prepareStatement(sql);
@@ -116,12 +116,14 @@ public class PersonDAO implements DAOInterface<Person> {
 				statement.setInt(5, UserRole.Unknown.getIndex());
 			}
 			statement.executeUpdate();
-			int ID = -1;
-
-			ResultSet rsid = statement.getGeneratedKeys();
-			if (rsid != null && rsid.next()) {
-				ID = rsid.getInt(1);
-				s.setID(ID);
+			if(s.getID() == -1){
+				int ID = -1;
+	
+				ResultSet rsid = statement.getGeneratedKeys();
+				if (rsid != null && rsid.next()) {
+					ID = rsid.getInt(1);
+					s.setID(ID);
+				}
 			}
 			
 			statement.close();

@@ -1,6 +1,6 @@
 <project name="THO7HuiswerkNakijken" default="deploy" basedir=".">
 <property name="war_dir" location="war" />
-<property name="deploy_dir" location="D:\xampp\tomcat\webapps" />
+<property name="deploy_dir" location="C:\xampp\tomcat\webapps" />
 <target name="init" description="remove war-file" >
 <delete file="${ant.project.name}.war" />
 </target>
