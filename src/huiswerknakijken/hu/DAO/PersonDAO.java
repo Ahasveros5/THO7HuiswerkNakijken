@@ -96,7 +96,10 @@ public class PersonDAO implements DAOInterface<Person> {
 					statement = connection.prepareStatement(sql);
 					statement.setInt(6, s.getID());
 					Student st = (Student)s;
-					statement.setInt(7,st.getMainClass().getClassID());
+					if (st.getMainClass() != null)
+						statement.setInt(7,st.getMainClass().getClassID());
+					else
+						statement.setInt(7,-1);
 				} else{
 					sql = "INSERT INTO Person(first_name, last_name, email, password, role, id) VALUES (?,?,?,?,?,?)";
 					statement = connection.prepareStatement(sql);
