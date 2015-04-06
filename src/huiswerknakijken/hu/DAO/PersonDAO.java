@@ -208,24 +208,6 @@ public class PersonDAO implements DAOInterface<Person> {
 
 		return retrievedStudent;
 	}
-	
-	public ArrayList<Person> retrieveAllByClass(int classID, int layerLevel) {
-		Person retrievedStudent = null;
-		Connection connection = OracleConnectionPool.getConnection();
-		ArrayList<Person> eU = null;
-		try {
-			PreparedStatement statement = connection.prepareStatement("SELECT * FROM PERSON WHERE class_id=?");
-			statement.setInt(1, classID);
-			ResultSet rs = statement.executeQuery();
-			eU = resultSetExtractor(rs, layerLevel, connection);
-			statement.close();
-			connection.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return eU;
-	}
 
 	/*public Person retrieveByStudentname(String s, int layerLevel) {
 		Person retrievedStudent = null;
