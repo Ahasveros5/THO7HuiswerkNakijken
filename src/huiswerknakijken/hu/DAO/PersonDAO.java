@@ -14,6 +14,8 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.management.relation.Role;
+
 public class PersonDAO implements DAOInterface<Person> {
 	public List<Person> retrieveAll(int layerLevel) {
 		ResultSet rs = null;
@@ -65,6 +67,7 @@ public class PersonDAO implements DAOInterface<Person> {
 	public boolean add(Person s) {
 		boolean b = false;
 		Connection connection = OracleConnectionPool.getConnection();
+
 		try {
 			connection.setAutoCommit(false);
 		} catch (SQLException e1) {
@@ -104,7 +107,11 @@ public class PersonDAO implements DAOInterface<Person> {
 			statement.setString(2, s.getLastName());
 			statement.setString(3, s.getEmail());
 			statement.setString(4, s.getPassword());
-			statement.setInt(5, s.getRole().getIndex());
+			if (s.getRole() != null)
+				statement.setInt(5, s.getRole().getIndex());
+			else{
+				statement.setInt(5, UserRole.Unknown.getIndex());
+			}
 			statement.executeUpdate();
 			int ID = -1;
 
