@@ -7,19 +7,19 @@ import huiswerknakijken.hu.Domain.Question;
 
 import java.util.ArrayList;
 
-public class CheckAnwsers {
+public final class CheckAnswers {
 	
-	private ArrayList<Answer> getAnswers(Question q){
+	private static ArrayList<Answer> getAnswers(Question q){
 		AnswerDAO aDAO = new AnswerDAO();
 		return aDAO.retrieveAllByQuestion(q.getID(),1);
 	}
 	
-	public Answer getCorrectAnswer(Question q){
+	public static Answer getCorrectAnswer(Question q){
 		AnswerDAO aDAO = new AnswerDAO();
 		return aDAO.retrieveCorrectByQuestion(q.getID(),1);
 	}
 	
-	public boolean HasGivenCorrectAnswer(Question q, Answer a){
+	public static boolean HasGivenCorrectAnswer(Question q, Answer a){
 		if(a.getCorrect() == Correct.True){ //meerkeuze check
 			return true;
 		}
