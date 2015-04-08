@@ -315,26 +315,7 @@ public class PersonDAO implements DAOInterface<Person> {
 					//u.setLayerLevel(layerLevel);
 
 					if (layerLevel > 1) {
-						/*AddressDAO adao = new AddressDAO();
-						String sqlKoppel;
-						PreparedStatement statementKoppel;
-						sqlKoppel = "SELECT * FROM Student_ADDRESSES WHERE Student_id = ? AND date_to IS NULL";
-						statementKoppel = connection.prepareStatement(sqlKoppel);
-						statementKoppel.setInt(1, u.getStudentid());
-						ResultSet addressStudent = statementKoppel.executeQuery();
-						while (addressStudent.next()) {
-							int addressInt = addressStudent.getInt("address_id");
-							int addressType = addressStudent.getInt("address_type_code");
-							Address a = adao.retrieveByID(addressInt);
-							for (AddressType at : AddressType.values()) {
-								if (at.index() == addressType) {
-									a.setAddressType(at);
-									break;
-								}
-							}
-							u.getAddresses().add(a);
-						}
-						statementKoppel.close();*/
+						
 					}
 
 					if (layerLevel > 2) {
