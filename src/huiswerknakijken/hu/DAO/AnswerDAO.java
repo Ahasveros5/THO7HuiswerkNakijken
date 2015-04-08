@@ -49,6 +49,25 @@ public class AnswerDAO implements DAOInterface<Answer> {
 
 	}
 	
+	public Answer retrieveCorrectByQuestion(int id, int layerLevel) {
+		Answer retrievedAnswer = null;
+		Connection connection = OracleConnectionPool.getConnection();
+		try {
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Answer WHERE question_id=? AND correct = 1");
+			statement.setInt(1, id);
+			ResultSet rs = statement.executeQuery();
+			ArrayList<Answer> Answer = resultSetExtractor(rs, layerLevel, connection);
+			retrievedAnswer = Answer.get(0);
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return retrievedAnswer;
+
+	}
+	
 	public ArrayList<Answer> retrieveAllByQuestion(int id, int layerLevel) {
 		ArrayList<Answer> Answer = null;
 		Connection connection = OracleConnectionPool.getConnection();

@@ -12,7 +12,13 @@ public class Main {
 	public static void main(String [ ] args)
 	{
 		System.out.println("starting creation of samples");
-		/*ClassDAO cdao = new ClassDAO();
+		//CreateTestData();
+		System.out.println("finished creating samples");
+		
+	}
+	
+	private static void CreateTestData(){
+		ClassDAO cdao = new ClassDAO();
 		Class c = new Class();
 		c.setClassID(0);
 		c.setName("Geen klas");
@@ -25,8 +31,6 @@ public class Main {
 		p.setLastName("Kerkhove");
 		p.setPassword("test");
 		p.setRole(UserRole.Student);
-		pDAO.add(p);*/
-		System.out.println("finished creating samples");
-		
+		pDAO.add(p);
 	}
 }
