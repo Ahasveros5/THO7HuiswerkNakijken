@@ -1,6 +1,6 @@
 package huiswerknakijken.hu.DAO;
 
-import huiswerknakijken.hu.Domain.Class;
+import huiswerknakijken.hu.Domain.Question;
 import huiswerknakijken.hu.Util.OracleConnectionPool;
 
 import java.sql.Connection;
@@ -11,13 +11,13 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClassDAO implements DAOInterface<Class> {
-	public List<Class> retrieveAll(int layerLevel) {
+public class QuestionDAO implements DAOInterface<Question> {
+	public List<Question> retrieveAll(int layerLevel) {
 		ResultSet rs = null;
-		ArrayList<Class> classes = null;
+		ArrayList<Question> classes = null;
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
-			PreparedStatement statement = connection.prepareStatement("SELECT * FROM CLASS");
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Question");
 			rs = statement.executeQuery();
 			classes = resultSetExtractor(rs, layerLevel, connection);
 			statement.close();
@@ -29,15 +29,15 @@ public class ClassDAO implements DAOInterface<Class> {
 		return classes;
 	}
 	
-	public Class retrieveByName(String name, int layerLevel) {
-		Class retrievedClass = new Class();
+	public Question retrieveByName(String name, int layerLevel) {
+		Question retrievedClass = null;
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
-			PreparedStatement statement = connection.prepareStatement("SELECT * FROM CLASS WHERE class_name=?");
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Question WHERE question_name=?");
 			statement.setString(1, name);
 			ResultSet rs = statement.executeQuery();
-			ArrayList<Class> Class = resultSetExtractor(rs, layerLevel, connection);
-			retrievedClass = Class.get(0);
+			ArrayList<Question> Question = resultSetExtractor(rs, layerLevel, connection);
+			retrievedClass = Question.get(0);
 			statement.close();
 			connection.close();
 		} catch (SQLException e) {
@@ -47,15 +47,33 @@ public class ClassDAO implements DAOInterface<Class> {
 		return retrievedClass;
 
 	}
+	
+	public ArrayList<Question> retrieveAllByHomework(int id, int layerLevel) {
+		ArrayList<Question> Questions = null;
+		Connection connection = OracleConnectionPool.getConnection();
+		try {
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Question WHERE homework_id=?");
+			statement.setInt(1, id);
+			ResultSet rs = statement.executeQuery();
+			Questions = resultSetExtractor(rs, layerLevel, connection);
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return Questions;
+
+	}
 
 	@Override
-	public boolean delete(Class s) {
+	public boolean delete(Question s) {
 		System.out.println("Deleting NYI");
 		return false;
 	}
 
 	@Override
-	public boolean add(Class s) {
+	public boolean add(Question s) {
 		boolean b = false;
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
@@ -66,23 +84,18 @@ public class ClassDAO implements DAOInterface<Class> {
 		try {
 
 			String sql;
-			PreparedStatement statement = null;
-			if (s.getClassID() < 0){
-				String generatedColumns[] = { "class_id" };
-				sql = "INSERT INTO Class(class_name) VALUES (?)";
+			PreparedStatement statement;
+				String generatedColumns[] = { "question_id" };
+				sql = "INSERT INTO Question(question_name, question) VALUES (?,?)";
 				statement = connection.prepareStatement(sql, generatedColumns);
-			} else {
-				sql = "INSERT INTO Class(class_name, class_id) VALUES (?,?)";
-				statement = connection.prepareStatement(sql);
-				statement.setInt(2,s.getClassID());
-			}
 				statement.setString(1, s.getName());
+				statement.setString(2, s.getDescription());
 				statement.executeUpdate();
 				int ID = -1;
 				ResultSet rsid = statement.getGeneratedKeys();
 				if (rsid != null && rsid.next()) {
 					ID = rsid.getInt(1);
-					s.setClassID(ID);
+					s.setID(ID);
 				}
 			statement.close();
 
@@ -110,35 +123,27 @@ public class ClassDAO implements DAOInterface<Class> {
 	}
 
 	@Override
-	public boolean update(Class s) {
+	public boolean update(Question s) {
 		boolean b = false;
 		return b;
 	}
 
 
-	private ArrayList<Class> resultSetExtractor(ResultSet rs, int layerLevel, Connection connection) {
-		ArrayList<Class> extractedStudents = new ArrayList<Class>();
+	private ArrayList<Question> resultSetExtractor(ResultSet rs, int layerLevel, Connection connection) {
+		ArrayList<Question> extractedStudents = new ArrayList<Question>();
 		
 		try {
 			while (rs.next()) {
-				boolean notInCache = true;
-				/*if (cacheStudents.containsKey(StudentID)) {
-					Class cacheStudent = cacheStudents.get(StudentID);
-					if (cacheStudent.getLayerLevel() >= layerLevel) {
-						extractedStudents.add(cacheStudents.get(StudentID));
-						notInCache = false;
-					}
-				}*/
-				if (notInCache) {
-					Class c;
-					c = new Class();
-					c.setClassID(rs.getInt("class_id"));
-					c.setName(rs.getString("class_name"));
+					Question c;
+					c = new Question();
+					c.setID(rs.getInt("question_id"));
+					c.setName(rs.getString("question_name"));
+					c.setDescription(rs.getString("question_description"));
 					//u.setLayerLevel(layerLevel);
 
-					if (layerLevel > 1) { //students to class
-						PersonDAO pDAO = new PersonDAO();
-						c.setStudents(pDAO.retrieveAllByClass(c.getClassID(), 0));
+					if (layerLevel > 1) { //answers
+						AnswerDAO adao = new AnswerDAO();
+						adao.retrieveAllByQuestion(c.getID(), 1);
 					}
 
 					if (layerLevel > 2) {
@@ -148,7 +153,6 @@ public class ClassDAO implements DAOInterface<Class> {
 					//cacheStudents.put(u.getStudentid(), u);
 					extractedStudents.add(c);
 				}
-			}
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
@@ -158,12 +162,12 @@ public class ClassDAO implements DAOInterface<Class> {
 	}
 
 	@Override
-	public List<Class> retrieveAll() {
+	public List<Question> retrieveAll() {
 		return retrieveAll(4);
 	}
 
 	@Override
-	public Class retrieve(String s) {
+	public Question retrieve(String s) {
 		System.out.println("ERROR NOT WORKING METHOD RETRIEVE(string)");
 		return null;//retrieve(s, 10);
 	}

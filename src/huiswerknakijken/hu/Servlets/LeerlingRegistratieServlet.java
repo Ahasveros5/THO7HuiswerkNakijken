@@ -67,7 +67,7 @@ public class LeerlingRegistratieServlet extends HttpServlet {
 			}
 		}		
 		
-		if(!dao.retrieveByEmail(email1, 0).getEmail().equals(null)){
+		if(dao.retrieveByEmail(email1, 0) != null){
 			req.setAttribute("msgs", "Emailadres staat al geregistreerd");
 			rd = req.getRequestDispatcher("LeerlingRegistreren.jsp");
 		}

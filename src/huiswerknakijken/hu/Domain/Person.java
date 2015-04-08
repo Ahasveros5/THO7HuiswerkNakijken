@@ -26,6 +26,17 @@ public class Person {
 	protected UserRole role; //1 = student // 2 = teacher
 	
 	
+	public Student toStudent(){
+		Student s = new Student();
+		s.eMail = eMail;
+		s.firstName = firstName;
+		s.lastName = lastName;
+		s.password = password;
+		s.ID = ID;
+		s.role = role;
+		return s;
+	}
+	
 	public int getID() {
 		return ID;
 	}

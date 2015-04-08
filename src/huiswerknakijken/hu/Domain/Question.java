@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 public class Question 
 {
-	
-	protected int nr;
+	protected int ID;
+	protected String name;
 	protected String description;
 	private ArrayList<Answer> answers = new ArrayList<Answer>();
 
@@ -14,13 +14,6 @@ public class Question
 		
 	}
 	
-	
-	public int getNr() {
-		return nr;
-	}
-	public void setNr(int nr) {
-		this.nr = nr;
-	}
 	public String getDescription() {
 		return description;
 	}
@@ -32,6 +25,22 @@ public class Question
 	}
 	public void setAnswers(ArrayList<Answer> answers) {
 		this.answers = answers;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getID() {
+		return ID;
+	}
+
+	public void setID(int iD) {
+		ID = iD;
 	}
 	
 }

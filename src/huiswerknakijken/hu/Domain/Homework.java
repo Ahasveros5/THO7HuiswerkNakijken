@@ -4,11 +4,13 @@ import java.util.ArrayList;
 
 public class Homework {
 
+	private String name;
 	private Grade grade;
 	private ArrayList<Question> question;
 	private Course course;
 	private Teacher teacher;
 	private ArrayList<Student> students;
+	private int ID;
 	
 	public Grade getGrade() {
 		return grade;
@@ -48,6 +50,22 @@ public class Homework {
 
 	public void setStudents(ArrayList<Student> students) {
 		this.students = students;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getID() {
+		return ID;
+	}
+
+	public void setID(int iD) {
+		ID = iD;
 	}
 
 	

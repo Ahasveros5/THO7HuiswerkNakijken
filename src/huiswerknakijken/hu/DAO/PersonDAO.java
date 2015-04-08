@@ -95,8 +95,11 @@ public class PersonDAO implements DAOInterface<Person> {
 					sql = "INSERT INTO Person(first_name, last_name, email, password, role, id,class_id) VALUES (?,?,?,?,?,?,?)";
 					statement = connection.prepareStatement(sql);
 					statement.setInt(6, s.getID());
-					Student st = (Student)s;
-					statement.setInt(7,st.getMainClass().getClassID());
+					Student st = s.toStudent();
+					if(st.getMainClass() != null)
+						statement.setInt(7,st.getMainClass().getClassID());
+					else
+						statement.setInt(7,0);
 				} else{
 					sql = "INSERT INTO Person(first_name, last_name, email, password, role, id) VALUES (?,?,?,?,?,?)";
 					statement = connection.prepareStatement(sql);
@@ -113,12 +116,14 @@ public class PersonDAO implements DAOInterface<Person> {
 				statement.setInt(5, UserRole.Unknown.getIndex());
 			}
 			statement.executeUpdate();
-			int ID = -1;
-
-			ResultSet rsid = statement.getGeneratedKeys();
-			if (rsid != null && rsid.next()) {
-				ID = rsid.getInt(1);
-				s.setID(ID);
+			if(s.getID() == -1){
+				int ID = -1;
+	
+				ResultSet rsid = statement.getGeneratedKeys();
+				if (rsid != null && rsid.next()) {
+					ID = rsid.getInt(1);
+					s.setID(ID);
+				}
 			}
 			
 			statement.close();
@@ -179,7 +184,7 @@ public class PersonDAO implements DAOInterface<Person> {
 
 
 	public Person retrieve(int id, int layerLevel) {
-		Person retrievedStudent = new Person();
+		Person retrievedStudent = null;
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
 			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Person WHERE id = ?");
@@ -198,7 +203,7 @@ public class PersonDAO implements DAOInterface<Person> {
 	}
 	
 	public Person retrieve(int id, int layerLevel, Connection connection) {
-		Person retrievedStudent = new Person();
+		Person retrievedStudent = null;
 		try {
 			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Person WHERE id=?");
 			statement.setInt(1, id);
@@ -313,26 +318,7 @@ public class PersonDAO implements DAOInterface<Person> {
 					//u.setLayerLevel(layerLevel);
 
 					if (layerLevel > 1) {
-						/*AddressDAO adao = new AddressDAO();
-						String sqlKoppel;
-						PreparedStatement statementKoppel;
-						sqlKoppel = "SELECT * FROM Student_ADDRESSES WHERE Student_id = ? AND date_to IS NULL";
-						statementKoppel = connection.prepareStatement(sqlKoppel);
-						statementKoppel.setInt(1, u.getStudentid());
-						ResultSet addressStudent = statementKoppel.executeQuery();
-						while (addressStudent.next()) {
-							int addressInt = addressStudent.getInt("address_id");
-							int addressType = addressStudent.getInt("address_type_code");
-							Address a = adao.retrieveByID(addressInt);
-							for (AddressType at : AddressType.values()) {
-								if (at.index() == addressType) {
-									a.setAddressType(at);
-									break;
-								}
-							}
-							u.getAddresses().add(a);
-						}
-						statementKoppel.close();*/
+						
 					}
 
 					if (layerLevel > 2) {
