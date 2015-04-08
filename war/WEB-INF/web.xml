@@ -53,5 +53,13 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 		<url-pattern>/LogoutServlet.do</url-pattern>
 	</servlet-mapping>
 	
-	
+	<servlet>
+		<servlet-name>MultipleChoiceAanmakenServlet</servlet-name>
+		<servlet-class>huiswerknakijken.hu.Servlets.MultipleChoiceAanmakenServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MultipleChoiceAanmakenServlet</servlet-name>
+		<url-pattern>/MultipleChoiceAanmakenServlet.do</url-pattern>
+	</servlet-mapping>
 </web-app>
