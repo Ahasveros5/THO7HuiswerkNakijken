@@ -26,12 +26,14 @@ public class LoginServlet extends HttpServlet {
 			req.setAttribute("msgs", "Vul alle velden in.");
 			rd = req.getRequestDispatcher("loginpage.jsp");
 				} else {			
-					if (p != null || password.equals(p.getPassword())){
-					//session.setAttribute("userEmail",userEmail );
-					rd = req.getRequestDispatcher("index.jsp");
+					if (p != null && password.equals(p.getPassword())){
+						//session.setAttribute("userEmail",userEmail );
+						rd = req.getRequestDispatcher("index.jsp");
+						System.out.println("testi");
 					} else {
 						req.setAttribute("msgs", "Wachtwoord of gebruikersnaam incorrect.");
 						rd = req.getRequestDispatcher("loginpage.jsp");
+						System.out.println("testor");
 					}
 				}				
 		
