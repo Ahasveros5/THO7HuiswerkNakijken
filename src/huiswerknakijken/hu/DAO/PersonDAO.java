@@ -236,8 +236,6 @@ public class PersonDAO implements DAOInterface<Person> {
 
 		return retrievedStudent;
 	}
-<<<<<<< HEAD:src/huiswerknakijken/hu/DAO/PersonDAO.java
-=======
 	
 	public ArrayList<Person> retrieveAllByClass(int classID, int layerLevel) {
 		Connection connection = OracleConnectionPool.getConnection();
@@ -255,7 +253,6 @@ public class PersonDAO implements DAOInterface<Person> {
 
 		return eU;
 	}
->>>>>>> origin/master:src/huiswerknakijken/hu/DAO/PersonDAO.java
 
 	/*public Person retrieveByStudentname(String s, int layerLevel) {
 		Person retrievedStudent = null;

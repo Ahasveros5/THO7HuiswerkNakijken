@@ -1,3 +1,9 @@
+# custom stuff
+*.gitignore
+*.class
+*.war
+
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
