@@ -95,7 +95,7 @@ public class PersonDAO implements DAOInterface<Person> {
 					sql = "INSERT INTO Person(first_name, last_name, email, password, role, id,class_id) VALUES (?,?,?,?,?,?,?)";
 					statement = connection.prepareStatement(sql);
 					statement.setInt(6, s.getID());
-					Student st = (Student)s;
+					Student st = s.toStudent();
 					if(st.getMainClass() != null)
 						statement.setInt(7,st.getMainClass().getClassID());
 					else
@@ -184,7 +184,7 @@ public class PersonDAO implements DAOInterface<Person> {
 
 
 	public Person retrieve(int id, int layerLevel) {
-		Person retrievedStudent = new Person();
+		Person retrievedStudent = null;
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
 			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Person WHERE id = ?");
@@ -203,7 +203,7 @@ public class PersonDAO implements DAOInterface<Person> {
 	}
 	
 	public Person retrieve(int id, int layerLevel, Connection connection) {
-		Person retrievedStudent = new Person();
+		Person retrievedStudent = null;
 		try {
 			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Person WHERE id=?");
 			statement.setInt(1, id);

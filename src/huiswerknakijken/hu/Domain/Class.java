@@ -10,7 +10,7 @@ public class Class {
 	private ArrayList<Student> students = new ArrayList<Student>();
 	private ArrayList<Teacher> teachers = new ArrayList<Teacher>();
 	private Course course;
-	private int classID;
+	private int classID = -1;
 	private String name;
 	
 	public Class(){

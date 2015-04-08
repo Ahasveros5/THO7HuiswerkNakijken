@@ -30,10 +30,10 @@ public class QuestionDAO implements DAOInterface<Question> {
 	}
 	
 	public Question retrieveByName(String name, int layerLevel) {
-		Question retrievedClass = new Question();
+		Question retrievedClass = null;
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
-			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Question WHERE class_name=?");
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Question WHERE question_name=?");
 			statement.setString(1, name);
 			ResultSet rs = statement.executeQuery();
 			ArrayList<Question> Question = resultSetExtractor(rs, layerLevel, connection);
@@ -45,6 +45,24 @@ public class QuestionDAO implements DAOInterface<Question> {
 		}
 
 		return retrievedClass;
+
+	}
+	
+	public ArrayList<Question> retrieveAllByHomework(int id, int layerLevel) {
+		ArrayList<Question> Questions = null;
+		Connection connection = OracleConnectionPool.getConnection();
+		try {
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Question WHERE homework_id=?");
+			statement.setInt(1, id);
+			ResultSet rs = statement.executeQuery();
+			Questions = resultSetExtractor(rs, layerLevel, connection);
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return Questions;
 
 	}
 
@@ -67,16 +85,17 @@ public class QuestionDAO implements DAOInterface<Question> {
 
 			String sql;
 			PreparedStatement statement;
-				String generatedColumns[] = { "class_id" };
-				sql = "INSERT INTO Question(class_name) VALUES (?)";
+				String generatedColumns[] = { "question_id" };
+				sql = "INSERT INTO Question(question_name, question) VALUES (?,?)";
 				statement = connection.prepareStatement(sql, generatedColumns);
 				statement.setString(1, s.getName());
+				statement.setString(2, s.getDescription());
 				statement.executeUpdate();
 				int ID = -1;
 				ResultSet rsid = statement.getGeneratedKeys();
 				if (rsid != null && rsid.next()) {
 					ID = rsid.getInt(1);
-					s.setClassID(ID);
+					s.setID(ID);
 				}
 			statement.close();
 
@@ -115,24 +134,16 @@ public class QuestionDAO implements DAOInterface<Question> {
 		
 		try {
 			while (rs.next()) {
-				boolean notInCache = true;
-				/*if (cacheStudents.containsKey(StudentID)) {
-					Question cacheStudent = cacheStudents.get(StudentID);
-					if (cacheStudent.getLayerLevel() >= layerLevel) {
-						extractedStudents.add(cacheStudents.get(StudentID));
-						notInCache = false;
-					}
-				}*/
-				if (notInCache) {
 					Question c;
 					c = new Question();
-					c.setClassID(rs.getInt("class_id"));
-					c.setName(rs.getString("class_name"));
+					c.setID(rs.getInt("question_id"));
+					c.setName(rs.getString("question_name"));
+					c.setDescription(rs.getString("question_description"));
 					//u.setLayerLevel(layerLevel);
 
-					if (layerLevel > 1) { //students to Question
-						PersonDAO pDAO = new PersonDAO();
-						c.setStudents(pDAO.retrieveAllByClass(c.getClassID(), 0));
+					if (layerLevel > 1) { //answers
+						AnswerDAO adao = new AnswerDAO();
+						adao.retrieveAllByQuestion(c.getID(), 1);
 					}
 
 					if (layerLevel > 2) {
@@ -142,7 +153,6 @@ public class QuestionDAO implements DAOInterface<Question> {
 					//cacheStudents.put(u.getStudentid(), u);
 					extractedStudents.add(c);
 				}
-			}
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
