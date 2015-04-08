@@ -12,7 +12,7 @@
 
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Gear Auctions</title>
+<title>HU automatisch huiswerk nakijksysteem</title>
 </head>
 <body>
 	<nav class="navbar navbar-default navbar-fixed-top navtotop" role="navigation"> <!-- Brand and toggle get grouped for better mobile display -->
@@ -22,12 +22,14 @@
 	<div class="collapse navbar-collapse navbar-ex1-collapse">
 		<ul class="nav navbar-nav">
 		</ul>
-		<div class="nav navbar-nav navbar-right">
-				<ul class="nav navbar-nav navbar-right">
+		<div class="headerlist headerborder">
+				<ul>
 					<li><a href="loginpage.jsp">Login</a></li>
 					<li><a href="LeerlingRegistreren.jsp" class="regbutton">Registreer leerling</a></li>
 					<li><a href="LeraarRegistreren.jsp" class="regbutton">Registreer leraar</a></li>
 				</ul>
+				
+				
 			
 		</div>
 	</div>

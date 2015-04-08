@@ -17,7 +17,7 @@ public class ClassDAO implements DAOInterface<Class> {
 		ArrayList<Class> classes = null;
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
-			PreparedStatement statement = connection.prepareStatement("SELECT * FROM CLASS");
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM C_CLASS");
 			rs = statement.executeQuery();
 			classes = resultSetExtractor(rs, layerLevel, connection);
 			statement.close();
@@ -33,7 +33,7 @@ public class ClassDAO implements DAOInterface<Class> {
 		Class retrievedClass = new Class();
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
-			PreparedStatement statement = connection.prepareStatement("SELECT * FROM CLASS WHERE class_name=?");
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM C_CLASS WHERE class_name=?");
 			statement.setString(1, name);
 			ResultSet rs = statement.executeQuery();
 			ArrayList<Class> Class = resultSetExtractor(rs, layerLevel, connection);
@@ -67,22 +67,24 @@ public class ClassDAO implements DAOInterface<Class> {
 
 			String sql;
 			PreparedStatement statement = null;
-			if (s.getClassID() < 0){
+			if (s.getClassID() == -1){
 				String generatedColumns[] = { "class_id" };
-				sql = "INSERT INTO Class(class_name) VALUES (?)";
+				sql = "INSERT INTO C_Class(class_name) VALUES (?)";
 				statement = connection.prepareStatement(sql, generatedColumns);
 			} else {
-				sql = "INSERT INTO Class(class_name, class_id) VALUES (?,?)";
+				sql = "INSERT INTO C_Class(class_name, class_id) VALUES (?,?)";
 				statement = connection.prepareStatement(sql);
 				statement.setInt(2,s.getClassID());
 			}
 				statement.setString(1, s.getName());
 				statement.executeUpdate();
-				int ID = -1;
-				ResultSet rsid = statement.getGeneratedKeys();
-				if (rsid != null && rsid.next()) {
-					ID = rsid.getInt(1);
-					s.setClassID(ID);
+				if(s.getClassID() == -1){
+					int ID = -1;
+					ResultSet rsid = statement.getGeneratedKeys();
+					if (rsid != null && rsid.next()) {
+						ID = rsid.getInt(1);
+						s.setClassID(ID);
+					}
 				}
 			statement.close();
 

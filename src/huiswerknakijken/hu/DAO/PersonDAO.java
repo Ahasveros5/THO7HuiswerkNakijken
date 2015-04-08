@@ -77,7 +77,7 @@ public class PersonDAO implements DAOInterface<Person> {
 
 			String sql;
 			PreparedStatement statement;
-			if(s.getID() == -1){
+			/*if(s.getID() == -1){
 				String generatedColumns[] = { "Person_ID" };
 				if(s.getRole() == UserRole.Student){
 					sql = "INSERT INTO Person(first_name, last_name, email, password, role, class_id) VALUES (?,?,?,?,?,?)";
@@ -90,7 +90,7 @@ public class PersonDAO implements DAOInterface<Person> {
 				}
 				System.out.println("ATTENTION:: While adding Person generating new ID.");
 			}
-			else{
+			else{*/
 				if(s.getRole() == UserRole.Student){
 					sql = "INSERT INTO Person(first_name, last_name, email, password, role, id,class_id) VALUES (?,?,?,?,?,?,?)";
 					statement = connection.prepareStatement(sql);
@@ -105,16 +105,16 @@ public class PersonDAO implements DAOInterface<Person> {
 					statement = connection.prepareStatement(sql);
 					statement.setInt(6, s.getID());
 				}
-			}
+			//}
 			statement.setString(1, s.getFirstName());
 			statement.setString(2, s.getLastName());
 			statement.setString(3, s.getEmail());
 			statement.setString(4, s.getPassword());
-			if (s.getRole() != null)
+			//if (s.getRole() != null)
 				statement.setInt(5, s.getRole().getIndex());
-			else{
-				statement.setInt(5, UserRole.Unknown.getIndex());
-			}
+			//else{
+			//	statement.setInt(5, UserRole.Unknown.getIndex());
+			//}
 			statement.executeUpdate();
 			if(s.getID() == -1){
 				int ID = -1;

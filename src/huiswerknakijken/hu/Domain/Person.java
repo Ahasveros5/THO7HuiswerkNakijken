@@ -22,7 +22,7 @@ public class Person {
 	protected String lastName;
 	protected String eMail;
 	protected String password;
-	protected int ID; 
+	protected int ID = -1; 
 	protected UserRole role; //1 = student // 2 = teacher
 	
 	

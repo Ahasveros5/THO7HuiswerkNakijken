@@ -86,10 +86,11 @@ public class QuestionDAO implements DAOInterface<Question> {
 			String sql;
 			PreparedStatement statement;
 				String generatedColumns[] = { "question_id" };
-				sql = "INSERT INTO Question(question_name, question) VALUES (?,?)";
+				sql = "INSERT INTO Question(question_name, question, homework_id) VALUES (?,?,?)";
 				statement = connection.prepareStatement(sql, generatedColumns);
 				statement.setString(1, s.getName());
 				statement.setString(2, s.getDescription());
+				statement.setInt(3,s.getHomework().getID());
 				statement.executeUpdate();
 				int ID = -1;
 				ResultSet rsid = statement.getGeneratedKeys();

@@ -9,6 +9,7 @@ public class Question
 	protected String name;
 	protected String description;
 	private ArrayList<Answer> answers = new ArrayList<Answer>();
+	protected Homework homework;
 
 	public Question(){
 		
@@ -41,6 +42,14 @@ public class Question
 
 	public void setID(int iD) {
 		ID = iD;
+	}
+
+	public Homework getHomework() {
+		return homework;
+	}
+
+	public void setHomework(Homework homework) {
+		this.homework = homework;
 	}
 	
 }

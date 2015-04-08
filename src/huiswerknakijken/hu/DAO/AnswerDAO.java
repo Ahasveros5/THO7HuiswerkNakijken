@@ -108,10 +108,11 @@ public class AnswerDAO implements DAOInterface<Answer> {
 			String sql;
 			PreparedStatement statement;
 				String generatedColumns[] = { "Answer_id" };
-				sql = "INSERT INTO Answer(answer, correct) VALUES (?,?)";
+				sql = "INSERT INTO Answer(answer, correct, question_id) VALUES (?,?,?)";
 				statement = connection.prepareStatement(sql, generatedColumns);
 				statement.setString(1, s.getAnswer());
 				statement.setInt(2, s.getCorrect().getIndex());
+				statement.setInt(3,s.getQuestion().getID());
 				statement.executeUpdate();
 				int ID = -1;
 				ResultSet rsid = statement.getGeneratedKeys();

@@ -1,9 +1,21 @@
 DROP TABLE PERSON;
-DROP TABLE CLASS;
+DROP TABLE C_CLASS;
 DROP TABLE COURSE;
 DROP TABLE ANSWER;
 DROP TABLE QUESTION;
 DROP TABLE HOMEWORK;
+
+DROP SEQUENCE SEQ_ANSWER_ID;
+DROP SEQUENCE SEQ_C_CLASS_ID;
+DROP SEQUENCE SEQ_HOMEWORK_ID;
+DROP SEQUENCE SEQ_PERSON_ID;
+DROP SEQUENCE SEQ_QUESTION_ID;
+
+DROP TRIGGER TRIGGER_ANSWER_ID;
+DROP TRIGGER TRIGGER_C_CLASS_ID;
+DROP TRIGGER TRIGGER_HOMEWORK_ID;
+DROP TRIGGER TRIGGER_PERSON_ID;
+DROP TRIGGER TRIGGER_QUESTION_ID;
 
 
 CREATE TABLE HOMEWORK (
@@ -37,7 +49,7 @@ CONSTRAINT PK_COURSE PRIMARY KEY (course_id),
 CONSTRAINT FK_HOMEWORK_ID_COURSE FOREIGN KEY(homework_id) REFERENCES HOMEWORK(homework_id)
 );
 
-CREATE TABLE CLASS (
+CREATE TABLE C_CLASS (
 class_id NUMBER(10),
 class_name VARCHAR2(10),
 course_id NUMBER(10),
@@ -58,13 +70,95 @@ course_id NUMBER(10),
 homework_id NUMBER(10),
 CONSTRAINT PK_PERSON PRIMARY KEY (id),
 CONSTRAINT UK_EMAIL UNIQUE(email),
-CONSTRAINT FK_CLASS_ID FOREIGN KEY(class_id) REFERENCES CLASS(class_id),
+CONSTRAINT FK_CLASS_ID FOREIGN KEY(class_id) REFERENCES C_CLASS(class_id),
 CONSTRAINT FK_HOMEWORK_ID_PERSON FOREIGN KEY(homework_id) REFERENCES HOMEWORK(homework_id),
 CONSTRAINT FK_COURSE_PERSON_ID FOREIGN KEY(course_id) REFERENCES COURSE(course_id)
 );
 
 
+/
+create sequence SEQ_ANSWER_ID
+start with 1 
+increment by 1 
+nomaxvalue; 
+/
 
+CREATE OR REPLACE TRIGGER TRIGGER_ANSWER_ID
+  before insert on answer           
+  for each row  
+begin   
+  if :NEW.answer_id is null then 
+    select SEQ_ANSWER_ID.nextval into :NEW.ANSWER_ID from dual; 
+  end if; 
+end; 
+
+/
+create sequence SEQ_C_Class_ID
+start with 1 
+increment by 1 
+nomaxvalue; 
+/
+
+CREATE OR REPLACE TRIGGER TRIGGER_C_Class_ID
+  before insert on C_Class           
+  for each row  
+begin   
+if :old.class_id = -1 then
+  if :NEW.Class_id is null then 
+    select SEQ_C_Class_ID.nextval into :NEW.Class_ID from dual; 
+  end if;
+end if; 
+end; 
+
+/
+create sequence SEQ_Homework_ID
+start with 1 
+increment by 1 
+nomaxvalue; 
+/
+
+CREATE OR REPLACE TRIGGER TRIGGER_Homework_ID
+  before insert on Homework           
+  for each row  
+begin   
+  if :NEW.Homework_id is null then 
+    select SEQ_Homework_ID.nextval into :NEW.Homework_ID from dual; 
+  end if; 
+end; 
+
+/
+create sequence SEQ_Question_ID
+start with 1 
+increment by 1 
+nomaxvalue; 
+/
+
+CREATE OR REPLACE TRIGGER TRIGGER_Question_ID
+  before insert on Question           
+  for each row  
+begin   
+  if :NEW.Question_id is null then 
+    select SEQ_Question_ID.nextval into :NEW.Question_ID from dual; 
+  end if; 
+end; 
+
+/
+create sequence SEQ_Person_ID
+start with 1 
+increment by 1 
+nomaxvalue; 
+/
+
+CREATE OR REPLACE TRIGGER TRIGGER_Person_ID
+  before insert on Person           
+  for each row  
+begin   
+if :old.id = -1 then
+  if :NEW.id is null then 
+    select SEQ_Person_ID.nextval into :NEW.ID from dual; 
+  end if; 
+end if;
+end; 
 
 
 

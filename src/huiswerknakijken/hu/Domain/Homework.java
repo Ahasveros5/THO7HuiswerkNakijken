@@ -6,10 +6,10 @@ public class Homework {
 
 	private String name;
 	private Grade grade;
-	private ArrayList<Question> question;
+	private ArrayList<Question> questions = new ArrayList<Question>();
 	private Course course;
 	private Teacher teacher;
-	private ArrayList<Student> students;
+	private ArrayList<Student> students = new ArrayList<Student>();
 	private int ID;
 	
 	public Grade getGrade() {
@@ -21,11 +21,11 @@ public class Homework {
 	}
 
 	public ArrayList<Question> getQuestion() {
-		return question;
+		return questions;
 	}
 
 	public void setQuestion(ArrayList<Question> question) {
-		this.question = question;
+		this.questions = question;
 	}
 
 	public Course getCourse() {
@@ -66,6 +66,14 @@ public class Homework {
 
 	public void setID(int iD) {
 		ID = iD;
+	}
+	
+	public void addStudent(Student s){
+		students.add(s);
+	}
+	
+	public void addQuestion(Question q){
+		questions.add(q);
 	}
 
 	
