@@ -6,32 +6,35 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	version="2.4">
 	
 	<init-param>
-  		<param-name>nl.hu.nlThemaOpdracht4</param-name>
- 		 <param-value>THO4</param-value>
+  		<param-name>huiswerknakijken.hu</param-name>
+ 		 <param-value>THO7HuiswerkNakijken</param-value>
 	</init-param>
 	
-	<servlet>
-		<servlet-name>AutoRegistratieServlet</servlet-name>
-		<servlet-class>nl.hu.ThemaOpdracht4.AutoRegistratieServlet
-		</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>AutoRegistratieServlet</servlet-name>
-		<url-pattern>/AutoRegistratieServlet.do</url-pattern>
-	</servlet-mapping>
+	
 	
 	<servlet>
-		<servlet-name>KlantRegistratieServlet</servlet-name>
-		<servlet-class>nl.hu.ThemaOpdracht4.KlantRegistratieServlet</servlet-class>
+		<servlet-name>LeerlingRegistratieServlet</servlet-name>
+		<servlet-class>huiswerknakijken.hu.Servlets.LeerlingRegistratieServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>KlantRegistratieServlet</servlet-name>
-		<url-pattern>/KlantRegistratieServlet.do</url-pattern>
+		<servlet-name>LeerlingRegistratieServlet</servlet-name>
+		<url-pattern>/LeerlingRegistratieServlet.do</url-pattern>
 	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>LeraarRegistratieServlet</servlet-name>
+		<servlet-class>huiswerknakijken.hu.Servlets.LeraarRegistratieServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LeraarRegistratieServlet</servlet-name>
+		<url-pattern>/LeraarRegistratieServlet.do</url-pattern>
+	</servlet-mapping>
+	
 	
 	<servlet>
 		<servlet-name>LoginServlet</servlet-name>
-		<servlet-class>nl.hu.ThemaOpdracht4.LoginServlet
+		<servlet-class>huiswerknakijken.hu.Servlets.LoginServlet
 		</servlet-class>
 	</servlet>
 	<servlet-mapping>
@@ -39,14 +42,16 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 		<url-pattern>/LoginServlet.do</url-pattern>
 	</servlet-mapping>
 	
-		<servlet>
+	
+	<servlet>
 		<servlet-name>LogoutServlet</servlet-name>
-		<servlet-class>nl.hu.ThemaOpdracht4.LogoutServlet
+		<servlet-class>huiswerknakijken.hu.Servlets.LogoutServlet
 		</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>LogoutServlet</servlet-name>
 		<url-pattern>/LogoutServlet.do</url-pattern>
 	</servlet-mapping>
+	
 	
 </web-app>

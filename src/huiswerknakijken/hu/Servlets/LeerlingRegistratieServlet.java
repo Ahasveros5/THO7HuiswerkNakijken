@@ -2,16 +2,18 @@ package huiswerknakijken.hu.Servlets;
 
 import huiswerknakijken.hu.DAO.PersonDAO;
 import huiswerknakijken.hu.Domain.Person;
+import huiswerknakijken.hu.Domain.Person.UserRole;
 import huiswerknakijken.hu.Domain.Student;
 
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class LeerlingRegistratieServlet {
+public class LeerlingRegistratieServlet extends HttpServlet {
 	/**
 	 * 
 	 */
@@ -50,21 +52,29 @@ public class LeerlingRegistratieServlet {
 				req.setAttribute("msgs", "Emailadressen komen niet overeen");
 				rd = req.getRequestDispatcher("LeerlingRegistreren.jsp");			
 			}
-		}
-		Person p = new Student();
-		p.setEmail(email1);
-		p.setPassword(ww1);
-		p.setFirstName(naam);
-		p.setLastName(achternaam);
-		p.setID(studentnr);
-		p.setRole(1);
+			else{
+				Person p = new Student();
+				p.setEmail(email1);
+				p.setPassword(ww1);
+				p.setFirstName(naam);
+				p.setLastName(achternaam);
+				p.setID(studentnr);
+				p.setRole(UserRole.Student);
+				dao.add(p); 
+				
+				rd = req.getRequestDispatcher("loginpage.jsp");
+				req.setAttribute("msgs", "Registreren succesvol");				
+			}
+		}		
 		
 		if(!dao.retrieveByEmail(email1, 0).getEmail().equals(null)){
 			req.setAttribute("msgs", "Emailadres staat al geregistreerd");
 			rd = req.getRequestDispatcher("LeerlingRegistreren.jsp");
 		}
 
-		dao.add(p);
+		if(rd != null) {
+			rd.forward(req, resp);
+		}
 	}
 
 }

@@ -12,17 +12,7 @@
 	 <div class="body_background">
 		<div id="header">
    	 	<div id="header_content">
-    			
-               
-                
-                 <div id="logo_atd_small_holder">
-<div id="logo_atd_small_shake_holder" class="shake" a="" href="/atd">
-                	<a href="/atd" class="shake" id="logo_atd_small"></a>
-               
-</div>
-                </div>
-                
-                
+                             
      			<div id="navigation_header">
 
      			</div>
@@ -59,9 +49,11 @@
 			  <input type="password" size="25" name="invoer_ww" /><br />
 			  <label><b>Wachtwoord:</b><span>Ter Bevestiging</span></label>
 			  <input type="password" size="25" name="invoer_wwb" /> <br/>
+			  
+			   <input class="button" type="submit" name="knop" value="Registreren!" />
 			  </form>
 			  </fieldset>
-			  <input class="button" type="submit" name="knop" value="Registreren!" />
+			 
 		
            
      </div>

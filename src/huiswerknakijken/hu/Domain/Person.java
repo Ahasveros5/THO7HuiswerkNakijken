@@ -1,13 +1,29 @@
 package huiswerknakijken.hu.Domain;
 
 public class Person {
+	
+	public enum UserRole{
+		Student(1),
+		Teacher(2),
+		Unknown(3);
+		
+		private final int index;   
+		 
+		UserRole(int index) {
+			this.index = index;
+		}
+
+		public int getIndex() { 
+			return index; 
+		}
+	}
 
 	protected String firstName;
 	protected String lastName;
 	protected String eMail;
 	protected String password;
-	protected int ID;
-	protected int role;
+	protected int ID; 
+	protected UserRole role; //1 = student // 2 = teacher
 	
 	
 	public int getID() {
@@ -18,11 +34,11 @@ public class Person {
 		ID = iD;
 	}
 
-	public int getRole() {
+	public UserRole getRole() {
 		return role;
 	}
 
-	public void setRole(int role) {
+	public void setRole(UserRole role) {
 		this.role = role;
 	}
 

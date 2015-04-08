@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Auto registratie</title>
+		<title>Loginpage</title>
 		<link rel="stylesheet" type="text/css" href="atd_final.css" />
         <link href='http://fonts.googleapis.com/css?family=Handlee' rel='stylesheet' type='text/css'>
 	</head>
@@ -11,15 +11,6 @@
 		<div id="header">
    	 	<div id="header_content">
     			
-                
-                
-                 <div id="logo_atd_small_holder">
-<div id="logo_atd_small_shake_holder" class="shake" a="" href="/atd">
-                	<a href="/atd" class="shake" id="logo_atd_small"></a>
-               
-</div>
-                </div>
-                
                 
      			<div id="navigation_header">
                 <ul>

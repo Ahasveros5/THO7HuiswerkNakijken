@@ -3,6 +3,7 @@ package huiswerknakijken.hu.Servlets;
 import huiswerknakijken.hu.DAO.PersonDAO;
 import huiswerknakijken.hu.Domain.Person;
 import huiswerknakijken.hu.Domain.Teacher;
+import huiswerknakijken.hu.Domain.Person.UserRole;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -21,18 +22,18 @@ public class LeraarRegistratieServlet extends HttpServlet {
 
 	@SuppressWarnings("null")
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		PrintWriter out = resp.getWriter();
 		resp.setContentType("text/html");
 
 		String naam = req.getParameter("invoer_naam");
-		String achternaam = req.getParameter("invoer_achternaam");
-		PersonDAO dao = new PersonDAO();
+		String achternaam = req.getParameter("invoer_achternaam");		
 		String email1 = req.getParameter("invoer_email");
 		String email2 = req.getParameter("invoer_emailb");
 		String ww1 = req.getParameter("invoer_ww");
 		String ww2 = req.getParameter("invoer_wwb");
 
 		RequestDispatcher rd = null;
+		
+		PersonDAO dao = new PersonDAO();
 
 		if(
 			naam.isEmpty() ||
@@ -51,22 +52,28 @@ public class LeraarRegistratieServlet extends HttpServlet {
 			} else if(!email1.equals(email2)){
 				req.setAttribute("msgs", "Emailadressen komen niet overeen");
 				rd = req.getRequestDispatcher("LeraarRegistreren.jsp");			
+			}else{
+
+				Person p = new Teacher();
+				p.setFirstName(naam);
+				p.setLastName(achternaam);
+				p.setEmail(email1);
+				p.setPassword(ww1);
+				p.setRole(UserRole.Teacher);
+				
+				dao.add(p);			
+				rd = req.getRequestDispatcher("loginpage.jsp");
 			}
 		}
 		
-		Person p = new Teacher();
-		p.setFirstName(naam);
-		p.setLastName(achternaam);
-		p.setEmail(email1);
-		p.setPassword(ww1);
-		p.setRole(2);
-	
-		if(!dao.retrieveByEmail(email1, 0).getEmail().equals(null)){
+	/*	if(!dao.retrieveByEmail(email1, 0).getEmail().equals(null)){
 			req.setAttribute("msgs", "Emailadres staat al geregistreerd");
 			rd = req.getRequestDispatcher("LeraarRegistreren.jsp");
+		} */
+		
+		if(rd != null) {
+			rd.forward(req, resp);
 		}
-
-		dao.add(p);
 	}
 
 }

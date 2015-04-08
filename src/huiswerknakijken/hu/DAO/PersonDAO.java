@@ -1,6 +1,7 @@
 package huiswerknakijken.hu.DAO;
 
 import huiswerknakijken.hu.Domain.Person;
+import huiswerknakijken.hu.Domain.Person.UserRole;
 import huiswerknakijken.hu.Domain.Student;
 import huiswerknakijken.hu.Domain.Teacher;
 import huiswerknakijken.hu.Util.OracleConnectionPool;
@@ -12,6 +13,8 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.management.relation.Role;
 
 public class PersonDAO implements DAOInterface<Person> {
 	public List<Person> retrieveAll(int layerLevel) {
@@ -64,6 +67,7 @@ public class PersonDAO implements DAOInterface<Person> {
 	public boolean add(Person s) {
 		boolean b = false;
 		Connection connection = OracleConnectionPool.getConnection();
+
 		try {
 			connection.setAutoCommit(false);
 		} catch (SQLException e1) {
@@ -75,20 +79,39 @@ public class PersonDAO implements DAOInterface<Person> {
 			PreparedStatement statement;
 			if(s.getID() == -1){
 				String generatedColumns[] = { "Person_ID" };
-				sql = "INSERT INTO Person(first_name, last_name, email, password, role) VALUES (?,?,?,?,?)";
-				statement = connection.prepareStatement(sql, generatedColumns);
+				if(s.getRole() == UserRole.Student){
+					sql = "INSERT INTO Person(first_name, last_name, email, password, role, class_id) VALUES (?,?,?,?,?,?)";
+					statement = connection.prepareStatement(sql, generatedColumns);
+					Student st = (Student)s;
+					statement.setInt(6,st.getMainClass().getClassID());
+				} else{
+					sql = "INSERT INTO Person(first_name, last_name, email, password, role) VALUES (?,?,?,?,?)";
+					statement = connection.prepareStatement(sql, generatedColumns);
+				}
 				System.out.println("ATTENTION:: While adding Person generating new ID.");
 			}
 			else{
-				sql = "INSERT INTO Person(first_name, last_name, email, password, role, id) VALUES (?,?,?,?,?,?)";
-				statement = connection.prepareStatement(sql);
-				statement.setInt(6, s.getID());
+				if(s.getRole() == UserRole.Student){
+					sql = "INSERT INTO Person(first_name, last_name, email, password, role, id,class_id) VALUES (?,?,?,?,?,?,?)";
+					statement = connection.prepareStatement(sql);
+					statement.setInt(6, s.getID());
+					Student st = (Student)s;
+					statement.setInt(7,st.getMainClass().getClassID());
+				} else{
+					sql = "INSERT INTO Person(first_name, last_name, email, password, role, id) VALUES (?,?,?,?,?,?)";
+					statement = connection.prepareStatement(sql);
+					statement.setInt(6, s.getID());
+				}
 			}
 			statement.setString(1, s.getFirstName());
 			statement.setString(2, s.getLastName());
 			statement.setString(3, s.getEmail());
 			statement.setString(4, s.getPassword());
-			statement.setInt(5, s.getRole());
+			if (s.getRole() != null)
+				statement.setInt(5, s.getRole().getIndex());
+			else{
+				statement.setInt(5, UserRole.Unknown.getIndex());
+			}
 			statement.executeUpdate();
 			int ID = -1;
 
@@ -208,6 +231,26 @@ public class PersonDAO implements DAOInterface<Person> {
 
 		return retrievedStudent;
 	}
+<<<<<<< HEAD:src/huiswerknakijken/hu/DAO/PersonDAO.java
+=======
+	
+	public ArrayList<Person> retrieveAllByClass(int classID, int layerLevel) {
+		Connection connection = OracleConnectionPool.getConnection();
+		ArrayList<Person> eU = null;
+		try {
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM PERSON WHERE class_id=?");
+			statement.setInt(1, classID);
+			ResultSet rs = statement.executeQuery();
+			eU = resultSetExtractor(rs, layerLevel, connection);
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return eU;
+	}
+>>>>>>> origin/master:src/huiswerknakijken/hu/DAO/PersonDAO.java
 
 	/*public Person retrieveByStudentname(String s, int layerLevel) {
 		Person retrievedStudent = null;
