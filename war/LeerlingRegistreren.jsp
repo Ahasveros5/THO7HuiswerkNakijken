@@ -8,7 +8,7 @@
 	</head>
 	
 	<body>
-
+<%@ include file="header.jsp" %>
 	 <div class="body_background">
 		<div id="header">
    	 	<div id="header_content">

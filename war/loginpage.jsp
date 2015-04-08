@@ -9,27 +9,8 @@
 	<body>
 	
 		<div id="header">
-   	 	<div id="header_content">
-    			
-                
-     			<div id="navigation_header">
-                <ul>
-<li><a href="">Over Ons</a></li>
-<li><a href="">Aanmelden</a></li>
-<li><a href="">Registreren</a></li>
-<li><a href="">Contact</a></li>
-
-</ul>
-     			</div>
-     	</div> 
+		<%@ include file="header.jsp" %>
    </div> 
-   <% Object msgs = request.getAttribute("msgs"); 
-	if (msgs != null) {
-		out.println("<div id=\"messagebox\">");
-		out.println(msgs); 
-		out.println("</div>");
-	} 
-%> 
    <h2>Inloggen</h2>
    
    	<div id="Inlogfield">
@@ -40,15 +21,9 @@
    		<input type="password" size="25" name="ww_login" /><br />
    		
    		<input class="button" type="submit" name="knop" value="Inloggen" />
+   		</form>
    	</div>
    	
-   	</form>
    	
    	
-   	
-   	
-   	
-   	
-   	
-   	
-   	
+   	<%@ include file="footer.jsp" %>
