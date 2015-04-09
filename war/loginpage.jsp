@@ -7,10 +7,9 @@
 	</head>
 	
 	<body>
-	
-		<div id="header">
+	<div>
 		<%@ include file="header.jsp" %>
-   </div> 
+		
    <h2>Inloggen</h2>
    
    	<div id="Inlogfield">
@@ -23,7 +22,7 @@
    		<input class="button" type="submit" name="knop" value="Inloggen" />
    		</form>
    	</div>
-   	
+   	</div>
    	
    	
    	<%@ include file="footer.jsp" %>
