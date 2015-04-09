@@ -1,3 +1,4 @@
+
 .headerlist ul
 {
 margin: 4%;
@@ -39,10 +40,10 @@ background-color: #0000ff;
 }
 #Inlogfield {
 	text-align:center;
-<<<<<<< HEAD
     width: 100% !important;
     height: 10% !important;
     background-image: url("HU-logo.png");
+<<<<<<< HEAD
 
 =======
 
@@ -57,3 +58,10 @@ background-color: #0000ff;
 >>>>>>> 88b2fa2db640b90574524e962548d69263a3bfec
 >>>>>>> c84fb98edfc5f52bcab97ef106e5ba2ad5105cb1
 }
+=======
+    width: 100% !important;
+    height: 10% !important;
+    background-image: url("HU-logo.png");
+             
+             
+>>>>>>> d3748a404a5dfd9d99d484693d49cfc2e992a709
