@@ -28,6 +28,7 @@ public class LoginServlet extends HttpServlet {
 			rd = req.getRequestDispatcher("loginpage.jsp");
 				} else {			
 					if (p != null && password.equals(p.getPassword())){
+						System.out.println("test: " + p.getFirstName() + " " + p.getLastName());
 						session.setAttribute("user",p );
 						rd = req.getRequestDispatcher("index.jsp");
 						System.out.println("testi");
