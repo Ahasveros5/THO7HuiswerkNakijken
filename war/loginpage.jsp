@@ -14,8 +14,8 @@
    		<h2>Inloggen</h2>
    		<form action="LoginServlet.do" method="post">
    		
-   		<input class = "input" type="text" size="25" name="email_login" value="E-mail adres" ><br />
-   		<input class = "input" type="password" size="25" name="ww_login" value="Wachtwoord" /><br />
+   		<input class = "input" type="text" size="25" name="email_login" placeholder="E-mail adres" ><br />
+   		<input class = "input" type="password" size="25" name="ww_login" placeholder="Wachtwoord" /><br />
    		<br />
    		<input class="button" type="submit" name="knop" value="Inloggen" />
    		</form>

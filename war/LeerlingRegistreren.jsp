@@ -34,7 +34,7 @@
      
 		  <fieldset id="Klant">
 
-			  <form action="LeerlingRegistratieServlet.do" method="post">
+			  <form class="registerform" action="LeerlingRegistratieServlet.do" method="post">
 			  <label><b>Voornaam:</b></label>
 			  <input type="text" size="25" name="invoer_naam" /><br />
 			  <label><b>Achternaam:</b></label>
