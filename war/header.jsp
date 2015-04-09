@@ -3,10 +3,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="//resources.vpl.me/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-<link href="//resources.vpl.me/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet" media="screen">
-<link href="//resources.vpl.me/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
-<link href="//lokeshdhakar.com/projects/lightbox2/css/lightbox.css" rel="stylesheet">
+<%@ page import="huiswerknakijken.hu.Domain.Person"%>
 <link rel="stylesheet" type="text/css" href="/THO7HuiswerkNakijken/css/style.css">
 <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
 
@@ -16,6 +13,11 @@
 </head>
 <body>
 		<div class="headerlist headerborder">
+		<% if(session.getAttribute("user") != null){ 
+		Person p = (Person) session.getAttribute("user");
+		%>
+		Welkom <%  p.getFirstName(); %> <% p.getFirstName(); }else{%>
+		Welkom vreemdeling<%} %>
 				<ul>
 					<li><a href="loginpage.jsp">Login</a></li>
 					<li><a href="LeerlingRegistreren.jsp" class="regbutton">Registreer leerling</a></li>

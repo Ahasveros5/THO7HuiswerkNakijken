@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -21,13 +22,13 @@ public class LoginServlet extends HttpServlet {
 		Person p = pdao.retrieveByEmail(userEmail, 1);
 		
 		RequestDispatcher rd = null;
-		//HttpSession session = null;
+		HttpSession session = req.getSession();
 		if(userEmail.isEmpty() || password.isEmpty()) {
 			req.setAttribute("msgs", "Vul alle velden in.");
 			rd = req.getRequestDispatcher("loginpage.jsp");
 				} else {			
 					if (p != null && password.equals(p.getPassword())){
-						//session.setAttribute("userEmail",userEmail );
+						session.setAttribute("user",p );
 						rd = req.getRequestDispatcher("index.jsp");
 						System.out.println("testi");
 					} else {
