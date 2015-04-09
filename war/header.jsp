@@ -15,23 +15,11 @@
 <title>HU automatisch huiswerk nakijksysteem</title>
 </head>
 <body>
-	<nav class="navbar navbar-default navbar-fixed-top navtotop" role="navigation"> <!-- Brand and toggle get grouped for better mobile display -->
-	
-
-	<!-- Collect the nav links, forms, and other content for toggling -->
-	<div class="collapse navbar-collapse navbar-ex1-collapse">
-		<ul class="nav navbar-nav">
-		</ul>
 		<div class="headerlist headerborder">
 				<ul>
 					<li><a href="loginpage.jsp">Login</a></li>
 					<li><a href="LeerlingRegistreren.jsp" class="regbutton">Registreer leerling</a></li>
 					<li><a href="LeraarRegistreren.jsp" class="regbutton">Registreer leraar</a></li>
 				</ul>
-				
-				
-			
 		</div>
-	</div>
-	</nav>
 	<div class="container">
