@@ -10,10 +10,15 @@
 	<div>
 		<%@ include file="header.jsp" %>
    </div> 
+<<<<<<< HEAD
 
 		
    <h2>Inloggen</h2>
 
+=======
+   		
+   <h2>Inloggen</h2>
+>>>>>>> 88b2fa2db640b90574524e962548d69263a3bfec
    
    	<div id="Inlogfield">
    		<h2>Inloggen</h2>

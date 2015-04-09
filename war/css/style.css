@@ -37,8 +37,15 @@ background-color: #0000ff;
 }
 #Inlogfield {
 	text-align:center;
+<<<<<<< HEAD
     width: 100% !important;
     height: 10% !important;
     background-image: url("HU-logo.png");
 
+=======
+
+    width: 100% !important;
+    height: 10% !important;
+    background-image: url("HU-logo.png");
+>>>>>>> 88b2fa2db640b90574524e962548d69263a3bfec
 }
