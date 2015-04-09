@@ -32,15 +32,13 @@ background-color: #0000ff;
     border-radius: 25px;
     border: 2px solid #000000;
     padding: 20px; 
-<<<<<<< HEAD
     width: 800px;
     height: 150px; 
 }
 #Inlogfield {
 	text-align:center;
-=======
     width: 100% !important;
     height: 10% !important;
     background-image: url("HU-logo.png");
->>>>>>> ab87bd14d560eca98af9f2a2aebb01e25d809f02
+
 }

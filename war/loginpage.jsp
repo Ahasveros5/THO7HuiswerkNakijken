@@ -9,13 +9,11 @@
 	<body>
 	<div>
 		<%@ include file="header.jsp" %>
-<<<<<<< HEAD
    </div> 
-   
-=======
+
 		
    <h2>Inloggen</h2>
->>>>>>> ab87bd14d560eca98af9f2a2aebb01e25d809f02
+
    
    	<div id="Inlogfield">
    		<h2>Inloggen</h2>
@@ -28,7 +26,7 @@
    		<input class="button" type="submit" name="knop" value="Inloggen" />
    		</form>
    	</div>
-   	</div>
+
    	
    	
    	<%@ include file="footer.jsp" %>
