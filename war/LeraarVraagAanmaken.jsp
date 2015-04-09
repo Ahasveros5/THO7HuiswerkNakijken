@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<title>Vraag aanmaken</title>
-		
+		<link rel="stylesheet" type="text/css" href="style.css" />
 	</head>
 	
 	<body>

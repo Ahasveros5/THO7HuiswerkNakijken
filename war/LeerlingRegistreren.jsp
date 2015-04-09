@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<title>Klantregistratie</title>
-		<link rel="stylesheet" type="text/css" href="http://thestrike.nl/atd/css/atd_final.css" />
+		<link rel="stylesheet" type="text/css" href="style.css" />
         <link href='http://fonts.googleapis.com/css?family=Handlee' rel='stylesheet' type='text/css'>
 	</head>
 	
@@ -60,22 +60,8 @@
     </div>
        
      </div>   
-        <div id="footer_border">
-        </div>
-        <div id="footer">
-        <div id="footer_container">
-        <div id="footer_blok1">
-        test
-        </div>
-        <div id="footer_blok2">
-        test
-        </div>
-        <div id="footer_blok3">
-        test
-        </div>
-        </div> 
+
         
-        </div>
         
 	</body>
 </html>

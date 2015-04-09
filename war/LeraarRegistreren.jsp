@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<title>Klantregistratie</title>
-		<link rel="stylesheet" type="text/css" href="http://thestrike.nl/atd/css/atd_final.css" />
+		<link rel="stylesheet" type="text/css" href="style.css" />
         <link href='http://fonts.googleapis.com/css?family=Handlee' rel='stylesheet' type='text/css'>
 	</head>
 	
