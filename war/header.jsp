@@ -47,8 +47,8 @@
 
 		<%} else{%>
 			<ul>
-				<li><a href="loginpage.jsp">Huiswerk12 maken</a></li>
-				<li><a href="LeerlingRegistreren.jsp" class="regbutton">Overzicht12 huiswerk</a></li>
+				<li><a href="404.jsp">--</a></li>
+				<li><a href="404.jsp" class="regbutton">---</a></li>
 				<li><a href="LogoutServlet.do">Uitloggen</a></li>
 			</ul>
 		<%}}%>

@@ -76,10 +76,11 @@ public class MultipleChoiceAanmakenServlet extends HttpServlet {
 		}else{
 			q = new Question();
 			q.setDescription(vraag);
+			q.setName("Test");
 			q.setAnswers(antwoorden);
-			
+			dao.addComplete(q);
 		}
-		dao.add(q);
+		
 		
 		if(rd != null) {
 			rd.forward(req, resp);

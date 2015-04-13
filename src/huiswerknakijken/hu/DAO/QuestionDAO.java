@@ -91,7 +91,7 @@ public class QuestionDAO implements DAOInterface<Question> {
 				statement = connection.prepareStatement(sql, generatedColumns);
 				statement.setString(1, s.getName());
 				statement.setString(2, s.getDescription());
-				statement.setInt(3,s.getHomework().getID());
+				statement.setInt(3,1);//s.getHomework().getID());
 				statement.executeUpdate();
 				int ID = -1;
 				ResultSet rsid = statement.getGeneratedKeys();
