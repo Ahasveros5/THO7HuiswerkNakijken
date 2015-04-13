@@ -34,6 +34,7 @@ public class MultipleChoiceAanmakenServlet extends HttpServlet {
 		Question q = null;
 		Answer a = new Answer();
 		a.setAnswer(antwoord1);
+		
 		antwoorden.add(a);
 		
 		Answer b = new Answer();
@@ -76,8 +77,12 @@ public class MultipleChoiceAanmakenServlet extends HttpServlet {
 		}else{
 			q = new Question();
 			q.setDescription(vraag);
-			q.setName("Test");
 			q.setAnswers(antwoorden);
+			a.setQuestion(q);
+			b.setQuestion(q);
+			c.setQuestion(q);
+			d.setQuestion(q);
+			
 			dao.addComplete(q);
 		}
 		
