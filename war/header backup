@@ -31,25 +31,20 @@
 			Person p = (Person)session.getAttribute("user");
 		
 			
-			if(p.getRole() == UserRole.Student) { %>
-				<ul>
-					<li><a href="loginpage.jsp">Huiswerk maken</a></li>
-					<li><a href="LeerlingRegistreren.jsp" class="regbutton">Overzicht huiswerk</a></li>
-					<li><a href="LogoutServlet.do">Uitloggen</a></li>
-				</ul>
-		<%}	else if(p.getRole() == UserRole.Teacher){%>
-				<ul>
-				<li><a href="loginpage.jsp">Huiswerk maken</a></li>
-				<li><a href="LeerlingRegistreren.jsp" class="regbutton">Overzicht huiswerk</a></li>
-				<li><a href="LogoutServlet.do">Uitloggen</a></li>
-			</ul>
-
-		<%} else{%>
-			<ul>
-				<li><a href="loginpage.jsp">Huiswerk12 maken</a></li>
-				<li><a href="LeerlingRegistreren.jsp" class="regbutton">Overzicht12 huiswerk</a></li>
-				<li><a href="LogoutServlet.do">Uitloggen</a></li>
-			</ul>
-		<%}}%>
+			if(p.getRole().getIndex() == 1) { 
+				out.println("<ul>");
+					out.println("<li><a href=\'loginpage.jsp\'>Huiswerk maken</a></li>");
+					out.println("<li><a href=\'LeerlingRegistreren.jsp\'>Overzicht huiswerk</a></li>");
+					out.println("<li><a href=\'LogoutServlet.do\'>Uitloggen</a></li>");
+				out.println("</ul>");
+			}
+			else if(p.getRole().getIndex() == 2){
+				out.println("<ul>");
+				out.println("<li><a href=\'loginpage.jsp\'>Huiswerk maken</a></li>");
+				out.println("<li><a href=\'LeerlingRegistreren.jsp\'>Overzicht huiswerk</a></li>");
+				out.println("<li><a href=\'LogoutServlet.do\'>Uitloggen</a></li>");
+				out.println("</ul>");
+				}
+		} %>
 		</div>
 	<div class="container">
