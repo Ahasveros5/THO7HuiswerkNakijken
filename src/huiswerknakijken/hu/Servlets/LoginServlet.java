@@ -2,6 +2,7 @@ package huiswerknakijken.hu.Servlets;
 
 import huiswerknakijken.hu.DAO.PersonDAO;
 import huiswerknakijken.hu.Domain.Person;
+import huiswerknakijken.hu.Domain.Person.UserRole;
 
 import java.io.IOException;
 
@@ -37,7 +38,13 @@ public class LoginServlet extends HttpServlet {
 						rd = req.getRequestDispatcher("loginpage.jsp");
 						System.out.println("testor");
 					}
-				}				
+				}		
+		if(p.getRole()==UserRole.Teacher){
+			rd= req.getRequestDispatcher("LeraarOverzicht.jsp");
+		}
+		if(p.getRole()==UserRole.Student){
+			rd = req.getRequestDispatcher("LeerlingOverzicht.jsp");
+		}
 		
 		if(rd != null) {
 			rd.forward(req, resp);
