@@ -291,26 +291,32 @@ public class PersonDAO implements DAOInterface<Person> {
 					Person p;
 					int role = rs.getInt("role");
 					if(role == 1){//student
+						System.out.println("STUDENT CREATED");
 						p = new Student();
 						p.setID(ID);
 						p.setFirstName(rs.getString("first_name"));
 						p.setLastName(rs.getString("last_name"));
 						p.setEmail(rs.getString("email"));
 						p.setPassword(rs.getString("password"));
+						p.setRole(UserRole.Student);
 					} else if (role == 2){//teacher
+						System.out.println("TEACHER CREATED");
 						p = new Teacher();
 						p.setID(ID);
 						p.setFirstName(rs.getString("first_name"));
 						p.setLastName(rs.getString("last_name"));
 						p.setEmail(rs.getString("email"));
 						p.setPassword(rs.getString("password"));
+						p.setRole(UserRole.Teacher);
 					} else{ //no teacher or student, so it's someone not belonging to HU
+						System.out.println("PERSON CREATED");
 						p = new Person();
 						p.setID(ID);
 						p.setFirstName(rs.getString("first_name"));
 						p.setLastName(rs.getString("last_name"));
 						p.setEmail(rs.getString("email"));
 						p.setPassword(rs.getString("password"));
+						p.setRole(UserRole.Unknown);
 					}
 					//u.setLayerLevel(layerLevel);
 

@@ -1,5 +1,7 @@
 package huiswerknakijken.hu.Domain;
 
+import huiswerknakijken.hu.Domain.Answer.Correct;
+
 public class Person {
 	
 	public enum UserRole{
@@ -15,6 +17,16 @@ public class Person {
 
 		public int getIndex() { 
 			return index; 
+		}
+		
+		public static UserRole getValue(int i){
+			UserRole ur = UserRole.Unknown;
+			for (UserRole us : UserRole.values()) {
+				if (us.getIndex() == i) {
+					ur = us;
+				}
+			}
+			return ur;
 		}
 	}
 

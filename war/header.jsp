@@ -4,6 +4,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <%@ page import="huiswerknakijken.hu.Domain.Person"%>
+<%@ page import="huiswerknakijken.hu.Domain.Person.UserRole"%>
 <link rel="stylesheet" type="text/css" href="/THO7HuiswerkNakijken/css/style.css">
 <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
 
@@ -26,12 +27,30 @@
 					<li><a href="LeerlingRegistreren.jsp" class="regbutton">Registreer leerling</a></li>
 					<li><a href="LeraarRegistreren.jsp" class="regbutton">Registreer leraar</a></li>
 				</ul>
-		<% }else { %>
+		<% }else {
+			Person p = (Person)session.getAttribute("user");
+		
+			
+			if(p.getRole() == UserRole.Student) { %>
 				<ul>
-					<li><a href="loginpage.jsp">Huiswerk maken</a></li>
-					<li><a href="LeerlingRegistreren.jsp" class="regbutton">Overzicht huiswerk</a></li>
-					<li><input class="button" action = "LogoutServlet.do" type="submit" name="knop" value="Uitloggen" />
+					<li><a href="404.jsp">Huiswerk maken</a></li>
+					<li><a href="404.jsp" class="regbutton">Overzicht huiswerk</a></li>
+					<li><a href="LogoutServlet.do">Uitloggen</a></li>
 				</ul>
-		<%} %>
+		<%}	else if(p.getRole() == UserRole.Teacher){%>
+				<ul>
+				<li><a href="404.jsp">Huiswerk aanmaken</a></li>
+				<li><a href="404.jsp" class="regbutton">Overzicht huiswerk</a></li>
+				<li><a href="404.jsp" class="regbutton">Overzicht leerlingen</a></li>
+				<li><a href="LogoutServlet.do">Uitloggen</a></li>
+			</ul>
+
+		<%} else{%>
+			<ul>
+				<li><a href="loginpage.jsp">Huiswerk12 maken</a></li>
+				<li><a href="LeerlingRegistreren.jsp" class="regbutton">Overzicht12 huiswerk</a></li>
+				<li><a href="LogoutServlet.do">Uitloggen</a></li>
+			</ul>
+		<%}}%>
 		</div>
 	<div class="container">
