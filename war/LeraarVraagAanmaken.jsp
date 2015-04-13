@@ -6,7 +6,7 @@
 	</head>
 	
 	<body>
-		
+	<%@ include file="header.jsp" %>	
 	<% Object msgs = request.getAttribute("msgs");
 	if (msgs != null) {
 		out.println("<div id=\"messagebox\">");
@@ -25,9 +25,13 @@
 			  
 			  <label><b>Mogelijke antwoorden</b></label>
 			  <div id="dynamicInput">
-         		 Antwoord 1<br><input type="text" name="Antwoord1">
+         		 Antwoord 1<input type="text" name="Antwoord1"><br>
+         		 Antwoord 2<input type="text" name="Antwoord2"><br>
+         		 Antwoord 3<input type="text" name="Antwoord3"><br>
+         		 Antwoord 4<input type="text" name="Antwoord4"><br>
    			  </div>
-			  <input type="button" value="Voeg Antwoord toe" onClick="addTextField('dynamicInput');">	
+			  
+			<!--  <input type="button" value="Voeg Antwoord toe" onClick="addTextField('dynamicInput');">	
 			  
 			  
 			  <script language="javascript" type="text/javascript">
@@ -44,13 +48,23 @@
 				var child = parent.firstElementChild;
 				  document.getElementById(divName).removeChild(child);
 			  }
-			  </script>
+			  </script> -->
 			  
-			  <br/>
+			  <br>
 			  
-			  <input class = "button" value = "Opslaan" type="submit" name="knop" />
-
-			   <label><b>Goede Antwoord</b></label>
+			  
+				<br>
+			   <label><b>Goede Antwoord</b></label><br><br>
+			   
+				Antwoord  <select name="GoedeAntwoord">
+								<option value = "1">1</option>
+								<option value = "2">2</option>
+								<option value = "3">3</option>
+								<option value = "4">4</option>
+								
+								</select><br>
+								
+								<input class = "button" value = "Opslaan" type="submit" name="knop" />
 			   </form>
 			   
 			</body>
