@@ -1,5 +1,6 @@
 package huiswerknakijken.hu.DAO;
 
+import huiswerknakijken.hu.Domain.Answer;
 import huiswerknakijken.hu.Domain.Question;
 import huiswerknakijken.hu.Util.OracleConnectionPool;
 
@@ -119,6 +120,17 @@ public class QuestionDAO implements DAOInterface<Question> {
 				e1.printStackTrace();
 			}
 			e.printStackTrace();
+		}
+		return b;
+	}
+	
+	public boolean addComplete(Question q){
+		boolean b = add(q);
+		AnswerDAO adao = new AnswerDAO();
+		for (Answer a : q.getAnswers()){
+			b = adao.add(a);
+			if (b == false)
+				break;
 		}
 		return b;
 	}
