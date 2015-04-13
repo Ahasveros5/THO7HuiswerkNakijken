@@ -15,13 +15,23 @@
 		<div class="headerlist headerborder">
 		<% if(session.getAttribute("user") != null){ 
 		Person p = (Person) session.getAttribute("user");
-		%>
-		Welkom <%  p.getFirstName(); %> <% p.getFirstName(); }else{%>
-		Welkom vreemdeling<%} %>
+		System.out.println("hallo: " + p.getFirstName());
+		out.println("Welkom: " + p.getFirstName() +" " +  p.getLastName());
+		
+		}else{
+		out.println("Welkom");} %>
+		<% if(session.getAttribute("user") == null){ %>
 				<ul>
 					<li><a href="loginpage.jsp">Login</a></li>
 					<li><a href="LeerlingRegistreren.jsp" class="regbutton">Registreer leerling</a></li>
 					<li><a href="LeraarRegistreren.jsp" class="regbutton">Registreer leraar</a></li>
 				</ul>
+		<% }else { %>
+				<ul>
+					<li><a href="loginpage.jsp">Huiswerk maken</a></li>
+					<li><a href="LeerlingRegistreren.jsp" class="regbutton">Overzicht huiswerk</a></li>
+					<li><a href="loginpage.jsp"> Uitloggen</a>
+				</ul>
+		<%} %>
 		</div>
 	<div class="container">
