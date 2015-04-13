@@ -30,7 +30,7 @@
 				<ul>
 					<li><a href="loginpage.jsp">Huiswerk maken</a></li>
 					<li><a href="LeerlingRegistreren.jsp" class="regbutton">Overzicht huiswerk</a></li>
-					<li><a href="loginpage.jsp"> Uitloggen</a>
+					<li><input class="button" action = "LogoutServlet.do" type="submit" name="knop" value="Uitloggen" />
 				</ul>
 		<%} %>
 		</div>
