@@ -52,6 +52,10 @@ public class LeerlingRegistratieServlet extends HttpServlet {
 				req.setAttribute("msgs", "Emailadressen komen niet overeen");
 				rd = req.getRequestDispatcher("LeerlingRegistreren.jsp");			
 			}
+			else if(dao.retrieveByEmail(email1, 0) != null){
+				req.setAttribute("msgs", "Emailadres staat al geregistreerd");
+				rd = req.getRequestDispatcher("LeerlingRegistreren.jsp");
+			}
 			else{
 				Person p = new Student();
 				p.setEmail(email1);
@@ -67,10 +71,7 @@ public class LeerlingRegistratieServlet extends HttpServlet {
 			}
 		}		
 		
-		if(dao.retrieveByEmail(email1, 0) != null){
-			req.setAttribute("msgs", "Emailadres staat al geregistreerd");
-			rd = req.getRequestDispatcher("LeerlingRegistreren.jsp");
-		}
+		
 
 		if(rd != null) {
 			rd.forward(req, resp);
