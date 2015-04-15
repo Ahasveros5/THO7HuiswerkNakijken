@@ -78,7 +78,7 @@ public class PersonDAO implements DAOInterface<Person> {
 			String sql;
 			PreparedStatement statement;
 			/*if(s.getID() == -1){
-				String generatedColumns[] = { "Person_ID" };
+				
 				if(s.getRole() == UserRole.Student){
 					sql = "INSERT INTO Person(first_name, last_name, email, password, role, class_id) VALUES (?,?,?,?,?,?)";
 					statement = connection.prepareStatement(sql, generatedColumns);
@@ -92,18 +92,32 @@ public class PersonDAO implements DAOInterface<Person> {
 			}
 			else{*/
 				if(s.getRole() == UserRole.Student){
-					sql = "INSERT INTO Person(first_name, last_name, email, password, role, id,class_id) VALUES (?,?,?,?,?,?,?)";
-					statement = connection.prepareStatement(sql);
-					statement.setInt(6, s.getID());
+						sql = "INSERT INTO Person(first_name, last_name, email, password, role, id,class_id) VALUES (?,?,?,?,?,?,?)";
+						if (s.getID() == -1){
+							String generatedColumns[] = { "id" };
+							statement = connection.prepareStatement(sql,generatedColumns);
+						} else
+							statement = connection.prepareStatement(sql);
+						System.out.println("testo");
+						statement.setInt(6, s.getID());
+
 					Student st = s.toStudent();
 					if(st.getMainClass() != null)
 						statement.setInt(7,st.getMainClass().getClassID());
-					else
+					else{
 						statement.setInt(7,0);
+						System.out.println("Testo2");
+					}
 				} else{
-					sql = "INSERT INTO Person(first_name, last_name, email, password, role, id) VALUES (?,?,?,?,?,?)";
-					statement = connection.prepareStatement(sql);
-					statement.setInt(6, s.getID());
+					
+						sql = "INSERT INTO Person(first_name, last_name, email, password, role, id) VALUES (?,?,?,?,?,?)";
+						if (s.getID() == -1){
+							String generatedColumns[] = { "id" };
+							statement = connection.prepareStatement(sql,generatedColumns);
+						} else
+							statement = connection.prepareStatement(sql);
+						statement.setInt(6, s.getID());
+						System.out.println("Teacher id is wel bestaand");
 				}
 			//}
 			statement.setString(1, s.getFirstName());
@@ -115,10 +129,11 @@ public class PersonDAO implements DAOInterface<Person> {
 			//else{
 			//	statement.setInt(5, UserRole.Unknown.getIndex());
 			//}
+				s.print();
 			statement.executeUpdate();
 			if(s.getID() == -1){
 				int ID = -1;
-	
+				
 				ResultSet rsid = statement.getGeneratedKeys();
 				if (rsid != null && rsid.next()) {
 					ID = rsid.getInt(1);

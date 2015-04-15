@@ -52,11 +52,11 @@ public class LeraarRegistratieServlet extends HttpServlet {
 			} else if(!email1.equals(email2)){
 				req.setAttribute("msgs", "Emailadressen komen niet overeen");
 				rd = req.getRequestDispatcher("LeraarRegistreren.jsp");		
-			} else if(!dao.retrieveByEmail(email1, 0).getEmail().equals(null)){
+			} else if(dao.retrieveByEmail(email1, 0) != null){
 				req.setAttribute("msgs", "Emailadres staat al geregistreerd");
 				rd = req.getRequestDispatcher("LeraarRegistreren.jsp");
 			}else{
-
+				System.out.println("ADDING TEACHER");
 				Person p = new Teacher();
 				p.setFirstName(naam);
 				p.setLastName(achternaam);

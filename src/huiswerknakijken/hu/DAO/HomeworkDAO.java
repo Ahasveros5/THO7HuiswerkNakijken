@@ -66,7 +66,7 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 		ArrayList<Homework> homework = null;
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
-			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Homework WHERE teacher_id=?");
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Homework, Student_Homework WHERE Student_Homework.teacher_id=? AND Homework.homework_id = Student_Homework.homework_id");
 			statement.setInt(1, teacherID);
 			ResultSet rs = statement.executeQuery();
 			homework = resultSetExtractor(rs, layerLevel, connection);
@@ -84,6 +84,15 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 		return false;
 	}
 
+	private void addTeacher(Connection connection, Homework h) throws SQLException {
+		PreparedStatement statementKoppel = null;
+		String sqlKoppel = "INSERT INTO PERSON_HOMEWORK(person_id,homework_id) VALUES (?,?)";
+		statementKoppel = connection.prepareStatement(sqlKoppel);
+				statementKoppel.setInt(1, h.getTeacher().getID());
+				statementKoppel.setInt(2, h.getID());
+		statementKoppel.executeUpdate();
+		statementKoppel.close();
+	}
 	@Override
 	public boolean add(Homework s) {
 		boolean b = false;
@@ -109,7 +118,7 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 					s.setID(ID);
 				}
 			statement.close();
-
+			addTeacher(connection,s);
 
 			b = true;
 			connection.commit();
@@ -153,7 +162,7 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 
 					if (layerLevel > 1) { //questions
 						QuestionDAO qDAO = new QuestionDAO();
-						c.setQuestion(qDAO.retrieveAllByHomework(c.getID(), 1));
+						c.setQuestion(qDAO.retrieveAllByHomework(c.getID(), 2));
 					}
 
 					if (layerLevel > 2) {
