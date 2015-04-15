@@ -51,15 +51,11 @@ public class LeraarRegistratieServlet extends HttpServlet {
 				rd = req.getRequestDispatcher("LeraarRegistreren.jsp");
 			} else if(!email1.equals(email2)){
 				req.setAttribute("msgs", "Emailadressen komen niet overeen");
-<<<<<<< HEAD
-				rd = req.getRequestDispatcher("LeraarRegistreren.jsp");	
-				
-=======
 				rd = req.getRequestDispatcher("LeraarRegistreren.jsp");		
 			} else if(!dao.retrieveByEmail(email1, 0).getEmail().equals(null)){
 				req.setAttribute("msgs", "Emailadres staat al geregistreerd");
 				rd = req.getRequestDispatcher("LeraarRegistreren.jsp");
->>>>>>> c4156e7b56affecc0af2526b1e79654dd97be559
+
 			}else{
 
 				Person p = new Teacher();
@@ -73,13 +69,7 @@ public class LeraarRegistratieServlet extends HttpServlet {
 				rd = req.getRequestDispatcher("loginpage.jsp");
 			}
 		}
-		
-<<<<<<< HEAD
-		
-=======
-	
->>>>>>> c4156e7b56affecc0af2526b1e79654dd97be559
-		
+
 		if(rd != null) {
 			rd.forward(req, resp);
 		}
