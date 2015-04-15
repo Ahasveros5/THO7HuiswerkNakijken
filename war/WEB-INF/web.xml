@@ -62,4 +62,14 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 		<servlet-name>MultipleChoiceAanmakenServlet</servlet-name>
 		<url-pattern>/MultipleChoiceAanmakenServlet.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>HuiswerkAanmakenServlet</servlet-name>
+		<servlet-class>huiswerknakijken.hu.Servlets.HuiswerkAanmakenServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>HuiswerkAanmakenServlet</servlet-name>
+		<url-pattern>/HuiswerkAanmakenServlet.do</url-pattern>
+	</servlet-mapping>
 </web-app>

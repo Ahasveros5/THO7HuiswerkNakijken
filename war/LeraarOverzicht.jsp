@@ -14,7 +14,25 @@
 		out.println("</div>");
 	} 
 	%> 
+	<div id = "HW">
+	<h3> Huiswerk aanmaken</h3>
+	<form action = "HuiswerkAanmakenServlet.do"method="post">
+	<label>naam:</label>
+	<input type = "text" name = "HWName"> 
+	<label>deadline:</label>
+	<input type="date" name="deadline"/>
+	<input type = "time" name="DLTime"/><br>
 	
-	<input class = "button" value = "VraagAanmaken" type="submit" name="knop" />
+	
+	<input class = "button" value = "Huiswerk Aanmaken" type = "submit" name="knop" />
+	</form>
+	</div>
+	<br>
+	
+	<form action = "LeraarVraagAanmaken.jsp">
+	<input value = "Vraag Aanmaken" type="submit" name="knop" />
+	</form>
+	
+
 	</body>
 </html>
