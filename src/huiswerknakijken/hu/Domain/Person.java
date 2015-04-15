@@ -4,6 +4,15 @@ import huiswerknakijken.hu.Domain.Answer.Correct;
 
 public class Person {
 	
+	public void print(){
+		System.out.println("Printing out Person:\n" + 
+		firstName + " " + lastName + "\n" + 
+		eMail + "\n" +
+		password + "\n" +
+		ID + "\n" +
+		role.toString());
+	}
+	
 	public enum UserRole{
 		Student(1),
 		Teacher(2),
