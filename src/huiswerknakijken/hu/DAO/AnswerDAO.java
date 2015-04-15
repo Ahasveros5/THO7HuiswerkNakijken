@@ -111,6 +111,8 @@ public class AnswerDAO implements DAOInterface<Answer> {
 				sql = "INSERT INTO Answer(answer, correct, question_id) VALUES (?,?,?)";
 				statement = connection.prepareStatement(sql, generatedColumns);
 				statement.setString(1, s.getAnswer());
+				if (s.getCorrect() == null)
+					s.setCorrect(Correct.False);
 				statement.setInt(2, s.getCorrect().getIndex());
 				statement.setInt(3,s.getQuestion().getID());
 				statement.executeUpdate();

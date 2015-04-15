@@ -61,6 +61,22 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 		}
 		return homework;
 	}
+	
+	public ArrayList<Homework> retrieveAllByTeacher(int teacherID, int layerLevel) {
+		ArrayList<Homework> homework = null;
+		Connection connection = OracleConnectionPool.getConnection();
+		try {
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Homework WHERE teacher_id=?");
+			statement.setInt(1, teacherID);
+			ResultSet rs = statement.executeQuery();
+			homework = resultSetExtractor(rs, layerLevel, connection);
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return homework;
+	}
 
 	@Override
 	public boolean delete(Homework s) {

@@ -27,24 +27,27 @@ public class LoginServlet extends HttpServlet {
 		if(userEmail.isEmpty() || password.isEmpty()) {
 			req.setAttribute("msgs", "Vul alle velden in.");
 			rd = req.getRequestDispatcher("loginpage.jsp");
-				} else {			
-					if (p != null && password.equals(p.getPassword())){
-						System.out.println("test: " + p.getFirstName() + " " + p.getLastName());
-						session.setAttribute("user",p );
-						rd = req.getRequestDispatcher("index.jsp");
-						System.out.println("testi");
-					} else {
-						req.setAttribute("msgs", "Wachtwoord of gebruikersnaam incorrect.");
-						rd = req.getRequestDispatcher("loginpage.jsp");
-						System.out.println("testor");
-					}
-				}		
-		if(p.getRole()==UserRole.Teacher){
-			rd= req.getRequestDispatcher("LeraarOverzicht.jsp");
-		}
-		if(p.getRole()==UserRole.Student){
-			rd = req.getRequestDispatcher("LeerlingOverzicht.jsp");
-		}
+		} else {			
+			if (p != null && password.equals(p.getPassword())){
+				System.out.println("test: " + p.getFirstName() + " " + p.getLastName());
+				session.setAttribute("user",p );
+				rd = req.getRequestDispatcher("index.jsp");
+				System.out.println("testi");
+				if(p.getRole() == null)
+					System.out.println("ROLE IS NULL");
+				if(p.getRole()==UserRole.Teacher){
+					rd= req.getRequestDispatcher("LeraarOverzicht.jsp");
+				}
+				if(p.getRole()==UserRole.Student){
+					rd = req.getRequestDispatcher("LeerlingOverzicht.jsp");
+				}
+			} else {
+				req.setAttribute("msgs", "Wachtwoord of gebruikersnaam incorrect.");
+				rd = req.getRequestDispatcher("loginpage.jsp");
+				System.out.println("testor");
+			}
+		}	
+		
 		
 		if(rd != null) {
 			rd.forward(req, resp);
