@@ -81,4 +81,14 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 		<servlet-name>HuiswerkAanmakenServlet</servlet-name>
 		<url-pattern>/HuiswerkAanmakenServlet.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>LeraarOverzichtServlet</servlet-name>
+		<servlet-class>huiswerknakijken.hu.Servlets.LeraarOverzichtServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LeraarOverzichtServlet</servlet-name>
+		<url-pattern>/LeraarOverzichtServlet.do</url-pattern>
+	</servlet-mapping>
 </web-app>
