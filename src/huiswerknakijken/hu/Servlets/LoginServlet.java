@@ -36,7 +36,7 @@ public class LoginServlet extends HttpServlet {
 				if(p.getRole() == null)
 					System.out.println("ROLE IS NULL");
 				if(p.getRole()==UserRole.Teacher){
-					rd= req.getRequestDispatcher("LeraarOverzicht.jsp");
+					rd= req.getRequestDispatcher("LeraarOverzichtServlet");
 				}
 				if(p.getRole()==UserRole.Student){
 					rd = req.getRequestDispatcher("LeerlingOverzicht.jsp");

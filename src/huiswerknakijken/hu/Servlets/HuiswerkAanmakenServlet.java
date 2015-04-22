@@ -34,7 +34,6 @@ public class HuiswerkAanmakenServlet extends HttpServlet {
 		int uur  = Integer.parseInt(timevals[0]);
 		int minuut = Integer.parseInt(timevals[1]);
 		Person teacher = (Person)session.getAttribute("user");
-		int teacherID = teacher.getID();
 		String Dline = day+" - "+ month+" - "+year+" Om "+uur+ ":"+minuut;
 		
 		System.out.println("Selected date: "+day +" - "+month+" - "+year+" Om: "+uur+":"+minuut);
@@ -46,10 +45,6 @@ public class HuiswerkAanmakenServlet extends HttpServlet {
 		hw.setTeacher(teacher);
 
 		dao.add(hw);
-		if(dao.retrieveAllByTeacher(teacherID, 1).size() < 1)
-			System.out.println("empty list");
-		hwList.addAll(dao.retrieveAllByTeacher(teacherID, 1));
-		req.setAttribute("Huiswerk", hwList);
 		rd = req.getRequestDispatcher("LeraarOverzicht.jsp");
 		}
 		rd.forward(req,resp);
