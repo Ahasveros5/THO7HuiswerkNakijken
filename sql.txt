@@ -9,7 +9,7 @@ DROP TABLE HOMEWORK;
 CREATE TABLE HOMEWORK (
 homework_id NUMBER(10),
 homework_name VARCHAR2(100),
-deadline DATE,
+deadline VARCHAR2(50),
 CONSTRAINT PK_HOMEWORK PRIMARY KEY(homework_id)
 );
 

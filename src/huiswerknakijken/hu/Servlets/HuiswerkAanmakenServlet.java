@@ -43,9 +43,11 @@ public class HuiswerkAanmakenServlet extends HttpServlet {
 		Homework hw = new Homework();
 		hw.setName(hwnaam);
 		hw.setDeadline(Dline);
+		hw.setTeacher(teacher);
 
 		dao.add(hw);
-		
+		if(dao.retrieveAllByTeacher(teacherID, 1).size() < 1)
+			System.out.println("empty list");
 		hwList.addAll(dao.retrieveAllByTeacher(teacherID, 1));
 		req.setAttribute("Huiswerk", hwList);
 		rd = req.getRequestDispatcher("LeraarOverzicht.jsp");

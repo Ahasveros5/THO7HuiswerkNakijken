@@ -66,7 +66,7 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 		ArrayList<Homework> homework = null;
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
-			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Homework, Student_Homework WHERE Student_Homework.teacher_id=? AND Homework.homework_id = Student_Homework.homework_id");
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Homework, Person_Homework WHERE Person_Homework.Student_id=? AND Homework.homework_id = Person_Homework.homework_id");
 			statement.setInt(1, teacherID);
 			ResultSet rs = statement.executeQuery();
 			homework = resultSetExtractor(rs, layerLevel, connection);
@@ -86,7 +86,7 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 
 	private void addTeacher(Connection connection, Homework h) throws SQLException {
 		PreparedStatement statementKoppel = null;
-		String sqlKoppel = "INSERT INTO PERSON_HOMEWORK(person_id,homework_id) VALUES (?,?)";
+		String sqlKoppel = "INSERT INTO PERSON_HOMEWORK(student_id,homework_id) VALUES (?,?)";
 		statementKoppel = connection.prepareStatement(sqlKoppel);
 				statementKoppel.setInt(1, h.getTeacher().getID());
 				statementKoppel.setInt(2, h.getID());
@@ -107,9 +107,10 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 			String sql;
 			PreparedStatement statement;
 				String generatedColumns[] = { "homework_id" };
-				sql = "INSERT INTO Homework(homework_name) VALUES (?)";
+				sql = "INSERT INTO Homework(homework_name, deadline) VALUES (?,?)";
 				statement = connection.prepareStatement(sql, generatedColumns);
 				statement.setString(1, s.getName());
+				statement.setString(2, s.getDeadline());
 				statement.executeUpdate();
 				int ID = -1;
 				ResultSet rsid = statement.getGeneratedKeys();
@@ -158,6 +159,7 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 					c = new Homework();
 					c.setID(rs.getInt("homework_id"));
 					c.setName(rs.getString("homework_name"));
+					c.setDeadline(rs.getString("deadline"));
 					//u.setLayerLevel(layerLevel);
 
 					if (layerLevel > 1) { //questions

@@ -49,8 +49,8 @@ public class Homework {
 		return teacher;
 	}
 
-	public void setTeacher(Teacher teacher) {
-		this.teacher = teacher;
+	public void setTeacher(Person teacher2) {
+		this.teacher = (Teacher) teacher2;
 	}
 
 	public ArrayList<Student> getStudents() {
