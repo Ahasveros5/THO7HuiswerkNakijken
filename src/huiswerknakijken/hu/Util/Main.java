@@ -15,11 +15,14 @@ import huiswerknakijken.hu.Domain.Question;
 import huiswerknakijken.hu.Domain.Student;
 import huiswerknakijken.hu.Domain.Teacher;
 
+import java.io.File;
+
 public class Main {
 
 	
 	public static void main(String [ ] args)
 	{
+		ExcelImport.readFile(new File("temp.xlsx"));
 		System.out.println("starting creation of samples");
 		//CreateTestData();
 		System.out.println("finished creating samples");
