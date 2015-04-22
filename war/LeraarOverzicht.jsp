@@ -13,7 +13,20 @@
 		out.println(msgs); 
 		out.println("</div>");
 	} 
-	%> 
+	%>
+ 	<%@ page import="java.util.ArrayList" %>
+ 	<%ArrayList hw = (ArrayList)request.getAttribute("Huiswerk");
+ 	out.println("<div id=\"hwbox\">");
+ 		if (hw!=null){
+ 			for(int i = 0; i< hw.size(); i++){
+ 				out.println(hw.get(i).toString()+"<br>");
+ 				out.println(hw.size());
+ 				
+ 			}
+ 		}
+ 	out.println("</div>");
+ 	  %>
+ 
 	<div id = "HW">
 	<h3> Huiswerk aanmaken</h3>
 	<form action = "HuiswerkAanmakenServlet.do"method="post">

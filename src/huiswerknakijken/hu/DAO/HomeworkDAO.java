@@ -162,7 +162,7 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 
 					if (layerLevel > 1) { //questions
 						QuestionDAO qDAO = new QuestionDAO();
-						c.setQuestion(qDAO.retrieveAllByHomework(c.getID(), 2));
+						c.setQuestions(qDAO.retrieveAllByHomework(c.getID(), 2));
 					}
 
 					if (layerLevel > 2) {

@@ -11,21 +11,30 @@ public class Homework {
 	private Teacher teacher;
 	private ArrayList<Student> students = new ArrayList<Student>();
 	private int ID;
+	private String deadline;
 	
+	public ArrayList<Question> getQuestions() {
+		return questions;
+	}
+
+	public void setQuestions(ArrayList<Question> questions) {
+		this.questions = questions;
+	}
+
+	public String getDeadline() {
+		return deadline;
+	}
+
+	public void setDeadline(String deadline) {
+		this.deadline = deadline;
+	}
+
 	public Grade getGrade() {
 		return grade;
 	}
 
 	public void setGrade(Grade grade) {
 		this.grade = grade;
-	}
-
-	public ArrayList<Question> getQuestion() {
-		return questions;
-	}
-
-	public void setQuestion(ArrayList<Question> question) {
-		this.questions = question;
 	}
 
 	public Course getCourse() {
@@ -76,5 +85,8 @@ public class Homework {
 		questions.add(q);
 	}
 
+	public String toString(){
+		return name+" "+deadline;
+	}
 	
 }
