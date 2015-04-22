@@ -21,6 +21,15 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 		<url-pattern>/LeerlingRegistratieServlet.do</url-pattern>
 	</servlet-mapping>
 	
+	<servlet>
+		<servlet-name>LeerlingImporteerServlet</servlet-name>
+		<servlet-class>huiswerknakijken.hu.Servlets.LeerlingImporteerServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LeerlingImporteerServlet</servlet-name>
+		<url-pattern>/LeerlingImporteerServlet.do</url-pattern>
+	</servlet-mapping>
+	
 	
 	<servlet>
 		<servlet-name>LeraarRegistratieServlet</servlet-name>
