@@ -1,68 +1,145 @@
 package huiswerknakijken.hu.Servlets;
 
+import huiswerknakijken.hu.DAO.PersonDAO;
+import huiswerknakijken.hu.Domain.Person;
+import huiswerknakijken.hu.Domain.Person.UserRole;
+import huiswerknakijken.hu.Domain.Student;
 import huiswerknakijken.hu.Util.ExcelImport;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.FilenameUtils;
+
 public class LeerlingImporteerServlet extends HttpServlet {
-	
-	 /*protected void doGet(
-		        HttpServletRequest request, HttpServletResponse response
-		        ) throws ServletException, IOException {
-		        
-		        // Not used in our simple example - see text.
-		        // String imageName = request.getParameter("imageName");
-		        
-		        // For this example, just create our input stream from our sample byte array:
-		        ByteArrayInputStream iStream = new ByteArrayInputStream();
-		        
-		        // Determine the length of the content data.
-		        // In our simple example, I can get the length from the hard-coded byte array.
-		        // If you're getting your imaqe from a database or file,
-		        // you'll need to adjust this code to do what is appropriate:
-		        int length = SampleImage.sampleImage.length;
-		        
-		        // Hard-coded for a GIF image - see text.
-		        response.setContentType("image/gif");
-		        response.setContentLength(length);
-		        
-		        // Get the output stream from our response object, so we
-		        // can write our image data to the client:
-		        ServletOutputStream oStream = response.getOutputStream();
-		        
-		        // Now, loop through buffer reads of our content, and send it to the client:
-		        byte [] buffer = new byte[1024];
-		        int len;
-		        while ((len = iStream.read(buffer)) != -1) {
-		            oStream.write(buffer, 0, len);
-		        }
-		        
-		        // Now that we've sent the image data to the client, close down all the resources:
-		        iStream.close();
-		        
-		        oStream.flush();
-		        oStream.close();
-		        
-		        // And we're done. Just let the method return at this point.
-		    }*/
+	private String saveFile=System.getProperty("java.io.tmpdir");
 	
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/html");
 		RequestDispatcher rd = null;
 		HttpSession session = req.getSession();
-		
-		File f = (File)session.getAttribute("file");
-		ExcelImport.readFile(f);
+		File file;
+		System.out.println("ummmm: " + saveFile);
+		file = getFileFromServer(req,resp);
+		List<Object> users = ExcelImport.readFile(file);
+		System.out.println("temp: " + users.toString());
+		PersonDAO dao = new PersonDAO();
+		Person s = null;
+		int i = 0;
+		for (Object o : users){
+			i++;
+			if(o instanceof Number){
+				if (s == null){
+					s = new Student();
+					s.setID((int) o);
+				} else {
+					if (dao.retrieveByEmail(s.getEmail(), 0) == null)
+						dao.add(s);
+					s = new Student();
+					s.setID((int) o);
+				}
+			}
+			if(i==1)
+				s.setFirstName((String) o);
+			else if(i==2)
+				s.setLastName((String) o);
+			else if(i==3){
+				s.setEmail(s.getFirstName() + "." + s.getLastName() + "@student.hu.nl");
+				i = 0;
+				s.setRole(UserRole.Student);
+				//Class shit moet hier nog
+			}
+			System.out.println("tralalala");
+		}
 		//doGet(req, resp);
 	}
+	
+	protected File getFileFromServer(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		        
+		 response.setContentType("application/ms-excel");
+		 PrintWriter out = response.getWriter();
+		 File f = null;
+		 try {
+			 boolean ismultipart=ServletFileUpload.isMultipartContent(request);
+			 if(!ismultipart){
+	
+			 }
+			 else
+			 {
+				 FileItemFactory factory = new DiskFileItemFactory();
+				 ServletFileUpload upload = new ServletFileUpload(factory);	
+				 List items = null;
+	
+				 try{
+	
+					 items = upload.parseRequest(request);
+				 }catch(Exception e){
+					 e.printStackTrace();
+				 }	
+				 Iterator itr = items.iterator();
+				 while(itr.hasNext()){
+					 FileItem item = (FileItem)itr.next();
+					 if(item.isFormField()){
+		
+					 }else{
+						 String itemname = item.getName();
+						 if((itemname==null || itemname.equals(""))){
+							 continue;
+						 }
+						 String filename = FilenameUtils.getName(itemname);
+						 f = checkExist(filename);
+						 item.write(f);
+					 }
+				 }
+			 }	
+
+		 }catch(Exception e){
+
+		 }
+		 finally {
+		 out.close();
+		 }
+		 return f;
+	}
+
+	 private File checkExist(String fileName) {
+		 File f = new File(saveFile+"/"+fileName);
+		 
+		 System.out.println("saving");
+		 if(!f.exists()){
+			 System.out.println("Creating new");
+			try {
+				f.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		 }
+		else{
+			 System.out.println("saved");
+			 StringBuffer sb = new StringBuffer(fileName);
+			 sb.insert(sb.lastIndexOf("."),"-"+new Date().getTime());
+			 f = new File(saveFile+"/"+sb.toString());
+		 }
+		 return f;
+	 }
+		    
+	
+	
 }
