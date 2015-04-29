@@ -34,20 +34,25 @@ public class HuiswerkAanmakenServlet extends HttpServlet {
 		int uur  = Integer.parseInt(timevals[0]);
 		int minuut = Integer.parseInt(timevals[1]);
 		Person teacher = (Person)session.getAttribute("user");
+		if (teacher == null)
+			System.out.println("teacher is null");
 		String Dline = day+" - "+ month+" - "+year+" Om "+uur+ ":"+minuut;
-		
-		System.out.println("Selected date: "+day +" - "+month+" - "+year+" Om: "+uur+":"+minuut);
 		
 		if(!(hwnaam==null)&& !hwnaam.equals("")&& !(deadline==null)&&!deadline.equals("")){
 		Homework hw = new Homework();
 		hw.setName(hwnaam);
 		hw.setDeadline(Dline);
 		hw.setTeacher(teacher);
-
+		hwList.add(hw);
 		dao.add(hw);
-		rd = req.getRequestDispatcher("LeraarOverzicht.jsp");
+		session.setAttribute("Huiswerk", hwList);
+		req.setAttribute("msgs", "Huiswerk aangemaakt");
+		
 		}
+		rd = req.getRequestDispatcher("LeraarOverzicht.jsp");
+		if(rd!=null){
 		rd.forward(req,resp);
+		}
 	}
 	
 }

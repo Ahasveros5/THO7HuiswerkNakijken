@@ -31,7 +31,7 @@ public class LeraarOverzichtServlet extends HttpServlet{
 		if(dao.retrieveAllByTeacher(teacherID, 1).size() < 1)
 			System.out.println("empty list");
 		hwList.addAll(dao.retrieveAllByTeacher(teacherID, 1));
-		req.setAttribute("Huiswerk", hwList);
+		session.setAttribute("Huiswerk", hwList);
 		rd = req.getRequestDispatcher("LeraarOverzicht.jsp");
 		
 		if(rd!=null){

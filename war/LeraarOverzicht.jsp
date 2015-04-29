@@ -15,14 +15,13 @@
 	} 
 	%>
  	<%@ page import="java.util.ArrayList" %>
- 	<%ArrayList hw = (ArrayList)request.getAttribute("Huiswerk");
+ 	<%@ page import="huiswerknakijken.hu.Domain.Homework" %>
+ 	<%  ArrayList<Homework> hw = (ArrayList<Homework>) session.getAttribute("Huiswerk");
  	out.println("<div id=\"hwbox\">");
  		if (hw!=null){
  			for(int i = 0; i< hw.size(); i++){
- 				out.println(hw.get(i).toString()+"<br>");
- 				out.println(hw.size());
- 				
- 			}
+ 				out.println("<a href = 'HuiswerkOverzicht.jsp?id="+hw.get(i).getID()+"'>"+hw.get(i).toString()+"</a><br>");				
+ 			}	//servlet voor doorverwijzen aanmaken, id op te halen met de "id" tag.
  		}
  	out.println("</div>");
  	  %>
@@ -40,12 +39,6 @@
 	<input class = "button" value = "Huiswerk Aanmaken" type = "submit" name="knop" />
 	</form>
 	</div>
-	<br>
-	
-	<form action = "LeraarVraagAanmaken.jsp">
-	<input value = "Vraag Aanmaken" type="submit" name="knop" />
-	</form>
-	
 
 	</body>
 </html>

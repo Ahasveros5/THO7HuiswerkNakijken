@@ -91,4 +91,13 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 		<servlet-name>LeraarOverzichtServlet</servlet-name>
 		<url-pattern>/LeraarOverzichtServlet.do</url-pattern>
 	</servlet-mapping>
+	
+		<servlet>
+		<servlet-name>RemoveHuiswerkServlet</servlet-name>
+		<servlet-class>huiswerknakijken.hu.Servlets.RemoveHuiswerkServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RemoveHuiswerkServlet</servlet-name>
+		<url-pattern>/RemoveHuiswerkServlet.do</url-pattern>
+	</servlet-mapping>
 </web-app>
