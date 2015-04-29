@@ -18,21 +18,23 @@ public class ExcelImport
 {
     public static List<Object> readFile(File f)
     {
+    	
     	List<Object> temp = new ArrayList<Object>();
+    	System.out.println("BOA");
         try
         {
-            FileInputStream file = new FileInputStream(f);
- 
+        	System.out.println("BOA2");
             //Create Workbook instance holding reference to .xlsx file
-            XSSFWorkbook workbook = new XSSFWorkbook(file);
- 
+            XSSFWorkbook workbook = new XSSFWorkbook(f);
+            System.out.println("BOA3");
             //Get first/desired sheet from the workbook
             XSSFSheet sheet = workbook.getSheetAt(0);
- 
+            
             //Iterate through each rows one by one
             Iterator<Row> rowIterator = sheet.iterator();
             while (rowIterator.hasNext())
             {
+            	System.out.println("JAAAAAAAA");
                 Row row = rowIterator.next();
                 //For each row, iterate through all the columns
                 Iterator<Cell> cellIterator = row.cellIterator();
@@ -54,7 +56,7 @@ public class ExcelImport
                     
                 }
             }
-            file.close();
+            //file.close();
             workbook.close();
             System.out.println(temp.toString());
         }
