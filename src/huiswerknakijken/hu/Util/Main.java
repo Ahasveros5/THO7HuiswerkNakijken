@@ -23,16 +23,9 @@ public class Main {
 	
 	public static void main(String [ ] args)
 	{
-		//ExcelImport.readFile(new File("temp.xlsx"));
+		ExcelImport.readFile(new File("C:\\xampp\\tomcat\\temp.xlsx"));
 		System.out.println("starting creation of samples");
 		//CreateTestData();
-		File f = new File("D:/ja.txt");
-		try {
-			f.createNewFile();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		System.out.println("finished creating samples");
 		
 	}

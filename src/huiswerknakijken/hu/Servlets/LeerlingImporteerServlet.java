@@ -67,6 +67,9 @@ public class LeerlingImporteerServlet extends HttpServlet {
 			}
 			System.out.println("tralalala");
 		}
+		rd = req.getRequestDispatcher("LeraarOverzicht.jsp");
+		if (rd != null)
+			rd.forward(req, resp);
 		//doGet(req, resp);
 	}
 	

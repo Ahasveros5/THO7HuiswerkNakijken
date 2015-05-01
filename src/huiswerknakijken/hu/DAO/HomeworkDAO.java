@@ -46,6 +46,23 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 		return retrievedHomework;
 	}
 	
+	public Homework retrieveByID(int id, int layerLevel) {
+		Homework retrievedHomework = null;
+		Connection connection = OracleConnectionPool.getConnection();
+		try {
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Homework WHERE homework_id=?");
+			statement.setInt(1, id);
+			ResultSet rs = statement.executeQuery();
+			ArrayList<Homework> Homework = resultSetExtractor(rs, layerLevel, connection);
+			retrievedHomework = Homework.get(0);
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return retrievedHomework;
+	}
+	
 	public ArrayList<Homework> retrieveAllByName(String name, int layerLevel) {
 		ArrayList<Homework> homework = null;
 		Connection connection = OracleConnectionPool.getConnection();
