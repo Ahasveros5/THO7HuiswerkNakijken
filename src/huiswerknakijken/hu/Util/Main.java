@@ -16,12 +16,13 @@ import huiswerknakijken.hu.Domain.Student;
 import huiswerknakijken.hu.Domain.Teacher;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class Main {
 
 	
-	public static void main(String [ ] args)
+	public static void main(String [ ] args) throws FileNotFoundException
 	{
 		ExcelImport.readFile(new File("C:\\xampp\\tomcat\\temp.xlsx"));
 		System.out.println("starting creation of samples");

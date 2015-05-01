@@ -35,8 +35,9 @@ public class LeerlingImporteerServlet extends HttpServlet {
 		RequestDispatcher rd = null;
 		HttpSession session = req.getSession();
 		File file;
-		System.out.println("ummmm: " + saveFile);
+		//System.out.println("ummmm: " + saveFile);
 		file = getFileFromServer(req,resp);
+		System.out.println("boia");
 		List<Object> users = ExcelImport.readFile(file);
 		System.out.println("temp: " + users.toString());
 		PersonDAO dao = new PersonDAO();
@@ -97,7 +98,10 @@ public class LeerlingImporteerServlet extends HttpServlet {
 				 }	
 				 Iterator itr = items.iterator();
 				 while(itr.hasNext()){
-					 FileItem item = (FileItem)itr.next();
+					 Object o = itr.next();
+					 System.out.println(o.toString() + "\n");
+					 FileItem item = (FileItem)o;
+					 
 					 if(item.isFormField()){
 		
 					 }else{
@@ -113,7 +117,7 @@ public class LeerlingImporteerServlet extends HttpServlet {
 			 }	
 
 		 }catch(Exception e){
-
+			 e.printStackTrace();
 		 }
 		 finally {
 		 out.close();
