@@ -2,6 +2,8 @@ package huiswerknakijken.hu.Util;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -16,10 +18,12 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 //import statements
 public class ExcelImport
 {
-    public static List<Object> readFile(File f)
+    public static List<Object> readFile(File f) throws FileNotFoundException
     {
     	
     	List<Object> temp = new ArrayList<Object>();
+    	//f = new File("C:\\xampp\\tomcat\\temp\\Template Leerling informatie-1430476871960.xlsx");
+    	InputStream is = new FileInputStream(f);
     	System.out.println("BOA");
         try
         {
@@ -28,10 +32,20 @@ public class ExcelImport
         		System.out.println("nullllllerino");
         	else
         		System.out.println("not nulllerino");
+        	//f = new File("C:\\Users\\Guido Laptop\\Documents\\THO7HuiswerkNakijken\\te1mp.xlsx");
+        	if(f.exists())
+        		System.out.println("exists");
+        	else
+        		System.out.println("not existing");
         	System.out.println("path: " + f.getAbsolutePath());
         	System.out.println("name: " + f.getName());
             //Create Workbook instance holding reference to .xlsx file
-            XSSFWorkbook workbook = new XSSFWorkbook(f);
+        	XSSFWorkbook workbook = null;
+        	try {
+        		workbook = new XSSFWorkbook(is);
+        	} catch(Exception e){
+        		e.getStackTrace();
+        	}
             System.out.println("BOA3");
             //Get first/desired sheet from the workbook
             XSSFSheet sheet = workbook.getSheetAt(0);
@@ -62,7 +76,7 @@ public class ExcelImport
                     
                 }
             }
-            //file.close();
+            f.delete();
             workbook.close();
             System.out.println(temp.toString());
         }
