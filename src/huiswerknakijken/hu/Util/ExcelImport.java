@@ -24,6 +24,12 @@ public class ExcelImport
         try
         {
         	System.out.println("BOA2");
+        	if(f == null)
+        		System.out.println("nullllllerino");
+        	else
+        		System.out.println("not nulllerino");
+        	System.out.println("path: " + f.getAbsolutePath());
+        	System.out.println("name: " + f.getName());
             //Create Workbook instance holding reference to .xlsx file
             XSSFWorkbook workbook = new XSSFWorkbook(f);
             System.out.println("BOA3");
