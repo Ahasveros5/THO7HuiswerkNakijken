@@ -4,43 +4,46 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
 http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	version="2.4">
-	
+
 	<init-param>
-  		<param-name>huiswerknakijken.hu</param-name>
- 		 <param-value>THO7HuiswerkNakijken</param-value>
+		<param-name>huiswerknakijken.hu</param-name>
+		<param-value>THO7HuiswerkNakijken</param-value>
 	</init-param>
-	
-	
-	
+
+
+
 	<servlet>
 		<servlet-name>LeerlingRegistratieServlet</servlet-name>
-		<servlet-class>huiswerknakijken.hu.Servlets.LeerlingRegistratieServlet</servlet-class>
+		<servlet-class>huiswerknakijken.hu.Servlets.LeerlingRegistratieServlet
+		</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>LeerlingRegistratieServlet</servlet-name>
 		<url-pattern>/LeerlingRegistratieServlet.do</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>LeerlingImporteerServlet</servlet-name>
-		<servlet-class>huiswerknakijken.hu.Servlets.LeerlingImporteerServlet</servlet-class>
+		<servlet-class>huiswerknakijken.hu.Servlets.LeerlingImporteerServlet
+		</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>LeerlingImporteerServlet</servlet-name>
 		<url-pattern>/LeerlingImporteerServlet.do</url-pattern>
 	</servlet-mapping>
-	
-	
+
+
 	<servlet>
 		<servlet-name>LeraarRegistratieServlet</servlet-name>
-		<servlet-class>huiswerknakijken.hu.Servlets.LeraarRegistratieServlet</servlet-class>
+		<servlet-class>huiswerknakijken.hu.Servlets.LeraarRegistratieServlet
+		</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>LeraarRegistratieServlet</servlet-name>
 		<url-pattern>/LeraarRegistratieServlet.do</url-pattern>
 	</servlet-mapping>
-	
-	
+
+
 	<servlet>
 		<servlet-name>LoginServlet</servlet-name>
 		<servlet-class>huiswerknakijken.hu.Servlets.LoginServlet
@@ -50,8 +53,8 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 		<servlet-name>LoginServlet</servlet-name>
 		<url-pattern>/LoginServlet.do</url-pattern>
 	</servlet-mapping>
-	
-	
+
+
 	<servlet>
 		<servlet-name>LogoutServlet</servlet-name>
 		<servlet-class>huiswerknakijken.hu.Servlets.LogoutServlet
@@ -61,7 +64,7 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 		<servlet-name>LogoutServlet</servlet-name>
 		<url-pattern>/LogoutServlet.do</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>MultipleChoiceAanmakenServlet</servlet-name>
 		<servlet-class>huiswerknakijken.hu.Servlets.MultipleChoiceAanmakenServlet
@@ -71,7 +74,7 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 		<servlet-name>MultipleChoiceAanmakenServlet</servlet-name>
 		<url-pattern>/MultipleChoiceAanmakenServlet.do</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>HuiswerkAanmakenServlet</servlet-name>
 		<servlet-class>huiswerknakijken.hu.Servlets.HuiswerkAanmakenServlet
@@ -81,7 +84,7 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 		<servlet-name>HuiswerkAanmakenServlet</servlet-name>
 		<url-pattern>/HuiswerkAanmakenServlet.do</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>LeraarOverzichtServlet</servlet-name>
 		<servlet-class>huiswerknakijken.hu.Servlets.LeraarOverzichtServlet
@@ -91,13 +94,24 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 		<servlet-name>LeraarOverzichtServlet</servlet-name>
 		<url-pattern>/LeraarOverzichtServlet.do</url-pattern>
 	</servlet-mapping>
-	
-		<servlet>
+
+	<servlet>
 		<servlet-name>RemoveHuiswerkServlet</servlet-name>
-		<servlet-class>huiswerknakijken.hu.Servlets.RemoveHuiswerkServlet</servlet-class>
+		<servlet-class>huiswerknakijken.hu.Servlets.RemoveHuiswerkServlet
+		</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>RemoveHuiswerkServlet</servlet-name>
 		<url-pattern>/RemoveHuiswerkServlet.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>HuiswerkOverzichtServlet</servlet-name>
+		<servlet-class>huiswerknakijken.hu.Servlets.HuiswerkOverzichtServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>HuiswerkOverzichtServlet</servlet-name>
+		<url-pattern>/HuiswerkOverzichtServlet.do</url-pattern>
 	</servlet-mapping>
 </web-app>
