@@ -20,8 +20,9 @@
  	out.println("<div id=\"hwbox\">");
  		if (hw!=null){
  			for(int i = 0; i< hw.size(); i++){
- 				out.println("<a href = 'HuiswerkOverzicht.jsp?id="+hw.get(i).getID()+"'>"+hw.get(i).toString()+"</a><br>");				
- 			}	//servlet voor doorverwijzen aanmaken, id op te halen met de "id" tag.
+ 				out.println("<a href = 'HuiswerkOverzichtServlet.do?id="+hw.get(i).getID()+"'>"+hw.get(i).toString()+"</a><br>");
+ 				
+ 			}	
  		}
  	out.println("</div>");
  	  %>

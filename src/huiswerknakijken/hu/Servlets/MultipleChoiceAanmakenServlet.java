@@ -3,6 +3,7 @@ package huiswerknakijken.hu.Servlets;
 import huiswerknakijken.hu.DAO.QuestionDAO;
 import huiswerknakijken.hu.Domain.Answer;
 import huiswerknakijken.hu.Domain.Answer.Correct;
+import huiswerknakijken.hu.Domain.Homework;
 import huiswerknakijken.hu.Domain.Question;
 
 import java.io.IOException;
@@ -13,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class MultipleChoiceAanmakenServlet extends HttpServlet {
 	/**
@@ -23,13 +25,14 @@ public class MultipleChoiceAanmakenServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/html");
 		ArrayList<Answer>antwoorden = new ArrayList<Answer>();
-
+		HttpSession session = req.getSession();
 		String vraag = req.getParameter("vraagMultipleChoice");
 		String antwoord1 = req.getParameter("Antwoord1");
 		String antwoord2 = req.getParameter("Antwoord2");
 		String antwoord3 = req.getParameter("Antwoord3");
 		String antwoord4 = req.getParameter("Antwoord4");
 		int goedeAntwoord = Integer.parseInt(req.getParameter("GoedeAntwoord"));
+		ArrayList<Question> questions = new ArrayList<Question>();
 		
 		Question q = null;
 		Answer a = new Answer();
@@ -82,7 +85,11 @@ public class MultipleChoiceAanmakenServlet extends HttpServlet {
 			b.setQuestion(q);
 			c.setQuestion(q);
 			d.setQuestion(q);
-			
+			Homework h = (Homework)session.getAttribute("HwObj");
+			q.setHomework(h);
+			rd = req.getRequestDispatcher("HuiswerkOverzicht.jsp?id="+h.getID());
+			questions.add(q);
+			session.setAttribute("questObj", questions);
 			dao.addComplete(q);
 		}
 		
