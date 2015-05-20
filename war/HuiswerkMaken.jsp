@@ -10,6 +10,7 @@
 	
 		%>
 		</div>
-	<form action = "VraagMaken.jsp?id=1">
-	 <input class = "button" value = "Begin aan het huiswerk" type = "submit" name="knop" />
-	 </form>
+	<form action = "VraagMaken.jsp" method="post">
+		<input type="hidden" value="1" />
+	 	<input type="submit" value="Begin met huiswerk" name="Begin met huiswerk" />
+	</form>

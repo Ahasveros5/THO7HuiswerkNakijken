@@ -87,7 +87,7 @@ public class QuestionDAO implements DAOInterface<Question> {
 			String sql;
 			PreparedStatement statement;
 				String generatedColumns[] = { "question_id" };
-				sql = "INSERT INTO Question(question_name, question, homework_id,number) VALUES (?,?,?,?)";
+				sql = "INSERT INTO Question(question_name, question, homework_id,nr) VALUES (?,?,?,?)";
 				statement = connection.prepareStatement(sql, generatedColumns);
 				statement.setString(1, s.getName());
 				statement.setString(2, s.getDescription());
@@ -153,7 +153,7 @@ public class QuestionDAO implements DAOInterface<Question> {
 					c.setID(rs.getInt("question_id"));
 					c.setName(rs.getString("question_name"));
 					c.setDescription(rs.getString("question_description"));
-					c.setNumber(rs.getInt("number"));
+					c.setNumber(rs.getInt("nr"));
 					//u.setLayerLevel(layerLevel);
 
 					if (layerLevel > 1) { //answers
