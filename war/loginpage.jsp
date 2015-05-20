@@ -1,15 +1,5 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<title>Loginpage</title>
-		<link rel="stylesheet" type="text/css" href="style.css" />
-        <link href='http://fonts.googleapis.com/css?family=Handlee' rel='stylesheet' type='text/css'>
-	</head>
-	
-	<body>
-	<div>
+
 		<%@ include file="header.jsp" %>
-   </div> 
    	<div id="Inlogfield">
    		<h2>Inloggen</h2>
    		<form action="LoginServlet.do" method="post">

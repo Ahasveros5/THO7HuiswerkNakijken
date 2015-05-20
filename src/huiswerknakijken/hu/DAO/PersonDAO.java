@@ -34,6 +34,24 @@ public class PersonDAO implements DAOInterface<Person> {
 		return Students;
 	}
 	
+	public List<Person> retrieveAllByRole(int role, int layerLevel) {
+		ResultSet rs = null;
+		ArrayList<Person> Students = null;
+		Connection connection = OracleConnectionPool.getConnection();
+		try {
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Person WHERE Role=?");
+			statement.setInt(1, role);
+			rs = statement.executeQuery();
+			Students = resultSetExtractor(rs, layerLevel, connection);
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return Students;
+	}
+	
 	public List<Person> retrieveAllMatching(String email, String firstName, String lastName, int layerLevel) {
 		ResultSet rs = null;
 		ArrayList<Person> Students = null;

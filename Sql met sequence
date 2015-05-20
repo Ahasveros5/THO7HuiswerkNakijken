@@ -1,0 +1,152 @@
+DROP TABLE PERSON_HOMEWORK;
+DROP TABLE PERSON;
+DROP TABLE C_CLASS;
+DROP TABLE COURSE;
+DROP TABLE ANSWER;
+DROP TABLE QUESTION;
+DROP TABLE HOMEWORK;
+
+CREATE TABLE HOMEWORK (
+homework_id NUMBER(10),
+homework_name VARCHAR2(100),
+deadline VARCHAR2(50),
+CONSTRAINT PK_HOMEWORK PRIMARY KEY(homework_id)
+);
+
+CREATE TABLE QUESTION (
+question_id NUMBER(10),
+question_name VARCHAR2(100),
+question VARCHAR2(500),
+homework_id NUMBER(10),
+CONSTRAINT PK_QUESTION PRIMARY KEY(question_id),
+CONSTRAINT FK_HOMEWORK_ID_QUESTION FOREIGN KEY(homework_id) REFERENCES HOMEWORK(homework_id)
+);
+
+CREATE TABLE ANSWER (
+answer_id NUMBER(10),
+answer VARCHAR2(200),
+correct NUMBER(1),
+question_id NUMBER(10),
+CONSTRAINT PK_ANSWER PRIMARY KEY(answer_id),
+CONSTRAINT FK_QUESTION_ID_ANSWER FOREIGN KEY(question_id) REFERENCES QUESTION(question_id)
+);
+
+CREATE TABLE COURSE (
+course_id NUMBER(10),
+homework_id NUMBER(10),
+CONSTRAINT PK_COURSE PRIMARY KEY (course_id),
+CONSTRAINT FK_HOMEWORK_ID_COURSE FOREIGN KEY(homework_id) REFERENCES HOMEWORK(homework_id)
+);
+
+CREATE TABLE C_CLASS (
+class_id NUMBER(10),
+class_name VARCHAR2(10),
+course_id NUMBER(10),
+CONSTRAINT PK_CLASS PRIMARY KEY (class_id),
+CONSTRAINT UK_CLASS_NAME UNIQUE(class_name),
+CONSTRAINT FK_COURSE_ID FOREIGN KEY(course_id) REFERENCES COURSE(course_id)
+);
+
+CREATE TABLE PERSON (
+id NUMBER(10),
+email VARCHAR2(30),
+password VARCHAR2(200),
+first_name VARCHAR2(100),
+last_name VARCHAR2(100),
+role NUMBER(1),
+class_id NUMBER(10),
+course_id NUMBER(10),
+homework_id NUMBER(10),
+CONSTRAINT PK_PERSON PRIMARY KEY (id),
+CONSTRAINT UK_EMAIL UNIQUE(email),
+CONSTRAINT FK_CLASS_ID FOREIGN KEY(class_id) REFERENCES C_CLASS(class_id),
+CONSTRAINT FK_HOMEWORK_ID_PERSON FOREIGN KEY(homework_id) REFERENCES HOMEWORK(homework_id),
+CONSTRAINT FK_COURSE_PERSON_ID FOREIGN KEY(course_id) REFERENCES COURSE(course_id)
+);
+
+CREATE TABLE PERSON_HOMEWORK (
+homework_id NUMBER(10),
+student_id NUMBER(10),
+CONSTRAINT PK_HOMEWORK_STUDENT PRIMARY KEY(homework_id, student_id),
+CONSTRAINT FK_HOMEWORK_STUDENT FOREIGN KEY(homework_id) REFERENCES HOMEWORK(homework_id),
+CONSTRAINT FK_STUDENT_HOMEWORK FOREIGN KEY(student_id) REFERENCES PERSON(id)
+);
+
+CREATE OR REPLACE TRIGGER TRIGGER_ANSWER_ID
+  before insert on answer           
+  for each row  
+begin   
+  if :NEW.answer_id is null then 
+    select SEQ_ANSWER_ID.nextval into :NEW.ANSWER_ID from dual; 
+  end if; 
+end; 
+/
+CREATE OR REPLACE TRIGGER TRIGGER_C_Class_ID
+  before insert on C_Class           
+  for each row  
+begin   
+if :new.class_id = -1 then
+    select SEQ_C_Class_ID.nextval into :NEW.Class_ID from dual; 
+end if; 
+end; 
+/
+CREATE OR REPLACE TRIGGER TRIGGER_Homework_ID
+  before insert on Homework           
+  for each row  
+begin   
+  if :NEW.Homework_id is null then 
+    select SEQ_Homework_ID.nextval into :NEW.Homework_ID from dual; 
+  end if; 
+end; 
+/
+CREATE OR REPLACE TRIGGER TRIGGER_Question_ID
+  before insert on Question           
+  for each row  
+begin   
+  if :NEW.Question_id is null then 
+    select SEQ_Question_ID.nextval into :NEW.Question_ID from dual; 
+  end if; 
+end; 
+/
+CREATE OR REPLACE TRIGGER TRIGGER_Person_ID
+  before insert on Person           
+  for each row  
+begin   
+if :new.id = -1 then 
+    select SEQ_Person_ID.nextval into :NEW.ID from dual; 
+end if;
+end; 
+/
+create sequence SEQ_PERSON_ID
+start with 1 
+increment by 1 
+nomaxvalue; 
+
+/
+create sequence SEQ_HOMEWORK_ID
+start with 1 
+increment by 1 
+nomaxvalue; 
+
+/
+create sequence SEQ_QUESTION_ID
+start with 1 
+increment by 1 
+nomaxvalue; 
+
+/
+create sequence SEQ_C_CLASS_ID
+start with 1 
+increment by 1 
+nomaxvalue; 
+
+/
+create sequence SEQ_ANSWER_ID
+start with 1 
+increment by 1 
+nomaxvalue; 
+
+/
+
+
+

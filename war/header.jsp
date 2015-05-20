@@ -54,3 +54,10 @@
 		<%}}%>
 		</div>
 	<div class="container">
+	<% Object msgs = request.getAttribute("msgs");
+	if (msgs != null) {
+		out.println("<div id=\"messagebox\">");
+		out.println(msgs); 
+		out.println("</div>");
+	} 
+	%>

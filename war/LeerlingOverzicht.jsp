@@ -1,7 +1,8 @@
  <%@ include file="header.jsp" %>
- 
+ <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
  	<%@ page import="java.util.ArrayList" %>
  	<%@ page import="huiswerknakijken.hu.Domain.Homework" %>
+ 	<h3>Huiswerk overzicht</h3>
  	<%  ArrayList<Homework> hw = (ArrayList<Homework>) session.getAttribute("Huiswerk");
  	out.println("<div id=\"hwbox\">");
  		if (hw!=null){
@@ -12,20 +13,26 @@
  		}
  	out.println("</div>");
  	  %>
- 
-	<div id = "HW">
-	<h3> Huiswerk aanmaken</h3>
-	<form action = "HuiswerkAanmakenServlet.do"method="post">
-	<label>naam:</label>
-	<input type = "text" name = "HWName"> 
-	<label>deadline:</label>
-	<input type="date" name="deadline"/>
-	<input type = "time" name="DLTime"/><br>
-	
-	
-	<input class = "button" value = "Huiswerk Aanmaken" type = "submit" name="knop" />
-	</form>
-	</div>
+ 	  <table class="table table-hover">
+ 	  <thead>
+			<tr>
+				<td>Naam</td>
+				<td>Deadline</td>
+				<td>Leraar</td>
+			</tr>
+		</thead>
+ 	  <tbody>
+ 	  <tr class="clickableRow" href="www.google.com">
+ 	  
+ 	  	<td href="">1</td>
+ 	  	<td>2</td>
+ 	  	<td>3</td>
+ 	  
+ 	  </tr>
+ 	  	
+ 	  
+ 	  </tbody>
+ 	  </table>
 
 	</body>
 </html>

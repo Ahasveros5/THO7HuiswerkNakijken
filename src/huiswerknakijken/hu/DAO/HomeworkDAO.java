@@ -79,7 +79,7 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 		return homework;
 	}
 	
-	public ArrayList<Homework> retrieveAllByTeacher(int teacherID, int layerLevel) {
+	public ArrayList<Homework> retrieveAllByPerson(int teacherID, int layerLevel) {
 		ArrayList<Homework> homework = null;
 		Connection connection = OracleConnectionPool.getConnection();
 		try {

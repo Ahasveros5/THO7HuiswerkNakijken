@@ -44,3 +44,7 @@ background-color: #0000ff;
     height: 10% !important;
     background-image: url("HU-logo.png");
 }
+
+table thead{
+	font-weight: bold;
+}
