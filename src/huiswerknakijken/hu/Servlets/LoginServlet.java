@@ -39,7 +39,7 @@ public class LoginServlet extends HttpServlet {
 					rd= req.getRequestDispatcher("LeraarOverzichtServlet.do");
 				}
 				if(p.getRole()==UserRole.Student){
-					rd = req.getRequestDispatcher("LeerlingOverzicht.jsp");
+					rd = req.getRequestDispatcher("LeerlingOverzichtServlet.do");
 				}
 			} else {
 				req.setAttribute("msgs", "Wachtwoord of gebruikersnaam incorrect.");

@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class LeraarOverzichtServlet extends HttpServlet{
+public class LeerlingOverzichtServlet extends HttpServlet{
 	/**
 	 * 
 	 */
@@ -24,15 +24,16 @@ public class LeraarOverzichtServlet extends HttpServlet{
 		resp.setContentType("text/html");
 		HomeworkDAO dao = new HomeworkDAO();
 		HttpSession session = req.getSession();
-		Person teacher = (Person) session.getAttribute("user");
-		int teacherID = teacher.getID();
+		Person student = (Person) session.getAttribute("user");
+		int studentID = student.getID();
 		ArrayList<Homework> hwList = new ArrayList<Homework>();
 		RequestDispatcher rd = null;
-		if(dao.retrieveAllByPerson(teacherID, 1).size() < 1)
+		hwList = dao.retrieveAllByPerson(studentID, 1);
+		if(hwList.size() < 1)
 			System.out.println("empty list");
-		hwList.addAll(dao.retrieveAllByPerson(teacherID, 1));
+		
 		session.setAttribute("Huiswerk", hwList);
-		rd = req.getRequestDispatcher("LeraarOverzicht.jsp");
+		rd = req.getRequestDispatcher("LeerlingOverzicht.jsp");
 		
 		if(rd!=null){
 			rd.forward(req, resp);
