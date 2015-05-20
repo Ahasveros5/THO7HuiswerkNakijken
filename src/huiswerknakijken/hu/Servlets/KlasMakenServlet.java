@@ -28,6 +28,13 @@ public class KlasMakenServlet extends HttpServlet {
 		Klass c = new Klass(naam);
 		dao.add(c);
 		klassen.addAll(dao.retrieveAll());
+		for(int i =0; i<klassen.size(); i++){
+			if(klassen.get(i).getName().equals("Geen Naam")){
+				Klass k = klassen.get(i);
+				klassen.remove(k);
+				break;
+			}
+		}
 		session.setAttribute("klassen", klassen);
 		
 		rd = req.getRequestDispatcher("OverzichtLeerlingen.jsp");
