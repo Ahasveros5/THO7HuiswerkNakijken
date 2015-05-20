@@ -1,5 +1,20 @@
  <%@ include file="header.jsp" %>
- 
+   
+   	 	<div class="user_register_container">
+   	 	<%Homework hw = (Homework)session.getAttribute("Huiswerk"); %>
+     <h2><%hw.getName(); %></h2>
+     <div id="myform">	
+     
+	
+	<body>
+		
+	<% Object msgs = request.getAttribute("msgs");
+	if (msgs != null) {
+		out.println("<div id=\"messagebox\">");
+		out.println(msgs); 
+		out.println("</div>");
+	} 
+	%>
  	<%@ page import="java.util.ArrayList" %>
  	<%@ page import="huiswerknakijken.hu.Domain.Homework" %>
  	<%  ArrayList<Homework> hw = (ArrayList<Homework>) session.getAttribute("Huiswerk");
