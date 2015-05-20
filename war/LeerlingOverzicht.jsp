@@ -3,34 +3,30 @@
  	<%@ page import="java.util.ArrayList" %>
  	<%@ page import="huiswerknakijken.hu.Domain.Homework" %>
  	<h3>Huiswerk overzicht</h3>
- 	<%  ArrayList<Homework> hw = (ArrayList<Homework>) session.getAttribute("Huiswerk");
- 	out.println("<div id=\"hwbox\">");
- 		if (hw!=null){
- 			for(int i = 0; i< hw.size(); i++){
- 				out.println("<a href = 'HuiswerkOverzichtServlet.do?id="+hw.get(i).getID()+"'>"+hw.get(i).toString()+"</a><br>");
- 				
- 			}	
- 		}
- 	out.println("</div>");
- 	  %>
- 	  <table class="table table-hover">
- 	  <thead>
+ 	<table border="1">
+	 	<thead>
 			<tr>
 				<td>Naam</td>
 				<td>Deadline</td>
 				<td>Leraar</td>
 			</tr>
 		</thead>
- 	  <tbody>
- 	  <tr class="clickableRow" href="www.google.com">
- 	  
- 	  	<td href="">1</td>
- 	  	<td>2</td>
- 	  	<td>3</td>
- 	  
- 	  </tr>
- 	  	
- 	  
+	<tbody>
+ 	<%  ArrayList<Homework> hw = (ArrayList<Homework>) session.getAttribute("Huiswerk");
+ 	out.println("<div id=\"hwbox\">");
+ 		if (hw!=null){
+ 			for(int i = 0; i< hw.size(); i++){
+ 				Homework h = hw.get(i);
+ 				out.println("<tr>");
+ 				out.println("<td class='border'><a href = 'HuiswerkOverzichtServlet.do?id="+h.getID()+"'>"+h.getName()+"</a></td>>");
+ 				out.println("<td class='border'><a href = 'HuiswerkOverzichtServlet.do?id="+h.getID()+"'>"+h.getDeadline()+"</a></td>>");
+ 				out.println("<td class='border'><a href = 'HuiswerkOverzichtServlet.do?id="+h.getID()+"'>"+h.getTeacher().getFirstName()+ " "+h.getTeacher().getLastName() +"</a></td>>");
+ 				out.println("</tr>");
+ 				
+ 			}	
+ 		}
+ 	out.println("</div>");
+ 	  %>
  	  </tbody>
  	  </table>
 

@@ -124,10 +124,11 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 			String sql;
 			PreparedStatement statement;
 				String generatedColumns[] = { "homework_id" };
-				sql = "INSERT INTO Homework(homework_name, deadline) VALUES (?,?)";
+				sql = "INSERT INTO Homework(homework_name, deadline,questions) VALUES (?,?,?)";
 				statement = connection.prepareStatement(sql, generatedColumns);
 				statement.setString(1, s.getName());
 				statement.setString(2, s.getDeadline());
+				statement.setInt(3, s.getNumberQuestions());
 				statement.executeUpdate();
 				int ID = -1;
 				ResultSet rsid = statement.getGeneratedKeys();
@@ -177,6 +178,9 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 					c.setID(rs.getInt("homework_id"));
 					c.setName(rs.getString("homework_name"));
 					c.setDeadline(rs.getString("deadline"));
+					c.setNumberQuestions(rs.getInt("questions"));
+					PersonDAO dao = new PersonDAO();
+					c.setTeacher(dao.retrieveTeacherByHomework(c, 1));
 					//u.setLayerLevel(layerLevel);
 
 					if (layerLevel > 1) { //questions

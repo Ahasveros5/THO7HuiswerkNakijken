@@ -1,5 +1,6 @@
 package huiswerknakijken.hu.DAO;
 
+import huiswerknakijken.hu.Domain.Homework;
 import huiswerknakijken.hu.Domain.Person;
 import huiswerknakijken.hu.Domain.Person.UserRole;
 import huiswerknakijken.hu.Domain.Student;
@@ -13,8 +14,6 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.management.relation.Role;
 
 public class PersonDAO implements DAOInterface<Person> {
 	public List<Person> retrieveAll(int layerLevel) {
@@ -235,6 +234,30 @@ public class PersonDAO implements DAOInterface<Person> {
 
 	}
 	
+	public Person retrieveTeacherByHomework(Homework h, int layerLevel) {
+		Person retrievedStudent = null;
+		Connection connection = OracleConnectionPool.getConnection();
+		try {
+			System.out.println("ID: " +  h.getID());
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Person, Person_Homework WHERE PERSON_HOMEWORK.homework_id = ? AND PERSON.role = 2 AND PERSON.id = PERSON_HOMEWORK.student_id");
+			statement.setInt(1, h.getID());
+			ResultSet rs = statement.executeQuery();
+			System.out.println("adding teacher");
+			ArrayList<Person> Person = resultSetExtractor(rs, layerLevel, connection);
+			if(Person.size() > 0)
+				retrievedStudent = Person.get(0);
+			else
+				System.out.println("nulllaksdjfkjas");
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return retrievedStudent;
+
+	}
+	
 	public Person retrieve(int id, int layerLevel, Connection connection) {
 		Person retrievedStudent = null;
 		try {
@@ -322,6 +345,7 @@ public class PersonDAO implements DAOInterface<Person> {
 				}*/
 				if (notInCache) {
 					Person p;
+					System.out.println("creating person");
 					int role = rs.getInt("role");
 					if(role == 1){//student
 						System.out.println("STUDENT CREATED");

@@ -12,6 +12,7 @@ public class Homework {
 	private ArrayList<Student> students = new ArrayList<Student>();
 	private int ID;
 	private String deadline;
+	private int numberQuestions = 0;
 	
 	public ArrayList<Question> getQuestions() {
 		return questions;
@@ -82,11 +83,22 @@ public class Homework {
 	}
 	
 	public void addQuestion(Question q){
+		numberQuestions++;
+		q.setNumber(numberQuestions);
 		questions.add(q);
+		
 	}
 
 	public String toString(){
 		return name+" "+deadline;
+	}
+
+	public int getNumberQuestions() {
+		return numberQuestions;
+	}
+
+	public void setNumberQuestions(int numberQuestions) {
+		this.numberQuestions = numberQuestions;
 	}
 	
 }

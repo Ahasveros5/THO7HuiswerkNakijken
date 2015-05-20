@@ -10,6 +10,7 @@ public class Question
 	protected String description;
 	private ArrayList<Answer> answers = new ArrayList<Answer>();
 	protected Homework homework;
+	protected int number;
 
 	public Question(){
 		
@@ -50,6 +51,14 @@ public class Question
 
 	public void setHomework(Homework homework) {
 		this.homework = homework;
+	}
+	
+	public int getNumber(){
+		return number;
+	}
+	
+	public void setNumber(int i){
+		number = i;
 	}
 	
 }

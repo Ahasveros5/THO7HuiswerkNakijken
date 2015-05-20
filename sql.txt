@@ -10,6 +10,7 @@ CREATE TABLE HOMEWORK (
 homework_id NUMBER(10),
 homework_name VARCHAR2(100),
 deadline VARCHAR2(50),
+questions NUMBER(10),
 CONSTRAINT PK_HOMEWORK PRIMARY KEY(homework_id)
 );
 
@@ -17,6 +18,7 @@ CREATE TABLE QUESTION (
 question_id NUMBER(10),
 question_name VARCHAR2(100),
 question VARCHAR2(500),
+number NUMBER(10),
 homework_id NUMBER(10),
 CONSTRAINT PK_QUESTION PRIMARY KEY(question_id),
 CONSTRAINT FK_HOMEWORK_ID_QUESTION FOREIGN KEY(homework_id) REFERENCES HOMEWORK(homework_id)
