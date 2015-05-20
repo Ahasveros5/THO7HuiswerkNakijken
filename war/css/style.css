@@ -1,9 +1,10 @@
 dialog {  
-    width: 500px;  
+    width: 300px;  
     background:#e8e8e8;
     border: 1px solid #dadada;
     font-family:sans-serif;
     padding: 5px 10px 20px 20px;
+    
 }  
 
 
@@ -56,9 +57,15 @@ background-color: #0000ff;
 table thead{
 	font-weight: bold;
 }
+
+#wrapper{
+	Width: 500px;
+}
 #LeerlingContainer{
 	float: left;
+	width: 200px;
 }
 #KlassenContainer {
+	margin-top: -80px;
 	float: right;
 }

@@ -11,6 +11,8 @@
 	<%@ page import="huiswerknakijken.hu.Domain.Person" %>
 	<%@ page import="huiswerknakijken.hu.Domain.Student" %>
 	<%@ page import="huiswerknakijken.hu.Domain.Klass" %>
+	
+	<div id = "wrapper">
 	<h3>Studenten</h3>
 	<div id="LeerlingContainer">
 	<%
@@ -24,7 +26,9 @@
 		}out.println("</select>");
 	%>
 	</div>
-	
+	<div id ="addButton">
+	<button>Voeg toe aan klas</button>
+	</div>
 	<div id ="KlassenContainer">
 	<h3>Klassen</h3>
 	<%
@@ -38,10 +42,10 @@
 		}
 	out.println("</select>");
 	%>
-	
+	<br />
 	<button id="show">Klas Aanmaken</button> 
 	</div>
-	
+</div>
 	
 <dialog id="window">  
     <h3>Klas Aanmaken</h3>  
