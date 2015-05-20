@@ -13,15 +13,11 @@ public class Class {
 	private int classID = -1;
 	private String name;
 
-	public Class (){
+	public Class(){
 		
 	}
 	public Class(String name){
 		this.name = name;
-	}
-	
-	public Class() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public ArrayList<Student> getStudents() {
