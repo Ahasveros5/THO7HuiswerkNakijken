@@ -41,7 +41,7 @@
 				<ul>
 				<li><a href="404.jsp">Huiswerk aanmaken</a></li>
 				<li><a href="LeraarVraagAanmaken.jsp" class="regbutton">Overzicht huiswerk</a></li>
-				<li><a href="404.jsp" class="regbutton">Overzicht leerlingen</a></li>
+				<li><a href="OverzichtLeerlingenServlet.do" class="regbutton">Overzicht leerlingen</a></li>
 				<li><a href="LogoutServlet.do">Uitloggen</a></li>
 			</ul>
 
