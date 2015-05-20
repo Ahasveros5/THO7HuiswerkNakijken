@@ -1,6 +1,6 @@
 package huiswerknakijken.hu.DAO;
 
-import huiswerknakijken.hu.Domain.Class;
+import huiswerknakijken.hu.Domain.Klass;
 import huiswerknakijken.hu.Util.OracleConnectionPool;
 
 import java.sql.Connection;
@@ -11,10 +11,10 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClassDAO implements DAOInterface<Class> {
-	public List<Class> retrieveAll(int layerLevel) {
+public class ClassDAO implements DAOInterface<Klass> {
+	public List<Klass> retrieveAll(int layerLevel) {
 		ResultSet rs = null;
-		ArrayList<Class> classes = null;
+		ArrayList<Klass> classes = null;
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
 			PreparedStatement statement = connection.prepareStatement("SELECT * FROM C_CLASS");
@@ -29,14 +29,14 @@ public class ClassDAO implements DAOInterface<Class> {
 		return classes;
 	}
 	
-	public Class retrieveByName(String name, int layerLevel) {
-		Class retrievedClass = new Class();
+	public Klass retrieveByName(String name, int layerLevel) {
+		Klass retrievedClass = new Klass();
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
 			PreparedStatement statement = connection.prepareStatement("SELECT * FROM C_CLASS WHERE class_name=?");
 			statement.setString(1, name);
 			ResultSet rs = statement.executeQuery();
-			ArrayList<Class> Class = resultSetExtractor(rs, layerLevel, connection);
+			ArrayList<Klass> Class = resultSetExtractor(rs, layerLevel, connection);
 			retrievedClass = Class.get(0);
 			statement.close();
 			connection.close();
@@ -49,13 +49,13 @@ public class ClassDAO implements DAOInterface<Class> {
 	}
 
 	@Override
-	public boolean delete(Class s) {
+	public boolean delete(Klass s) {
 		System.out.println("Deleting NYI");
 		return false;
 	}
 
 	@Override
-	public boolean add(Class s) {
+	public boolean add(Klass s) {
 		boolean b = false;
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
@@ -112,14 +112,14 @@ public class ClassDAO implements DAOInterface<Class> {
 	}
 
 	@Override
-	public boolean update(Class s) {
+	public boolean update(Klass s) {
 		boolean b = false;
 		return b;
 	}
 
 
-	private ArrayList<Class> resultSetExtractor(ResultSet rs, int layerLevel, Connection connection) {
-		ArrayList<Class> extractedStudents = new ArrayList<Class>();
+	private ArrayList<Klass> resultSetExtractor(ResultSet rs, int layerLevel, Connection connection) {
+		ArrayList<Klass> extractedStudents = new ArrayList<Klass>();
 		
 		try {
 			while (rs.next()) {
@@ -132,8 +132,8 @@ public class ClassDAO implements DAOInterface<Class> {
 					}
 				}*/
 				if (notInCache) {
-					Class c;
-					c = new Class();
+					Klass c;
+					c = new Klass();
 					c.setClassID(rs.getInt("class_id"));
 					c.setName(rs.getString("class_name"));
 					//u.setLayerLevel(layerLevel);
@@ -160,12 +160,12 @@ public class ClassDAO implements DAOInterface<Class> {
 	}
 
 	@Override
-	public List<Class> retrieveAll() {
+	public List<Klass> retrieveAll() {
 		return retrieveAll(4);
 	}
 
 	@Override
-	public Class retrieve(String s) {
+	public Klass retrieve(String s) {
 		System.out.println("ERROR NOT WORKING METHOD RETRIEVE(string)");
 		return null;//retrieve(s, 10);
 	}
