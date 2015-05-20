@@ -44,7 +44,6 @@ public class LoginServlet extends HttpServlet {
 			} else {
 				req.setAttribute("msgs", "Wachtwoord of gebruikersnaam incorrect.");
 				rd = req.getRequestDispatcher("loginpage.jsp");
-				System.out.println("testor");
 			}
 		}	
 		

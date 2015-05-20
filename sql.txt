@@ -87,9 +87,9 @@ CREATE OR REPLACE TRIGGER TRIGGER_C_Class_ID
   before insert on C_Class           
   for each row  
 begin   
-if :new.class_id = -1 then
+--if :new.class_id = -1 then
     select SEQ_C_Class_ID.nextval into :NEW.Class_ID from dual; 
-end if; 
+--end if; 
 end; 
 /
 CREATE OR REPLACE TRIGGER TRIGGER_Homework_ID

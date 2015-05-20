@@ -26,6 +26,7 @@ public class MultipleChoiceAanmakenServlet extends HttpServlet {
 		resp.setContentType("text/html");
 		ArrayList<Answer>antwoorden = new ArrayList<Answer>();
 		HttpSession session = req.getSession();
+		String naam = req.getParameter("naam");
 		String vraag = req.getParameter("vraagMultipleChoice");
 		String antwoord1 = req.getParameter("Antwoord1");
 		String antwoord2 = req.getParameter("Antwoord2");
@@ -79,6 +80,7 @@ public class MultipleChoiceAanmakenServlet extends HttpServlet {
 			rd = req.getRequestDispatcher("LeraarVraagAanmaken.jsp");
 		}else{
 			q = new Question();
+			q.setName(naam);
 			q.setDescription(vraag);
 			q.setAnswers(antwoorden);
 			a.setQuestion(q);
@@ -87,6 +89,7 @@ public class MultipleChoiceAanmakenServlet extends HttpServlet {
 			d.setQuestion(q);
 			Homework h = (Homework)session.getAttribute("HwObj");
 			q.setHomework(h);
+			h.addQuestion(q);
 			rd = req.getRequestDispatcher("HuiswerkOverzicht.jsp?id="+h.getID());
 			questions.add(q);
 			session.setAttribute("questObj", questions);

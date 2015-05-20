@@ -67,15 +67,15 @@ public class ClassDAO implements DAOInterface<Klass> {
 
 			String sql;
 			PreparedStatement statement = null;
-			if (s.getClassID() == -1){
+			//if (s.getClassID() == -1){
 				String generatedColumns[] = { "class_id" };
 				sql = "INSERT INTO C_Class(class_name) VALUES (?)";
 				statement = connection.prepareStatement(sql, generatedColumns);
-			} else {
+			/*} else {
 				sql = "INSERT INTO C_Class(class_name, class_id) VALUES (?,?)";
 				statement = connection.prepareStatement(sql);
 				statement.setInt(2,s.getClassID());
-			}
+			}*/
 				statement.setString(1, s.getName());
 				statement.executeUpdate();
 				if(s.getClassID() == -1){

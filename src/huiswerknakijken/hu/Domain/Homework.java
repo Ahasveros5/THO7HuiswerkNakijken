@@ -12,6 +12,7 @@ public class Homework {
 	private ArrayList<Student> students = new ArrayList<Student>();
 	private int ID;
 	private String deadline;
+	private String description;
 	private int numberQuestions = 0;
 	
 	public ArrayList<Question> getQuestions() {
@@ -99,6 +100,14 @@ public class Homework {
 
 	public void setNumberQuestions(int numberQuestions) {
 		this.numberQuestions = numberQuestions;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 }

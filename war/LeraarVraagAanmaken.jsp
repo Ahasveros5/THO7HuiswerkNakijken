@@ -3,6 +3,8 @@
 	<h2>Vraag aanmaken</h2>
 	
 	 <form action="MultipleChoiceAanmakenServlet.do" method="post">
+			  <label><b>Naam</b></label>
+			  <input type="text" size="25" name="Naam" /><br />
 			  <label><b>Vraag</b></label>
 			  <input type="text" size="25" name="vraagMultipleChoice" /><br />
 			  <br />

@@ -16,9 +16,9 @@
 	<div id = "HW">
 	<h3> Huiswerk aanmaken</h3>
 	<form action = "HuiswerkAanmakenServlet.do"method="post">
-	<label>naam:</label>
-	<input type = "text" name = "HWName"> 
-	<label>deadline:</label>
+	<label>Naam:</label>
+	<input type = "text" name = "HWName"> <br>
+	<label>Deadline:</label>
 	<input type="date" name="deadline"/>
 	<input type = "time" name="DLTime"/><br>
 	

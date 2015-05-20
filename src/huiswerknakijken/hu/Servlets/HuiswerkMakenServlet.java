@@ -22,6 +22,7 @@ public class HuiswerkMakenServlet extends HttpServlet {
 		HomeworkDAO dao = new HomeworkDAO();
 		
 		String id = req.getParameter("id");
+		System.out.println("retrieving!");
 		Homework hw = dao.retrieveByID(Integer.parseInt(id), 2);
 		session.setAttribute("HwObj", hw);
 		ArrayList<Question> questions = hw.getQuestions();

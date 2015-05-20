@@ -184,6 +184,7 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 					//u.setLayerLevel(layerLevel);
 
 					if (layerLevel > 1) { //questions
+						System.out.println("Going for the correct questions");
 						QuestionDAO qDAO = new QuestionDAO();
 						c.setQuestions(qDAO.retrieveAllByHomework(c.getID(), 2));
 					}

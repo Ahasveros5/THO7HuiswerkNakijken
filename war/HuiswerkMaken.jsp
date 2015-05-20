@@ -11,6 +11,6 @@
 		%>
 		</div>
 	<form action = "VraagMaken.jsp" method="post">
-		<input type="hidden" value="1" />
+		<input type="hidden" value="1" name="id" />
 	 	<input type="submit" value="Begin met huiswerk" name="Begin met huiswerk" />
 	</form>
