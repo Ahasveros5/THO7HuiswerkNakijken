@@ -5,7 +5,7 @@ import huiswerknakijken.hu.DAO.PersonDAO;
 import huiswerknakijken.hu.Domain.Person;
 import huiswerknakijken.hu.Domain.Person.UserRole;
 import huiswerknakijken.hu.Domain.Student;
-import huiswerknakijken.hu.Domain.Class;
+import huiswerknakijken.hu.Domain.Klass;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ public class OverzichtLeerlingenServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/html");
 		ArrayList<Student>students = new ArrayList<Student>();
-		ArrayList<Class>klassen = new ArrayList<Class>();		
+		ArrayList<Klass>klassen = new ArrayList<Klass>();		
 		PersonDAO dao = new PersonDAO();
 		ClassDAO cdao = new ClassDAO();
 		HttpSession session = req.getSession();

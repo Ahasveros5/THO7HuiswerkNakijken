@@ -5,7 +5,7 @@ import java.util.ArrayList;
 //hier moeten waarschijnlijk ook nog Courses aan gekoppeld worden wat dus de vakken zijn.
 //zodat je per vak huiswerk kan hebben enzo...
 
-public class Class {
+public class Klass {
 
 	private ArrayList<Student> students = new ArrayList<Student>();
 	private ArrayList<Teacher> teachers = new ArrayList<Teacher>();
@@ -13,10 +13,10 @@ public class Class {
 	private int classID = -1;
 	private String name;
 
-	public Class(){
+	public Klass(){
 		
 	}
-	public Class(String name){
+	public Klass(String name){
 		this.name = name;
 	}
 

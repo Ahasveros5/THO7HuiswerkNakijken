@@ -1,7 +1,7 @@
 package huiswerknakijken.hu.Servlets;
 
 import huiswerknakijken.hu.DAO.ClassDAO;
-import huiswerknakijken.hu.Domain.Class;
+import huiswerknakijken.hu.Domain.Klass;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,9 +23,9 @@ public class KlasMakenServlet extends HttpServlet {
 		HttpSession session = req.getSession();
 		RequestDispatcher rd = null;
 		ClassDAO dao = new ClassDAO();
-		ArrayList<Class> klassen = new ArrayList<Class>();
+		ArrayList<Klass> klassen = new ArrayList<Klass>();
 		String naam = req.getParameter("Klasnaam");
-		Class c = new Class(naam);
+		Klass c = new Klass(naam);
 		dao.add(c);
 		klassen.addAll(dao.retrieveAll());
 		session.setAttribute("klassen", klassen);

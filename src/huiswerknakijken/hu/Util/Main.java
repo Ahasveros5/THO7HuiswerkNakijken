@@ -7,7 +7,7 @@ import huiswerknakijken.hu.DAO.PersonDAO;
 import huiswerknakijken.hu.DAO.QuestionDAO;
 import huiswerknakijken.hu.Domain.Answer;
 import huiswerknakijken.hu.Domain.Answer.Correct;
-import huiswerknakijken.hu.Domain.Class;
+import huiswerknakijken.hu.Domain.Klass;
 import huiswerknakijken.hu.Domain.Homework;
 import huiswerknakijken.hu.Domain.Person;
 import huiswerknakijken.hu.Domain.Person.UserRole;
@@ -33,7 +33,7 @@ public class Main {
 	
 	private static void CreateTestData(){
 		ClassDAO cdao = new ClassDAO();
-		Class c = new Class();
+		Klass c = new Klass();
 		c.setClassID(0);
 		c.setName("Geen klas");
 		cdao.add(c);
