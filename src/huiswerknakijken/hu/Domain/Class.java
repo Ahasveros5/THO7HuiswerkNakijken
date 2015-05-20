@@ -12,11 +12,7 @@ public class Class {
 	private Course course;
 	private int classID = -1;
 	private String name;
-	
-	public Class(){
-		
-	}
-	
+
 	public Class(String name){
 		this.name = name;
 	}

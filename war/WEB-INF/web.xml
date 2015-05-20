@@ -124,4 +124,24 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 		<servlet-name>HuiswerkOverzichtServlet</servlet-name>
 		<url-pattern>/HuiswerkOverzichtServlet.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>OverzichtLeerlingenServlet</servlet-name>
+		<servlet-class>huiswerknakijken.hu.Servlets.OverzichtLeerlingenServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>OverzichtLeerlingenServlet</servlet-name>
+		<url-pattern>/OverzichtLeerlingenServlet.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>KlasMakenServlet</servlet-name>
+		<servlet-class>huiswerknakijken.hu.Servlets.KlasMakenServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>KlasMakenServlet</servlet-name>
+		<url-pattern>/KlasMakenServlet.do</url-pattern>
+	</servlet-mapping>
 </web-app>

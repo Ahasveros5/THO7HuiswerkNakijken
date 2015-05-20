@@ -32,23 +32,7 @@
      </div>
     </div>
        
-     </div>   
-        <div id="footer_border">
-        </div>
-        <div id="footer">
-        <div id="footer_container">
-        <div id="footer_blok1">
-        test
-        </div>
-        <div id="footer_blok2">
-        test
-        </div>
-        <div id="footer_blok3">
-        test
-        </div>
-        </div> 
-        
-        </div>
+    
         
 	</body>
 </html>
