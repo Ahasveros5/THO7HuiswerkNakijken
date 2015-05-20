@@ -27,6 +27,8 @@ public class HuiswerkMakenServlet extends HttpServlet {
 		session.setAttribute("HwObj", hw);
 		ArrayList<Question> questions = hw.getQuestions();
 		session.setAttribute("QuestObj", questions);
+		for(Question q : questions)
+			System.out.println("tra:::: " + q.getAnswers().size());
 		
 		rd = req.getRequestDispatcher("HuiswerkMaken.jsp");
 		

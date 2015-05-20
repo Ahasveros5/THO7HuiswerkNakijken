@@ -160,7 +160,7 @@ public class QuestionDAO implements DAOInterface<Question> {
 					if (layerLevel > 1) { //answers"
 						System.out.println("Going for the answers!!");
 						AnswerDAO adao = new AnswerDAO();
-						adao.retrieveAllByQuestion(c.getID(), 1);
+						c.setAnswers(adao.retrieveAllByQuestion(c.getID(), 1));
 						System.out.println("retrieving answers");
 					}
 

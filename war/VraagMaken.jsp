@@ -25,17 +25,19 @@
 			if(cur.getAnswers().size() == 0){
 				out.println("<h3>Geen antwoorden</h3>");
 			}
-			int i = 1;
+			int i = 0;
+			String[] str = {"A","B","C","D","E","F","G","H","J"};
+			out.println("<form action='VraagMaken.jsp'<br>");
 			for(Answer a : ans){
-				out.println("i: "+a.getAnswer() +"");
+				out.println(str[i] +": <input type='radio' name='Answer' value='"+a.getAnswer() +"'> " + a.getAnswer() +"<br>");
 				i++;
 			}
+			out.println("<input type='hidden' value='"+(id+1)+"' name='id' />");
+			out.println("<input value = 'Volgende vraag' type = 'submit' name='knop' />");
+			out.println("</form>");
 		} else {
 			out.println("<h3>Geen vragen</h3>");
 		}
 	
 		%>
 		</div>
-	<form action = "VraagMaken.jsp?id=1">
-	 <input class = "button" value = "Volgende vraag" type = "submit" name="knop" />
-	 </form>
