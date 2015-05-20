@@ -17,7 +17,7 @@
 	ArrayList<Student> students = (ArrayList<Student>) session.getAttribute("Leerlingen");
 	if (students!=null){
 			for(int i = 0; i< students.size(); i++){
-				out.println("<p>"+ students.get(i).getFirstName()+" "+students.get(i).getLastName()+" "+students.get(i).getID()+"</p><br>");
+				out.println(""+ students.get(i).getFirstName()+" "+students.get(i).getLastName()+" "+students.get(i).getID()+"<br>");
 				
 			}	
 		}
@@ -29,7 +29,7 @@
 	ArrayList<Class> klassen = (ArrayList<Class>) session.getAttribute("klassen");
 	if (klassen!=null){
 			for(int i = 0; i< klassen.size(); i++){
-				out.println("<p>"+klassen.get(i).getName()+"</p><br>");
+				out.println(""+klassen.get(i).getName()+"<br>");
 				
 			}	
 		}

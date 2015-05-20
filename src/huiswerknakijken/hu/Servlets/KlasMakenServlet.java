@@ -27,7 +27,7 @@ public class KlasMakenServlet extends HttpServlet {
 		String naam = req.getParameter("Klasnaam");
 		Class c = new Class(naam);
 		dao.add(c);
-		klassen.add(c);
+		klassen.addAll(dao.retrieveAll());
 		session.setAttribute("klassen", klassen);
 		
 		rd = req.getRequestDispatcher("OverzichtLeerlingen.jsp");
