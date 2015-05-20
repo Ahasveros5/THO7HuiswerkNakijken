@@ -18,9 +18,9 @@
  			for(int i = 0; i< hw.size(); i++){
  				Homework h = hw.get(i);
  				out.println("<tr>");
- 				out.println("<td class='border'><a href = 'HuiswerkOverzichtServlet.do?id="+h.getID()+"'>"+h.getName()+"</a></td>>");
- 				out.println("<td class='border'><a href = 'HuiswerkOverzichtServlet.do?id="+h.getID()+"'>"+h.getDeadline()+"</a></td>>");
- 				out.println("<td class='border'><a href = 'HuiswerkOverzichtServlet.do?id="+h.getID()+"'>"+h.getTeacher().getFirstName()+ " "+h.getTeacher().getLastName() +"</a></td>>");
+ 				out.println("<td class='border'><a href = 'HuiswerkMakenServlet.do?id="+h.getID()+"'>"+h.getName()+"</a></td>>");
+ 				out.println("<td class='border'><a href = 'HuiswerkMakenServlet.do?id="+h.getID()+"'>"+h.getDeadline()+"</a></td>>");
+ 				out.println("<td class='border'><a href = 'HuiswerkMakenServlet.do?id="+h.getID()+"'>"+h.getTeacher().getFirstName()+ " "+h.getTeacher().getLastName() +"</a></td>>");
  				out.println("</tr>");
  				
  			}	

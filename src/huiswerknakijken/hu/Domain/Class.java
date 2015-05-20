@@ -20,6 +20,10 @@ public class Class {
 		this.name = name;
 	}
 	
+	public Class() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public ArrayList<Student> getStudents() {
 		return students;
 	}

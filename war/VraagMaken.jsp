@@ -3,10 +3,11 @@
 	<div id ="hwbox">
 	<%@ page import="huiswerknakijken.hu.Domain.Answer" %>
 	<%@ page import="huiswerknakijken.hu.Domain.Question" %>
+	<%@ page import="huiswerknakijken.hu.Domain.Question" %>
 	<%@ page import="java.util.ArrayList" %>
 	<%  ArrayList<Question> qs = (ArrayList<Question>)session.getAttribute("QuestObj");
 		Question cur = null;
-		int id = (int)session.getAttribute("id");
+		int id = Integer.parseInt(request.getParameter("id"));
 		for (Question q : qs){
 			if (q.getNumber() ==id){
 				cur = q;
