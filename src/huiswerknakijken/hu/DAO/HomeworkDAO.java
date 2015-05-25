@@ -1,6 +1,7 @@
 package huiswerknakijken.hu.DAO;
 
 import huiswerknakijken.hu.Domain.Homework;
+import huiswerknakijken.hu.Domain.Homework.Status;
 import huiswerknakijken.hu.Util.OracleConnectionPool;
 
 import java.sql.Connection;
@@ -28,6 +29,43 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 		}
 		return homework;
 	}
+	
+	public List<Homework> retrieveAllWithStatus(Status s, int layerLevel) {
+		ResultSet rs = null;
+		ArrayList<Homework> homework = null;
+		Connection connection = OracleConnectionPool.getConnection();
+		try {
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Homework WHERE status=?");
+			statement.setInt(1, s.getIndex());
+			rs = statement.executeQuery();
+			homework = resultSetExtractor(rs, layerLevel, connection);
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return homework;
+	}
+	//retrieves the homework that does not have the given status
+	public List<Homework> retrieveAllNotStatus(Status s, int layerLevel) {
+		ResultSet rs = null;
+		ArrayList<Homework> homework = null;
+		Connection connection = OracleConnectionPool.getConnection();
+		try {
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Homework WHERE status!=?");
+			statement.setInt(1, s.getIndex());
+			rs = statement.executeQuery();
+			homework = resultSetExtractor(rs, layerLevel, connection);
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return homework;
+	}
+
 	
 	public Homework retrieveByName(String name, int layerLevel) {
 		Homework retrievedHomework = null;
@@ -94,6 +132,40 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 		}
 		return homework;
 	}
+	
+	public ArrayList<Homework> retrieveAllByPersonStatus(int teacherID, Status s, int layerLevel) {
+		ArrayList<Homework> homework = null;
+		Connection connection = OracleConnectionPool.getConnection();
+		try {
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Homework, Person_Homework WHERE Person_Homework.Student_id=? AND Homework.homework_id = Person_Homework.homework_id AND Status=?");
+			statement.setInt(1, teacherID);
+			statement.setInt(2, s.getIndex());
+			ResultSet rs = statement.executeQuery();
+			homework = resultSetExtractor(rs, layerLevel, connection);
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return homework;
+	}
+	
+	public ArrayList<Homework> retrieveAllByPersonNotStatus(int teacherID, Status s, int layerLevel) {
+		ArrayList<Homework> homework = null;
+		Connection connection = OracleConnectionPool.getConnection();
+		try {
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Homework, Person_Homework WHERE Person_Homework.Student_id=? AND Homework.homework_id = Person_Homework.homework_id AND Status!=?");
+			statement.setInt(1, teacherID);
+			statement.setInt(2, s.getIndex());
+			ResultSet rs = statement.executeQuery();
+			homework = resultSetExtractor(rs, layerLevel, connection);
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return homework;
+	}
 
 	@Override
 	public boolean delete(Homework s) {
@@ -124,11 +196,12 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 			String sql;
 			PreparedStatement statement;
 				String generatedColumns[] = { "homework_id" };
-				sql = "INSERT INTO Homework(homework_name, deadline,questions) VALUES (?,?,?)";
+				sql = "INSERT INTO Homework(homework_name, deadline,questions, status) VALUES (?,?,?,?)";
 				statement = connection.prepareStatement(sql, generatedColumns);
 				statement.setString(1, s.getName());
 				statement.setString(2, s.getDeadline());
 				statement.setInt(3, s.getNumberQuestions());
+				statement.setInt(4, s.getStatus().getIndex());
 				statement.executeUpdate();
 				int ID = -1;
 				ResultSet rsid = statement.getGeneratedKeys();
@@ -179,6 +252,7 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 					c.setName(rs.getString("homework_name"));
 					c.setDeadline(rs.getString("deadline"));
 					c.setNumberQuestions(rs.getInt("questions"));
+					c.setStatus(Status.getValue(rs.getInt("status")));
 					PersonDAO dao = new PersonDAO();
 					c.setTeacher(dao.retrieveTeacherByHomework(c, 1));
 					//u.setLayerLevel(layerLevel);

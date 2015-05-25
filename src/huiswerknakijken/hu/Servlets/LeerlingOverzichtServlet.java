@@ -2,6 +2,7 @@ package huiswerknakijken.hu.Servlets;
 
 import huiswerknakijken.hu.DAO.HomeworkDAO;
 import huiswerknakijken.hu.Domain.Homework;
+import huiswerknakijken.hu.Domain.Homework.Status;
 import huiswerknakijken.hu.Domain.Person;
 
 import java.io.IOException;
@@ -28,7 +29,8 @@ public class LeerlingOverzichtServlet extends HttpServlet{
 		int studentID = student.getID();
 		ArrayList<Homework> hwList = new ArrayList<Homework>();
 		RequestDispatcher rd = null;
-		hwList = dao.retrieveAllByPerson(studentID, 1);
+		hwList = dao.retrieveAllByPerson(studentID,1);
+		hwList = dao.retrieveAllByPersonNotStatus(studentID, Status.Af, 1); //retrieves all homework that is NOT finished
 		if(hwList.size() < 1)
 			System.out.println("empty list");
 		

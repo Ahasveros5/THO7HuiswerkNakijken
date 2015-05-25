@@ -12,6 +12,7 @@ homework_id NUMBER(10),
 homework_name VARCHAR2(100),
 deadline VARCHAR2(50),
 questions NUMBER(10),
+status NUMBER(2),
 CONSTRAINT PK_HOMEWORK PRIMARY KEY(homework_id)
 );
 

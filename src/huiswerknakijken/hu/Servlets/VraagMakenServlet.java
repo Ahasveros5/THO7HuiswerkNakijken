@@ -1,6 +1,7 @@
 package huiswerknakijken.hu.Servlets;
 
 import huiswerknakijken.hu.DAO.AnswerDAO;
+import huiswerknakijken.hu.Domain.Homework;
 import huiswerknakijken.hu.Domain.Person;
 
 import java.io.IOException;
@@ -25,8 +26,12 @@ public class VraagMakenServlet extends HttpServlet {
 		AnswerDAO adao = new AnswerDAO();
 		adao.addGivenAnswer(a, q, p);
 		System.out.println("answer: " + a);
-		rd = req.getRequestDispatcher("VraagMaken.jsp?id=" + qnumber);
-		
+		Homework h = (Homework)session.getAttribute("HwObj");
+		if (Integer.parseInt(qnumber) > h.getNumberQuestions()){
+			rd = req.getRequestDispatcher("HuiswerkAf.jsp");
+		} else{
+			rd = req.getRequestDispatcher("VraagMaken.jsp?id=" + qnumber);
+		}
 		if(rd!= null){
 			rd.forward(req, resp);
 		}
