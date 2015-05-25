@@ -27,12 +27,13 @@
 			}
 			int i = 0;
 			String[] str = {"A","B","C","D","E","F","G","H","J"};
-			out.println("<form action='VraagMaken.jsp'<br>");
+			out.println("<form action='VraagMakenServlet.do'<br>");
 			for(Answer a : ans){
-				out.println(str[i] +": <input type='radio' name='Answer' value='"+a.getAnswer() +"'> " + a.getAnswer() +"<br>");
+				out.println(str[i] +": <input type='radio' name='answer' value='"+ a.getID()+"'> " + a.getAnswer() +"<br>");
 				i++;
 			}
 			out.println("<input type='hidden' value='"+(id+1)+"' name='id' />");
+			out.println("<input type='hidden' value='"+cur.getID()+"' name='qid' />");
 			out.println("<input value = 'Volgende vraag' type = 'submit' name='knop' />");
 			out.println("</form>");
 		} else {

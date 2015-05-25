@@ -2,6 +2,8 @@ package huiswerknakijken.hu.DAO;
 
 import huiswerknakijken.hu.Domain.Answer;
 import huiswerknakijken.hu.Domain.Answer.Correct;
+import huiswerknakijken.hu.Domain.Person;
+import huiswerknakijken.hu.Domain.Question;
 import huiswerknakijken.hu.Util.OracleConnectionPool;
 
 import java.sql.Connection;
@@ -11,6 +13,8 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
+
+import oracle.net.aso.s;
 
 public class AnswerDAO implements DAOInterface<Answer> {
 	public List<Answer> retrieveAll(int layerLevel) {
@@ -46,6 +50,44 @@ public class AnswerDAO implements DAOInterface<Answer> {
 		}
 
 		return retrievedClass;
+
+	}
+	
+	public Answer retrieveById(int id, int layerLevel) {
+		Answer retrievedClass = null;
+		Connection connection = OracleConnectionPool.getConnection();
+		try {
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Answer WHERE answer_id=?");
+			statement.setInt(1, id);
+			ResultSet rs = statement.executeQuery();
+			ArrayList<Answer> Answer = resultSetExtractor(rs, layerLevel, connection);
+			retrievedClass = Answer.get(0);
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return retrievedClass;
+
+	}
+	
+	public Answer retrieveGivenAnswer(Question q, Person p, int layerLevel) {
+		Answer answer = null;
+		Connection connection = OracleConnectionPool.getConnection();
+		try {
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Question_Results WHERE question_id=? AND student_id=?");
+			statement.setInt(1, q.getID());
+			statement.setInt(2, p.getID());
+			ResultSet rs = statement.executeQuery();
+			answer = resultSetExtractorResult(rs, layerLevel, connection);
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return answer;
 
 	}
 	
@@ -146,6 +188,48 @@ public class AnswerDAO implements DAOInterface<Answer> {
 		}
 		return b;
 	}
+	
+	public boolean addGivenAnswer(int a, int q, int p) {
+		boolean b = false;
+		Connection connection = OracleConnectionPool.getConnection();
+		try {
+			connection.setAutoCommit(false);
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		try {
+
+			String sql;
+			PreparedStatement statement;
+				sql = "INSERT INTO Question_Results(answer_id, question_id, student_id) VALUES (?,?,?)";
+				statement = connection.prepareStatement(sql);
+				statement.setInt(1, a);
+				statement.setInt(2, q);
+				statement.setInt(3, p);
+				statement.executeUpdate();
+			statement.close();
+
+			b = true;
+			connection.commit();
+			connection.close();
+		} catch (SQLIntegrityConstraintViolationException e) {
+			e.printStackTrace();
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			System.out.println("Unique constraint error");
+		} catch (SQLException e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}
+		return b;
+	}
 
 	@Override
 	public boolean update(Answer s) {
@@ -183,6 +267,23 @@ public class AnswerDAO implements DAOInterface<Answer> {
 			e.printStackTrace();
 		}
 		return extractedStudents;
+	}
+
+	private Answer resultSetExtractorResult(ResultSet rs, int layerLevel, Connection connection) {
+		Answer a = null;
+		try {
+			while (rs.next()) {
+					a = retrieveById(rs.getInt("answer_id"),1);
+					//Question q = new QuestionDAO().retrieveById(rs.getInt("question_id"), 1);
+					//Person p = new PersonDAO().retrieve(rs.getInt("student_id"), 1);
+					//u.setLayerLevel(layerLevel);
+				}
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return a;
 	}
 
 	@Override

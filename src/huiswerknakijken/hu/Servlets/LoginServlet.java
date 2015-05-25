@@ -24,24 +24,30 @@ public class LoginServlet extends HttpServlet {
 		
 		RequestDispatcher rd = null;
 		HttpSession session = req.getSession();
-		if(userEmail.isEmpty() || password.isEmpty()) {
-			req.setAttribute("msgs", "Vul alle velden in.");
+		if(userEmail.isEmpty()) {
+			req.setAttribute("msgs", "Vul een gebruikersnaam in.");
 			rd = req.getRequestDispatcher("loginpage.jsp");
 		} else {			
-			if (p != null && password.equals(p.getPassword())){
-				System.out.println("test: " + p.getFirstName() + " " + p.getLastName());
-				session.setAttribute("user",p );
-				rd = req.getRequestDispatcher("index.jsp");
-				System.out.println("testi");
-				if(p.getRole() == null)
-					System.out.println("ROLE IS NULL");
-				if(p.getRole()==UserRole.Teacher){
-					rd= req.getRequestDispatcher("LeraarOverzichtServlet.do");
-				}
-				if(p.getRole()==UserRole.Student){
-					rd = req.getRequestDispatcher("LeerlingOverzichtServlet.do");
-				}
+			if (p != null && (p.getPassword() == null || password.equals(p.getPassword()))){ //nog de p.getpassword null check apart maken
+					System.out.println("test: " + p.getFirstName() + " " + p.getLastName());
+					session.setAttribute("user",p );
+					rd = req.getRequestDispatcher("index.jsp");
+					System.out.println("testi");
+					if(p.getRole() == null)
+						System.out.println("ROLE IS NULL");
+					if(p.getRole()==UserRole.Teacher){
+						rd= req.getRequestDispatcher("LeraarOverzichtServlet.do");
+					}
+					if(p.getRole()==UserRole.Student){
+						rd = req.getRequestDispatcher("LeerlingOverzichtServlet.do");
+					}
+					System.out.println("ppass: " + p.getPassword());
+					if (p.getPassword() == null || p.getPassword().equals("")){
+						System.out.println("nulll ww door gestuurd naar...");
+						rd = req.getRequestDispatcher("NieuwWachtwoord.jsp");
+					}
 			} else {
+				//System.out.println("pass: '" + p.getPassword() + "'");
 				req.setAttribute("msgs", "Wachtwoord of gebruikersnaam incorrect.");
 				rd = req.getRequestDispatcher("loginpage.jsp");
 			}

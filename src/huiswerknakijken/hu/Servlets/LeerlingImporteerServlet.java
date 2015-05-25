@@ -27,6 +27,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FilenameUtils;
 
+
 public class LeerlingImporteerServlet extends HttpServlet {
 	private String saveFile=System.getProperty("java.io.tmpdir");
 	
@@ -37,36 +38,50 @@ public class LeerlingImporteerServlet extends HttpServlet {
 		File file;
 		//System.out.println("ummmm: " + saveFile);
 		file = getFileFromServer(req,resp);
-		System.out.println("boia");
 		List<Object> users = ExcelImport.readFile(file);
-		System.out.println("temp: " + users.toString());
 		PersonDAO dao = new PersonDAO();
 		Person s = null;
-		int i = 0;
+		int i = -4;
 		for (Object o : users){
-			i++;
-			if(o instanceof Number){
+			if(i<0){
+				System.out.println(o.toString());
+				i++;
+				continue;
+			}
+			if(i == 0){
+				System.out.println("in i == 0");
 				if (s == null){
 					s = new Student();
-					s.setID((int) o);
+					try{
+						s.setID(Integer.parseInt((String) o));
+					}catch(NumberFormatException e){
+						e.printStackTrace();
+					}
+					
 				} else {
-					if (dao.retrieveByEmail(s.getEmail(), 0) == null)
-						dao.add(s);
 					s = new Student();
-					s.setID((int) o);
+					s.setID(Integer.parseInt((String) o));
 				}
 			}
-			if(i==1)
-				s.setFirstName((String) o);
-			else if(i==2)
-				s.setLastName((String) o);
+			
+			
+			if(i==1){
+				s.setFirstName(o.toString());
+			}
+			else if(i==2){
+
+				s.setLastName(o.toString());
+			}
 			else if(i==3){
 				s.setEmail(s.getFirstName() + "." + s.getLastName() + "@student.hu.nl");
-				i = 0;
+				i = -1;
 				s.setRole(UserRole.Student);
 				//Class shit moet hier nog
+				s.setPassword("");
+				if (dao.retrieveByEmail(s.getEmail(), 0) == null)
+					dao.add(s);
 			}
-			System.out.println("tralalala");
+			i++;
 		}
 		rd = req.getRequestDispatcher("LeraarOverzicht.jsp");
 		if (rd != null)

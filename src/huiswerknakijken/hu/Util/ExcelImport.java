@@ -24,21 +24,8 @@ public class ExcelImport
     	List<Object> temp = new ArrayList<Object>();
     	//f = new File("C:\\xampp\\tomcat\\temp\\Template Leerling informatie-1430476871960.xlsx");
     	InputStream is = new FileInputStream(f);
-    	System.out.println("BOA");
         try
         {
-        	System.out.println("BOA2");
-        	if(f == null)
-        		System.out.println("nullllllerino");
-        	else
-        		System.out.println("not nulllerino");
-        	//f = new File("C:\\Users\\Guido Laptop\\Documents\\THO7HuiswerkNakijken\\te1mp.xlsx");
-        	if(f.exists())
-        		System.out.println("exists");
-        	else
-        		System.out.println("not existing");
-        	System.out.println("path: " + f.getAbsolutePath());
-        	System.out.println("name: " + f.getName());
             //Create Workbook instance holding reference to .xlsx file
         	XSSFWorkbook workbook = null;
         	try {
@@ -46,7 +33,6 @@ public class ExcelImport
         	} catch(Exception e){
         		e.getStackTrace();
         	}
-            System.out.println("BOA3");
             //Get first/desired sheet from the workbook
             XSSFSheet sheet = workbook.getSheetAt(0);
             

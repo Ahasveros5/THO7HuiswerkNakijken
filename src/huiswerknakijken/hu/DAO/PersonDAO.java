@@ -190,6 +190,8 @@ public class PersonDAO implements DAOInterface<Person> {
 		//Service.getService().getStudents().put(u.getStudentid(), u);
 		try {
 			connection.setAutoCommit(false);
+			System.out.println("In update, id: " + s.getID());
+			System.out.println("In update, pass: " + s.getPassword());
 			PreparedStatement statement = connection.prepareStatement("UPDATE PERSON SET first_name=?, last_name=?, email=?, password=? WHERE id=?");
 			statement.setString(1, s.getFirstName());
 			statement.setString(2, s.getLastName());
@@ -278,7 +280,7 @@ public class PersonDAO implements DAOInterface<Person> {
 		Person retrievedStudent = null;
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
-			PreparedStatement statement = connection.prepareStatement("SELECT * FROM PERSON WHERE email=?");
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM PERSON WHERE LOWER(email)=LOWER(?)");
 			statement.setString(1, s);
 			ResultSet rs = statement.executeQuery();
 			ArrayList<Person> eU = resultSetExtractor(rs, layerLevel, connection);
@@ -354,7 +356,10 @@ public class PersonDAO implements DAOInterface<Person> {
 						p.setFirstName(rs.getString("first_name"));
 						p.setLastName(rs.getString("last_name"));
 						p.setEmail(rs.getString("email"));
-						p.setPassword(rs.getString("password"));
+						String s = rs.getString("password");
+						if (s == null)
+							s = "";
+						p.setPassword(s);
 						p.setRole(UserRole.Student);
 					} else if (role == 2){//teacher
 						System.out.println("TEACHER CREATED");

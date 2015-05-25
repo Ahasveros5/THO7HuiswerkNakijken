@@ -33,14 +33,12 @@
 			
 			if(p.getRole() == UserRole.Student) { %>
 				<ul>
-					<li><a href="HuiswerkOverzicht.jsp">Huiswerk maken</a></li>
-					<li><a href="404.jsp" class="regbutton">Overzicht huiswerk</a></li>
+					<li><a href="LeerlingOverzicht.jsp" class="regbutton">Overzicht huiswerk</a></li>
 					<li><a href="LogoutServlet.do">Uitloggen</a></li>
 				</ul>
 		<%}	else if(p.getRole() == UserRole.Teacher){%>
 				<ul>
-				<li><a href="HuiswerkOverzicht.jsp">Huiswerk aanmaken</a></li>
-				<li><a href="LeraarVraagAanmaken.jsp" class="regbutton">Overzicht huiswerk</a></li>
+				<li><a href="LeraarOverzichtServlet.do" class="regbutton">Overzicht huiswerk</a></li>
 				<li><a href="OverzichtLeerlingenServlet.do" class="regbutton">Overzicht leerlingen</a></li>
 				<li><a href="LogoutServlet.do">Uitloggen</a></li>
 			</ul>
