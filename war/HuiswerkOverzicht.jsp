@@ -19,6 +19,6 @@
 	}
 		%>
 		</div>
-	<form action = "LeraarVraagAanmaken.jsp">
+	<form action = "MultipleChoiceAanmaken.jsp">
 	 <input class = "button" value = "Multiple Choice vraag toevoegen" type = "submit" name="knop" />
 	 </form>
