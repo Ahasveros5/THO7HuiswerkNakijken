@@ -9,6 +9,18 @@
 			  <textarea name="vraag" form="openwoord">	</textarea> <input type="button" value="Voeg toe">
 			  <br />
 			  
+			  	<script language="javascript" type="text/javascript">
+					function addtext() {
+						int i = 0;
+						var newtext = document.myform.inputtext.value;
+						if (document.myform.placement[1].checked) {
+							document.myform.outputtext.value = "";
+							}
+						document.myform.vraag.value += ".." + i + "..";
+						i++;
+					}
+				</script>
+			  
 			<!--  <input type="button" value="Voeg Antwoord toe" onClick="addTextField('dynamicInput');">	
 			  
 			  
