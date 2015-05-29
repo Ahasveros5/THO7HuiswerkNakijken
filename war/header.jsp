@@ -39,8 +39,8 @@
 				</ul>
 		<%}	else if(p.getRole() == UserRole.Teacher){%>
 				<ul>
-				<li><a href="HuiswerkOverzicht.jsp">Huiswerk aanmaken</a></li>
-				<li><a href="LeraarVraagAanmaken.jsp" class="regbutton">Overzicht huiswerk</a></li>
+			<!-- 	<li><a href="HuiswerkOverzicht.jsp">Huiswerk aanmaken</a></li>  -->
+				<li><a href="LeraarOverzicht.jsp" class="regbutton">Overzicht huiswerk</a></li>
 				<li><a href="OverzichtLeerlingenServlet.do" class="regbutton">Overzicht leerlingen</a></li>
 				<li><a href="LogoutServlet.do">Uitloggen</a></li>
 			</ul>
