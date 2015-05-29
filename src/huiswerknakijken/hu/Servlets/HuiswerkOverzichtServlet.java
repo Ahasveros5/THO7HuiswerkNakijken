@@ -30,7 +30,7 @@ public class HuiswerkOverzichtServlet extends HttpServlet {
 		session.setAttribute("HwObj", hw);
 		ArrayList<Question> questions = hw.getQuestions();
 		session.setAttribute("QuestObj", questions);
-		ArrayList<Person>studenten = (ArrayList<Person>) pdao.retrieveAllByRole(UserRole.Student.getIndex(), 1);
+		ArrayList<Person>studenten = (ArrayList<Person>) pdao.retrieveStudentsByHomework(hw, 1);
 		session.setAttribute("leerlingen", studenten);
 		rd = req.getRequestDispatcher("HuiswerkOverzicht.jsp?id="+id);
 		
