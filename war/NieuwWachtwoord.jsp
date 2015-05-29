@@ -1,7 +1,7 @@
  <%@ include file="header.jsp" %>
    
    	 	<div class="user_register_container">
-     <h2>Registreren Leerling</h2>
+     <h2>Nieuw wachtwoord</h2>
      <div id="myform">	
      
 		  <fieldset id="Klant">
