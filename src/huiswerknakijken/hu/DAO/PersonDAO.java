@@ -340,12 +340,12 @@ public class PersonDAO implements DAOInterface<Person> {
 
 	}
 	
-	public ArrayList<Person> retrieveStudentsByHomework(Homework h, int layerLevel) {
+	public ArrayList<Person> retrieveStudentsByHomework(int hid, int layerLevel) {
 		ArrayList<Person> Persons = null;
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
 			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Person, Person_Homework WHERE PERSON_HOMEWORK.homework_id = ? AND PERSON.role = 1 AND PERSON.id = PERSON_HOMEWORK.student_id");
-			statement.setInt(1, h.getID());
+			statement.setInt(1, hid);
 			ResultSet rs = statement.executeQuery();
 			Persons = resultSetExtractor(rs, layerLevel, connection);
 			statement.close();
