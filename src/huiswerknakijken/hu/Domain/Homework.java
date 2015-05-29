@@ -11,7 +11,8 @@ public class Homework {
 	private ArrayList<Question> questions = new ArrayList<Question>();
 	private Course course;
 	private Teacher teacher;
-	private ArrayList<Student> students = new ArrayList<Student>();
+	private Student student; //specific student
+	private ArrayList<Student> students = new ArrayList<Student>(); //all students having this homework type
 	private int ID;
 	private String deadline;
 	private String description;
@@ -154,6 +155,14 @@ public class Homework {
 
 	public void setCurrentQuestion(int currentQuestion) {
 		this.currentQuestion = currentQuestion;
+	}
+
+	public Student getStudent() {
+		return student;
+	}
+
+	public void setStudent(Student student) {
+		this.student = student;
 	}
 	
 }
