@@ -26,11 +26,16 @@ public class HuiswerkOverzichtServlet extends HttpServlet {
 		PersonDAO pdao = new PersonDAO();
 		
 		String id = req.getParameter("id");
-		Homework hw = dao.retrieveByID(Integer.parseInt(id), 2);
+		Homework hwid = new Homework();
+		hwid.setID(id);
+		ArrayList<Person>studenten = (ArrayList<Person>) pdao.retrieveStudentsByHomework(id, 1);
+		for(i = 0; i<studenten.length; i++){
+		Homework hw = dao.retrieveHomeworkByStudent(dao.retrieveByID(Integer.parseInt(id), 1).getID(), Sid, layerLevel)dao.retrieveByID(Integer.parseInt(id), 2);
+		}
 		session.setAttribute("HwObj", hw);
 		ArrayList<Question> questions = hw.getQuestions();
 		session.setAttribute("QuestObj", questions);
-		ArrayList<Person>studenten = (ArrayList<Person>) pdao.retrieveStudentsByHomework(hw, 1);
+		
 		session.setAttribute("leerlingen", studenten);
 		rd = req.getRequestDispatcher("HuiswerkOverzicht.jsp?id="+id);
 		
