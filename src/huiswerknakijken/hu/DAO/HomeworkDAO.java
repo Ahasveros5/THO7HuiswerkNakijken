@@ -19,7 +19,7 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 		ArrayList<Homework> homework = null;
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
-			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Homework");
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Homework, Person_Homework");
 			rs = statement.executeQuery();
 			homework = resultSetExtractor(rs, layerLevel, connection);
 			statement.close();
@@ -36,7 +36,7 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 		ArrayList<Homework> homework = null;
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
-			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Homework WHERE status=?");
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Homework, Person_Homework WHERE status=?");
 			statement.setInt(1, s.getIndex());
 			rs = statement.executeQuery();
 			homework = resultSetExtractor(rs, layerLevel, connection);
@@ -54,7 +54,7 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 		ArrayList<Homework> homework = null;
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
-			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Homework WHERE status!=?");
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Homework, Person_Homework WHERE status!=?");
 			statement.setInt(1, s.getIndex());
 			rs = statement.executeQuery();
 			homework = resultSetExtractor(rs, layerLevel, connection);
@@ -72,7 +72,7 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 		Homework retrievedHomework = null;
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
-			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Homework WHERE homework_name=?");
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Homework, Person_Homework WHERE homework_name=?");
 			statement.setString(1, name);
 			ResultSet rs = statement.executeQuery();
 			ArrayList<Homework> Homework = resultSetExtractor(rs, layerLevel, connection);
@@ -89,7 +89,7 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 		Homework retrievedHomework = null;
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
-			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Homework WHERE homework_id=?");
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Homework, Person_Homework WHERE homework_id=?");
 			statement.setInt(1, id);
 			ResultSet rs = statement.executeQuery();
 			ArrayList<Homework> Homework = resultSetExtractor(rs, layerLevel, connection);
@@ -106,7 +106,7 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 		ArrayList<Homework> homework = null;
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
-			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Homework WHERE homework_name=?");
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Homework, Person_Homework WHERE homework_name=?");
 			statement.setString(1, name);
 			ResultSet rs = statement.executeQuery();
 			homework = resultSetExtractor(rs, layerLevel, connection);
@@ -193,6 +193,21 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 		statementKoppel.executeUpdate();
 		statementKoppel.close();
 	}
+	
+	private void updateStudentHomework(Connection connection, Homework h,Student s) throws SQLException {
+		PreparedStatement statementKoppel = null;
+		String sqlKoppel = "UPDATE Person_HOMEWORK SET Status=?, currentQuestion=? WHERE Homework_id=? AND Student_id=?";
+		statementKoppel = connection.prepareStatement(sqlKoppel);
+				statementKoppel.setInt(1, h.getStatus().getIndex());
+				statementKoppel.setInt(2, h.getCurrentQuestion());
+				statementKoppel.setInt(3, h.getID());
+				statementKoppel.setInt(4, s.getID());
+		statementKoppel.executeUpdate();
+		statementKoppel.close();
+	}
+	
+	
+	
 	@Override
 	public boolean add(Homework s) {
 		boolean b = false;
@@ -207,13 +222,11 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 			String sql;
 			PreparedStatement statement;
 				String generatedColumns[] = { "homework_id" };
-				sql = "INSERT INTO Homework(homework_name, deadline,questions, status, currentQuestion) VALUES (?,?,?,?,?)";
+				sql = "INSERT INTO Homework(homework_name, deadline,questions) VALUES (?,?,?)";
 				statement = connection.prepareStatement(sql, generatedColumns);
 				statement.setString(1, s.getName());
 				statement.setString(2, s.getDeadline());
 				statement.setInt(3, s.getNumberQuestions());
-				statement.setInt(4, s.getStatus().getIndex());
-				statement.setInt(5, s.getCurrentQuestion());
 				statement.executeUpdate();
 				
 				int ID = -1;
@@ -226,10 +239,10 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 			if(s.getStudents().size() > 0){
 				for(Student st : s.getStudents()){
 					addStudent(connection, s, st);
+					updateStudentHomework(connection, s, st);
 				}
 			}
 			addTeacher(connection,s);
-
 			b = true;
 			connection.commit();
 			connection.close();
@@ -259,16 +272,18 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 		//Service.getService().getStudents().put(u.getStudentid(), u);
 		try {
 			connection.setAutoCommit(false);
-			PreparedStatement statement = connection.prepareStatement("UPDATE HOMEWORK SET Homework_Name=?, Deadline=?, Questions=?, Status=?, CurrentQuestion=? WHERE Homework_id=?");
+			PreparedStatement statement = connection.prepareStatement("UPDATE HOMEWORK SET Homework_Name=?, Deadline=?, Questions=? WHERE Homework_id=?");
 			statement.setString(1, s.getName());
 			statement.setString(2, s.getDeadline());
 			statement.setInt(3, s.getNumberQuestions());
-			statement.setInt(4, s.getStatus().getIndex());
-			statement.setInt(5,s.getCurrentQuestion());
-			statement.setInt(6, s.getID());
+			statement.setInt(4, s.getID());
 			statement.executeUpdate();
 			statement.close();
-
+			if(s.getStudents().size() > 0){
+				for(Student st : s.getStudents()){
+					updateStudentHomework(connection, s, st);
+				}
+			}
 
 			connection.commit();
 			connection.close();

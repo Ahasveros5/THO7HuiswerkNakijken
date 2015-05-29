@@ -20,5 +20,11 @@
 		%>
 		</div>
 	<form action = "MultipleChoiceAanmaken.jsp">
-	 <input class = "button" value = "Multiple Choice vraag toevoegen" type = "submit" name="knop" />
+	 <input class = "button" value = "Meerkeuze vraag toevoegen" type = "submit" name="knop" />
+	 </form>
+	 <form action = "OpenWoordAanmaken.jsp">
+	 <input class = "button" value = "Open woord vraag toevoegen" type = "submit" name="knop" />
+	 </form>
+	 <form action = "MultipleChoiceAanmaken.jsp">
+	 <input class = "button" value = "Open vraag toevoegen(NYI)" type = "submit" name="knop" />
 	 </form>
