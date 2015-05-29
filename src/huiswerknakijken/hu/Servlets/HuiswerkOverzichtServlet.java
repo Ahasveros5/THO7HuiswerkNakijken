@@ -25,14 +25,14 @@ public class HuiswerkOverzichtServlet extends HttpServlet {
 		HomeworkDAO dao = new HomeworkDAO();
 		PersonDAO pdao = new PersonDAO();
 		
-		String id = req.getParameter("id");
-		Homework hwid = new Homework();
-		hwid.setID(id);
-		ArrayList<Person>studenten = (ArrayList<Person>) pdao.retrieveStudentsByHomework(id, 1);
-		for(i = 0; i<studenten.length; i++){
-		Homework hw = dao.retrieveHomeworkByStudent(dao.retrieveByID(Integer.parseInt(id), 1).getID(), Sid, layerLevel)dao.retrieveByID(Integer.parseInt(id), 2);
+		int id = Integer.parseInt(req.getParameter("id"));
+
+		ArrayList<Person> studenten = (ArrayList<Person>) pdao.retrieveStudentsByHomework(id, 1);
+		ArrayList<Homework> hwlist = new ArrayList<Homework>();
+		for(int i = 0; i<studenten.size(); i++){
+		Homework hw = dao.retrieveHomeworkByStudent(dao.retrieveByID(id, 1).getID(), studenten.get(i).getID(), 1);
 		}
-		session.setAttribute("HwObj", hw);
+		session.setAttribute("HwObj", hwlist);
 		ArrayList<Question> questions = hw.getQuestions();
 		session.setAttribute("QuestObj", questions);
 		
