@@ -103,6 +103,9 @@ public class Person {
 		this.password = password;
 	}
 	
+	public String toString(){
+		return firstName +" "+lastName;
+	}
 	
 	
 }
