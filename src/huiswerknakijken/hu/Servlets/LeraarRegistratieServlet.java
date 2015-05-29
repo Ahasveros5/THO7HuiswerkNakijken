@@ -4,9 +4,12 @@ import huiswerknakijken.hu.DAO.PersonDAO;
 import huiswerknakijken.hu.Domain.Person;
 import huiswerknakijken.hu.Domain.Teacher;
 import huiswerknakijken.hu.Domain.Person.UserRole;
+import huiswerknakijken.hu.Util.PasswordHash;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -61,7 +64,12 @@ public class LeraarRegistratieServlet extends HttpServlet {
 				p.setFirstName(naam);
 				p.setLastName(achternaam);
 				p.setEmail(email1);
-				p.setPassword(ww1);
+				try {
+					p.setPassword(PasswordHash.createHash(ww1));
+				} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				p.setRole(UserRole.Teacher);
 				
 				dao.add(p);			

@@ -196,12 +196,13 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 			String sql;
 			PreparedStatement statement;
 				String generatedColumns[] = { "homework_id" };
-				sql = "INSERT INTO Homework(homework_name, deadline,questions, status) VALUES (?,?,?,?)";
+				sql = "INSERT INTO Homework(homework_name, deadline,questions, status, currentQuestion) VALUES (?,?,?,?,?)";
 				statement = connection.prepareStatement(sql, generatedColumns);
 				statement.setString(1, s.getName());
 				statement.setString(2, s.getDeadline());
 				statement.setInt(3, s.getNumberQuestions());
 				statement.setInt(4, s.getStatus().getIndex());
+				statement.setInt(5, s.getCurrentQuestion());
 				statement.executeUpdate();
 				int ID = -1;
 				ResultSet rsid = statement.getGeneratedKeys();
@@ -237,6 +238,32 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 	@Override
 	public boolean update(Homework s) {
 		boolean b = false;
+		Connection connection = OracleConnectionPool.getConnection();
+		//Service.getService().getStudents().put(u.getStudentid(), u);
+		try {
+			connection.setAutoCommit(false);
+			PreparedStatement statement = connection.prepareStatement("UPDATE HOMEWORK SET Homework_Name=?, Deadline=?, Questions=?, Status=?, CurrentQuestion=? WHERE Homework_id=?");
+			statement.setString(1, s.getName());
+			statement.setString(2, s.getDeadline());
+			statement.setInt(3, s.getNumberQuestions());
+			statement.setInt(4, s.getStatus().getIndex());
+			statement.setInt(5,s.getCurrentQuestion());
+			statement.setInt(6, s.getID());
+			statement.executeUpdate();
+			statement.close();
+
+
+			connection.commit();
+			connection.close();
+			b = true;
+		} catch (SQLException e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}
 		return b;
 	}
 
@@ -252,6 +279,7 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 					c.setName(rs.getString("homework_name"));
 					c.setDeadline(rs.getString("deadline"));
 					c.setNumberQuestions(rs.getInt("questions"));
+					c.setCurrentQuestion(rs.getInt("currentQuestion"));
 					c.setStatus(Status.getValue(rs.getInt("status")));
 					PersonDAO dao = new PersonDAO();
 					c.setTeacher(dao.retrieveTeacherByHomework(c, 1));

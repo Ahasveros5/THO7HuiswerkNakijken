@@ -3,6 +3,7 @@ package huiswerknakijken.hu.Servlets;
 import huiswerknakijken.hu.DAO.HomeworkDAO;
 import huiswerknakijken.hu.Domain.Homework;
 import huiswerknakijken.hu.Domain.Question;
+import huiswerknakijken.hu.Domain.Homework.Status;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,7 +30,6 @@ public class HuiswerkMakenServlet extends HttpServlet {
 		session.setAttribute("QuestObj", questions);
 		for(Question q : questions)
 			System.out.println("tra:::: " + q.getAnswers().size());
-		
 		rd = req.getRequestDispatcher("HuiswerkMaken.jsp");
 		
 		if(rd!= null){
