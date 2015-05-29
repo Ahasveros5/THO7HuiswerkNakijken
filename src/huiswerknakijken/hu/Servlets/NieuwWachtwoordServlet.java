@@ -3,9 +3,11 @@ package huiswerknakijken.hu.Servlets;
 import huiswerknakijken.hu.DAO.PersonDAO;
 import huiswerknakijken.hu.Domain.Person;
 import huiswerknakijken.hu.Domain.Person.UserRole;
-import huiswerknakijken.hu.Domain.Student;
+import huiswerknakijken.hu.Util.PasswordHash;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -41,7 +43,13 @@ public class NieuwWachtwoordServlet extends HttpServlet {
 				rd = req.getRequestDispatcher("NieuwWachtwoord.jsp");
 			}
 			else{
-				p.setPassword(ww1);
+				try {
+					p.setPassword(PasswordHash.createHash(ww1));
+				} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				System.out.println("hashed pass: " + p.getPassword());
 				dao.update(p); 
 				System.out.println("Updated");
 				

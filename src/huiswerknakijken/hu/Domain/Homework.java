@@ -16,7 +16,8 @@ public class Homework {
 	private String deadline;
 	private String description;
 	private int numberQuestions = 0;
-	private Status status;
+	private Status status = Status.Nieuw;
+	private int currentQuestion = 1;
 	
 	public enum Status{
 		Nieuw(1),
@@ -145,6 +146,14 @@ public class Homework {
 
 	public void setStatus(Status status) {
 		this.status = status;
+	}
+
+	public int getCurrentQuestion() {
+		return currentQuestion;
+	}
+
+	public void setCurrentQuestion(int currentQuestion) {
+		this.currentQuestion = currentQuestion;
 	}
 	
 }

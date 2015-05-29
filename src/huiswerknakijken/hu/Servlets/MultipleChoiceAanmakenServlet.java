@@ -1,5 +1,6 @@
 package huiswerknakijken.hu.Servlets;
 
+import huiswerknakijken.hu.DAO.HomeworkDAO;
 import huiswerknakijken.hu.DAO.QuestionDAO;
 import huiswerknakijken.hu.Domain.Answer;
 import huiswerknakijken.hu.Domain.Answer.Correct;
@@ -89,7 +90,9 @@ public class MultipleChoiceAanmakenServlet extends HttpServlet {
 			d.setQuestion(q);
 			Homework h = (Homework)session.getAttribute("HwObj");
 			q.setHomework(h);
+			HomeworkDAO hdao = new HomeworkDAO();
 			h.addQuestion(q);
+			hdao.update(h);
 			rd = req.getRequestDispatcher("HuiswerkOverzicht.jsp?id="+h.getID());
 			questions.add(q);
 			session.setAttribute("questObj", questions);

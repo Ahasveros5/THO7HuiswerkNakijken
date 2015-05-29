@@ -1,7 +1,9 @@
 package huiswerknakijken.hu.Servlets;
 
 import huiswerknakijken.hu.DAO.AnswerDAO;
+import huiswerknakijken.hu.DAO.HomeworkDAO;
 import huiswerknakijken.hu.Domain.Homework;
+import huiswerknakijken.hu.Domain.Homework.Status;
 import huiswerknakijken.hu.Domain.Person;
 
 import java.io.IOException;
@@ -27,11 +29,19 @@ public class VraagMakenServlet extends HttpServlet {
 		adao.addGivenAnswer(a, q, p);
 		System.out.println("answer: " + a);
 		Homework h = (Homework)session.getAttribute("HwObj");
+		h.setCurrentQuestion(Integer.parseInt(qnumber));
+		if (h.getStatus() == Status.Nieuw){
+			h.setStatus(Status.Begonnen);
+		}
+		
 		if (Integer.parseInt(qnumber) > h.getNumberQuestions()){
+			h.setStatus(Status.Af);
 			rd = req.getRequestDispatcher("HuiswerkAf.jsp");
 		} else{
 			rd = req.getRequestDispatcher("VraagMaken.jsp?id=" + qnumber);
 		}
+		HomeworkDAO dao = new HomeworkDAO();
+		dao.update(h);
 		if(rd!= null){
 			rd.forward(req, resp);
 		}
