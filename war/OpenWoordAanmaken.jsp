@@ -6,18 +6,16 @@
 			  <label><b>Naam</b></label>
 			  <input type="text" size="25" name="Naam" /><br />
 			  <label><b>Vraag</b></label>
-			  <textarea name="vraag" form="openwoord">	</textarea> <input type="button" value="Voeg toe">
+			  <textarea name="vraag" form="openwoord">	</textarea> <input type="text" size="10" name="antwoord"/> <input type="button" value="Voeg toe"/>
 			  <br />
 			  
 			  	<script language="javascript" type="text/javascript">
 					function addtext() {
-						int i = 0;
-						var newtext = document.myform.inputtext.value;
+						var newtext = document.myform.antwoord.value;
 						if (document.myform.placement[1].checked) {
 							document.myform.outputtext.value = "";
 							}
-						document.myform.vraag.value += ".." + i + "..";
-						i++;
+						document.myform.vraag.value += "$" + newtext + "$";
 					}
 				</script>
 			  
