@@ -1,10 +1,13 @@
 package huiswerknakijken.hu.Servlets;
 
+import huiswerknakijken.hu.DAO.ClassDAO;
 import huiswerknakijken.hu.DAO.PersonDAO;
+import huiswerknakijken.hu.Domain.Klass;
 import huiswerknakijken.hu.Domain.Person;
 import huiswerknakijken.hu.Domain.Person.UserRole;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,7 +24,8 @@ public class LoginServlet extends HttpServlet {
 		String password = req.getParameter("ww_login");
 		PersonDAO pdao = new PersonDAO();
 		Person p = pdao.retrieveByEmail(userEmail, 1);
-		
+		ClassDAO kdao = new ClassDAO();
+		ArrayList<Klass> klassen = (ArrayList<Klass>) kdao.retrieveAll(2);
 		RequestDispatcher rd = null;
 		HttpSession session = req.getSession();
 		if(userEmail.isEmpty()) {
@@ -31,6 +35,9 @@ public class LoginServlet extends HttpServlet {
 			if (p != null && (p.getPassword() == null || password.equals(p.getPassword()))){ //nog de p.getpassword null check apart maken
 					System.out.println("test: " + p.getFirstName() + " " + p.getLastName());
 					session.setAttribute("user",p );
+					session.setAttribute("klassen", klassen);
+					for(int i =0; i<klassen.size(); i++){
+					}
 					rd = req.getRequestDispatcher("index.jsp");
 					System.out.println("testi");
 					if(p.getRole() == null)
