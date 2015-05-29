@@ -2,6 +2,7 @@ package huiswerknakijken.hu.DAO;
 
 import huiswerknakijken.hu.Domain.Homework;
 import huiswerknakijken.hu.Domain.Homework.Status;
+import huiswerknakijken.hu.Domain.Student;
 import huiswerknakijken.hu.Util.OracleConnectionPool;
 
 import java.sql.Connection;
@@ -182,6 +183,16 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 		statementKoppel.executeUpdate();
 		statementKoppel.close();
 	}
+	
+	private void addStudent(Connection connection, Homework h,Student s) throws SQLException {
+		PreparedStatement statementKoppel = null;
+		String sqlKoppel = "INSERT INTO PERSON_HOMEWORK(student_id,homework_id) VALUES (?,?)";
+		statementKoppel = connection.prepareStatement(sqlKoppel);
+				statementKoppel.setInt(1, s.getID());
+				statementKoppel.setInt(2, h.getID());
+		statementKoppel.executeUpdate();
+		statementKoppel.close();
+	}
 	@Override
 	public boolean add(Homework s) {
 		boolean b = false;
@@ -204,6 +215,7 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 				statement.setInt(4, s.getStatus().getIndex());
 				statement.setInt(5, s.getCurrentQuestion());
 				statement.executeUpdate();
+				
 				int ID = -1;
 				ResultSet rsid = statement.getGeneratedKeys();
 				if (rsid != null && rsid.next()) {
@@ -211,6 +223,11 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 					s.setID(ID);
 				}
 			statement.close();
+			if(s.getStudents().size() > 0){
+				for(Student st : s.getStudents()){
+					addStudent(connection, s, st);
+				}
+			}
 			addTeacher(connection,s);
 
 			b = true;
