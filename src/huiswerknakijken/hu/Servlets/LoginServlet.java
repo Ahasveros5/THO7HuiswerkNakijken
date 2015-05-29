@@ -5,8 +5,11 @@ import huiswerknakijken.hu.DAO.PersonDAO;
 import huiswerknakijken.hu.Domain.Klass;
 import huiswerknakijken.hu.Domain.Person;
 import huiswerknakijken.hu.Domain.Person.UserRole;
+import huiswerknakijken.hu.Util.PasswordHash;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -32,31 +35,36 @@ public class LoginServlet extends HttpServlet {
 			req.setAttribute("msgs", "Vul een gebruikersnaam in.");
 			rd = req.getRequestDispatcher("loginpage.jsp");
 		} else {			
-			if (p != null && (p.getPassword() == null || password.equals(p.getPassword()))){ //nog de p.getpassword null check apart maken
-					System.out.println("test: " + p.getFirstName() + " " + p.getLastName());
-					session.setAttribute("user",p );
-					session.setAttribute("klassen", klassen);
-					for(int i =0; i<klassen.size(); i++){
-					}
-					rd = req.getRequestDispatcher("index.jsp");
-					System.out.println("testi");
-					if(p.getRole() == null)
-						System.out.println("ROLE IS NULL");
-					if(p.getRole()==UserRole.Teacher){
-						rd= req.getRequestDispatcher("LeraarOverzichtServlet.do");
-					}
-					if(p.getRole()==UserRole.Student){
-						rd = req.getRequestDispatcher("LeerlingOverzichtServlet.do");
-					}
-					System.out.println("ppass: " + p.getPassword());
-					if (p.getPassword() == null || p.getPassword().equals("")){
-						System.out.println("nulll ww door gestuurd naar...");
-						rd = req.getRequestDispatcher("NieuwWachtwoord.jsp");
-					}
-			} else {
-				//System.out.println("pass: '" + p.getPassword() + "'");
-				req.setAttribute("msgs", "Wachtwoord of gebruikersnaam incorrect.");
-				rd = req.getRequestDispatcher("loginpage.jsp");
+			try {
+				if (p != null && (p.getPassword() == null || PasswordHash.validatePassword(password, p.getPassword()))){ //nog de p.getpassword null check apart maken
+						System.out.println("test: " + p.getFirstName() + " " + p.getLastName());
+						session.setAttribute("user",p );
+						session.setAttribute("klassen", klassen);
+						for(int i =0; i<klassen.size(); i++){
+						}
+						rd = req.getRequestDispatcher("index.jsp");
+						System.out.println("testi");
+						if(p.getRole() == null)
+							System.out.println("ROLE IS NULL");
+						if(p.getRole()==UserRole.Teacher){
+							rd= req.getRequestDispatcher("LeraarOverzichtServlet.do");
+						}
+						if(p.getRole()==UserRole.Student){
+							rd = req.getRequestDispatcher("LeerlingOverzichtServlet.do");
+						}
+						System.out.println("ppass: " + p.getPassword());
+						if (p.getPassword() == null || p.getPassword().equals("")){
+							System.out.println("nulll ww door gestuurd naar...");
+							rd = req.getRequestDispatcher("NieuwWachtwoord.jsp");
+						}
+				} else {
+					//System.out.println("pass: '" + p.getPassword() + "'");
+					req.setAttribute("msgs", "Wachtwoord of gebruikersnaam incorrect.");
+					rd = req.getRequestDispatcher("loginpage.jsp");
+				}
+			} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}	
 		
