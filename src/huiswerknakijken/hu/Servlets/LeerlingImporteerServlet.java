@@ -1,13 +1,13 @@
 package huiswerknakijken.hu.Servlets;
 
+import huiswerknakijken.hu.DAO.ClassDAO;
 import huiswerknakijken.hu.DAO.PersonDAO;
-import huiswerknakijken.hu.Domain.Person;
+import huiswerknakijken.hu.Domain.Klass;
 import huiswerknakijken.hu.Domain.Person.UserRole;
 import huiswerknakijken.hu.Domain.Student;
 import huiswerknakijken.hu.Util.ExcelImport;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
@@ -27,6 +27,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FilenameUtils;
 
+
 public class LeerlingImporteerServlet extends HttpServlet {
 	private String saveFile=System.getProperty("java.io.tmpdir");
 	
@@ -37,36 +38,62 @@ public class LeerlingImporteerServlet extends HttpServlet {
 		File file;
 		//System.out.println("ummmm: " + saveFile);
 		file = getFileFromServer(req,resp);
-		System.out.println("boia");
 		List<Object> users = ExcelImport.readFile(file);
-		System.out.println("temp: " + users.toString());
 		PersonDAO dao = new PersonDAO();
-		Person s = null;
-		int i = 0;
+		Student s = null;
+		int i = -4;
 		for (Object o : users){
-			i++;
-			if(o instanceof Number){
+			if(i<0){
+				System.out.println(o.toString());
+				i++;
+				continue;
+			}
+			if(i == 0){
+				System.out.println("in i == 0");
 				if (s == null){
 					s = new Student();
-					s.setID((int) o);
+					try{
+						s.setID(Integer.parseInt((String) o));
+					}catch(NumberFormatException e){
+						e.printStackTrace();
+					}
+					
 				} else {
-					if (dao.retrieveByEmail(s.getEmail(), 0) == null)
-						dao.add(s);
 					s = new Student();
-					s.setID((int) o);
+					s.setID(Integer.parseInt((String) o));
 				}
 			}
-			if(i==1)
-				s.setFirstName((String) o);
-			else if(i==2)
-				s.setLastName((String) o);
+			
+			
+			if(i==1){
+				s.setFirstName(o.toString());
+			}
+			else if(i==2){
+
+				s.setLastName(o.toString());
+			}
 			else if(i==3){
+				ClassDAO cdao = new ClassDAO();
+				System.out.println("troeloeloeloeloe");
+				Klass c = cdao.retrieveByName(o.toString(), 1);
+				System.out.println("tralalalala");
+				if (c == null){
+					System.out.println("Creating new class");
+					c = new Klass(o.toString());
+					cdao.add(c);
+				}
+				System.out.println("c.id: " + c.getClassID());
+				s.setMainClass(c);
+				
 				s.setEmail(s.getFirstName() + "." + s.getLastName() + "@student.hu.nl");
-				i = 0;
+				i = -1;
 				s.setRole(UserRole.Student);
 				//Class shit moet hier nog
+				s.setPassword("");
+				if (dao.retrieveByEmail(s.getEmail(), 0) == null)
+					dao.addStudent(s);
 			}
-			System.out.println("tralalala");
+			i++;
 		}
 		rd = req.getRequestDispatcher("LeraarOverzicht.jsp");
 		if (rd != null)

@@ -1,5 +1,7 @@
 package huiswerknakijken.hu.Domain;
 
+import huiswerknakijken.hu.Domain.Person.UserRole;
+
 import java.util.ArrayList;
 
 public class Homework {
@@ -14,6 +16,33 @@ public class Homework {
 	private String deadline;
 	private String description;
 	private int numberQuestions = 0;
+	private Status status;
+	
+	public enum Status{
+		Nieuw(1),
+		Begonnen(2),
+		Af(3);
+		
+		private final int index;   
+		 
+		Status(int index) {
+			this.index = index;
+		}
+
+		public int getIndex() { 
+			return index; 
+		}
+		
+		public static Status getValue(int i){
+			Status ur = Status.Nieuw;
+			for (Status us : Status.values()) {
+				if (us.getIndex() == i) {
+					ur = us;
+				}
+			}
+			return ur;
+		}
+	}
 	
 	public ArrayList<Question> getQuestions() {
 		return questions;
@@ -108,6 +137,14 @@ public class Homework {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
 	}
 	
 }

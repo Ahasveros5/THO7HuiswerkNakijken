@@ -73,6 +73,16 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 		<servlet-name>LoginServlet</servlet-name>
 		<url-pattern>/LoginServlet.do</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>NieuwWachtwoordServlet</servlet-name>
+		<servlet-class>huiswerknakijken.hu.Servlets.NieuwWachtwoordServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>NieuwWachtwoordServlet</servlet-name>
+		<url-pattern>/NieuwWachtwoordServlet.do</url-pattern>
+	</servlet-mapping>
 
 
 	<servlet>
@@ -133,6 +143,16 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	<servlet-mapping>
 		<servlet-name>HuiswerkOverzichtServlet</servlet-name>
 		<url-pattern>/HuiswerkOverzichtServlet.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>VraagMakenServlet</servlet-name>
+		<servlet-class>huiswerknakijken.hu.Servlets.VraagMakenServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>VraagMakenServlet</servlet-name>
+		<url-pattern>/VraagMakenServlet.do</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>

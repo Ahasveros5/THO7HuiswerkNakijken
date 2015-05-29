@@ -108,7 +108,7 @@ public class PersonDAO implements DAOInterface<Person> {
 				System.out.println("ATTENTION:: While adding Person generating new ID.");
 			}
 			else{*/
-				if(s.getRole() == UserRole.Student){
+				/*if(s.getRole() == UserRole.Student){
 						sql = "INSERT INTO Person(first_name, last_name, email, password, role, id,class_id) VALUES (?,?,?,?,?,?,?)";
 						if (s.getID() == -1){
 							String generatedColumns[] = { "id" };
@@ -119,24 +119,104 @@ public class PersonDAO implements DAOInterface<Person> {
 						statement.setInt(6, s.getID());
 
 					Student st = s.toStudent();
-					if(st.getMainClass() != null)
-						statement.setInt(7,st.getMainClass().getClassID());
+					if(st.getMainClass() != null){
+						System.out.println("Adding class id: " + st.getMainClass().getClassID());
+						statement.setInt(7,st.getMainClass().getClassID());}
 					else{
 						statement.setInt(7,0);
 						System.out.println("Testo2");
 					}
 				} else{
-					
-						sql = "INSERT INTO Person(first_name, last_name, email, password, role, id) VALUES (?,?,?,?,?,?)";
-						if (s.getID() == -1){
-							String generatedColumns[] = { "id" };
-							statement = connection.prepareStatement(sql,generatedColumns);
-						} else
-							statement = connection.prepareStatement(sql);
-						statement.setInt(6, s.getID());
-						System.out.println("Teacher id is wel bestaand");
-				}
+					*/
+			sql = "INSERT INTO Person(first_name, last_name, email, password, role, id) VALUES (?,?,?,?,?,?)";
+			if (s.getID() == -1){
+				String generatedColumns[] = { "id" };
+				statement = connection.prepareStatement(sql,generatedColumns);
+			} else
+				statement = connection.prepareStatement(sql);
+			statement.setInt(6, s.getID());
+			System.out.println("Teacher id is wel bestaand");
+				//}
 			//}
+			statement.setString(1, s.getFirstName());
+			statement.setString(2, s.getLastName());
+			statement.setString(3, s.getEmail());
+			statement.setString(4, s.getPassword());
+			//if (s.getRole() != null)
+				statement.setInt(5, s.getRole().getIndex());
+			//else{
+			//	statement.setInt(5, UserRole.Unknown.getIndex());
+			//}
+				s.print();
+			statement.executeUpdate();
+			if(s.getID() == -1){
+				int ID = -1;
+				
+				ResultSet rsid = statement.getGeneratedKeys();
+				if (rsid != null && rsid.next()) {
+					ID = rsid.getInt(1);
+					s.setID(ID);
+				}
+			}
+			
+			statement.close();
+
+
+			b = true;
+			connection.commit();
+			connection.close();
+		} catch (SQLIntegrityConstraintViolationException e) {
+			e.printStackTrace();
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			System.out.println("Unique constraint error");
+		} catch (SQLException e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}
+		return b;
+	}
+	
+	public boolean addStudent(Student s) {
+		boolean b = false;
+		Connection connection = OracleConnectionPool.getConnection();
+		if(s.getMainClass() == null)
+			System.out.println("GEEN MAIN CLASS BITCHEZZZ");
+		try {
+			connection.setAutoCommit(false);
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		PreparedStatement statement = null;
+		try {
+
+			String sql;
+			
+			if(s.getRole() == UserRole.Student){
+					sql = "INSERT INTO Person(first_name, last_name, email, password, role, id,class_id) VALUES (?,?,?,?,?,?,?)";
+					if (s.getID() == -1){
+						String generatedColumns[] = { "id" };
+						statement = connection.prepareStatement(sql,generatedColumns);
+					} else
+						statement = connection.prepareStatement(sql);
+					System.out.println("testo");
+					statement.setInt(6, s.getID());
+
+				if(s.getMainClass() != null){
+					System.out.println("Adding class id: " + s.getMainClass().getClassID());
+					statement.setInt(7,s.getMainClass().getClassID());}
+				else{
+					statement.setInt(7,0);
+					System.out.println("Testo2");
+				}
+			}
 			statement.setString(1, s.getFirstName());
 			statement.setString(2, s.getLastName());
 			statement.setString(3, s.getEmail());
@@ -190,6 +270,8 @@ public class PersonDAO implements DAOInterface<Person> {
 		//Service.getService().getStudents().put(u.getStudentid(), u);
 		try {
 			connection.setAutoCommit(false);
+			System.out.println("In update, id: " + s.getID());
+			System.out.println("In update, pass: " + s.getPassword());
 			PreparedStatement statement = connection.prepareStatement("UPDATE PERSON SET first_name=?, last_name=?, email=?, password=? WHERE id=?");
 			statement.setString(1, s.getFirstName());
 			statement.setString(2, s.getLastName());
@@ -278,7 +360,7 @@ public class PersonDAO implements DAOInterface<Person> {
 		Person retrievedStudent = null;
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
-			PreparedStatement statement = connection.prepareStatement("SELECT * FROM PERSON WHERE email=?");
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM PERSON WHERE LOWER(email)=LOWER(?)");
 			statement.setString(1, s);
 			ResultSet rs = statement.executeQuery();
 			ArrayList<Person> eU = resultSetExtractor(rs, layerLevel, connection);
@@ -354,7 +436,10 @@ public class PersonDAO implements DAOInterface<Person> {
 						p.setFirstName(rs.getString("first_name"));
 						p.setLastName(rs.getString("last_name"));
 						p.setEmail(rs.getString("email"));
-						p.setPassword(rs.getString("password"));
+						String s = rs.getString("password");
+						if (s == null)
+							s = "";
+						p.setPassword(s);
 						p.setRole(UserRole.Student);
 					} else if (role == 2){//teacher
 						System.out.println("TEACHER CREATED");

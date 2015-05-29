@@ -30,14 +30,18 @@ public class ClassDAO implements DAOInterface<Klass> {
 	}
 	
 	public Klass retrieveByName(String name, int layerLevel) {
-		Klass retrievedClass = new Klass();
+		Klass retrievedClass = null;
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
 			PreparedStatement statement = connection.prepareStatement("SELECT * FROM C_CLASS WHERE class_name=?");
 			statement.setString(1, name);
 			ResultSet rs = statement.executeQuery();
 			ArrayList<Klass> Class = resultSetExtractor(rs, layerLevel, connection);
-			retrievedClass = Class.get(0);
+			if(Class.size() == 0){
+				retrievedClass = null;
+			} else{
+				retrievedClass = Class.get(0);
+			}
 			statement.close();
 			connection.close();
 		} catch (SQLException e) {
