@@ -333,7 +333,7 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 					c.setStatus(Status.getValue(rs.getInt("status")));
 					PersonDAO dao = new PersonDAO();
 					c.setTeacher(dao.retrieveTeacherByHomework(c, 1));
-					c.setStudent((Student)dao.retrieve(rs.getInt("student_id"), 1));
+					c.setStudent(dao.retrieve(rs.getInt("student_id"), 1));
 					//u.setLayerLevel(layerLevel);
 
 					if (layerLevel > 1) { //questions

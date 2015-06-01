@@ -161,8 +161,8 @@ public class Homework {
 		return student;
 	}
 
-	public void setStudent(Student student) {
-		this.student = student;
+	public void setStudent(Person student) {
+		this.student = (Student)student;
 	}
 	
 }

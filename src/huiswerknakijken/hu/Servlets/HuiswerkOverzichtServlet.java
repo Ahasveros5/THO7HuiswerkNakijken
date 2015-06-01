@@ -31,12 +31,13 @@ public class HuiswerkOverzichtServlet extends HttpServlet {
 		ArrayList<Homework> hwlist = new ArrayList<Homework>();
 		for(int i = 0; i<studenten.size(); i++){
 		Homework hw = dao.retrieveHomeworkByStudent(dao.retrieveByID(id, 1).getID(), studenten.get(i).getID(), 1);
+		hwlist.add(hw);
 		}
-		session.setAttribute("HwObj", hwlist);
-		ArrayList<Question> questions = hw.getQuestions();
-		session.setAttribute("QuestObj", questions);
 		
-		session.setAttribute("leerlingen", studenten);
+		session.setAttribute("HwObj", hwlist);
+		ArrayList<Question> questions = hwlist.get(0).getQuestions();
+		session.setAttribute("QuestObj", questions);
+
 		rd = req.getRequestDispatcher("HuiswerkOverzicht.jsp?id="+id);
 		
 		if(rd!= null){

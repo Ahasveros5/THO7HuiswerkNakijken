@@ -5,7 +5,7 @@
 	<%@ page import="huiswerknakijken.hu.Domain.Question" %>
 	<%@ page import="huiswerknakijken.hu.Domain.Person" %>
 	<%@ page import="java.util.ArrayList" %>
-	<%  Homework hw = (Homework)session.getAttribute("HwObj");
+	<%  Homework hw = ((ArrayList<Homework>)session.getAttribute("HwObj")).get(0);
 		ArrayList<Question> q =(ArrayList<Question>)session.getAttribute("questObj");
 
 		if(hw!=null){
@@ -31,12 +31,12 @@
 	 </form>
 	 <div id = "studentBox">
 	 <h3>Huiswerk status leerlingen</h3>
-	 <%  ArrayList<Person> p = (ArrayList<Person>)session.getAttribute("leerlingen");
-		if(p!=null){
-			for(int i = 0; i<p.size(); i++){
-			out.println(p.get(i).toString()+"<br/>");
+	 <%  ArrayList<Homework> hwpp = (ArrayList<Homework>)session.getAttribute("HwObj");
+		if(hwpp!=null){
+			for(int i = 0; i<hwpp.size(); i++){
+			out.println(hwpp.get(i).getStudent().toString()+" status:  "+hwpp.get(i).getStatus()+ "<br/>");
 		}
-		}
+	}
 		%>
 		</div>
 <style>
