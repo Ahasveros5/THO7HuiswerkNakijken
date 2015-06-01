@@ -34,13 +34,12 @@
 	 <%  ArrayList<Homework> hwpp = (ArrayList<Homework>)session.getAttribute("HwObj");
 		if(hwpp!=null){
 			for(int i = 0; i<hwpp.size(); i++){
+				
 			out.println(hwpp.get(i).getStudent().toString()+" status:  "+hwpp.get(i).getStatus()+ "<br/>");
 		}
 	}
 		%>
 		</div>
-<style>
-#studentBox{
-float: center;
-}
-</style>
+ 	<form action = "HuiswerkNakijkenServlet.jsp">
+	 <input class = "button" value = "Nakijken" type = "submit" name="knop" />
+	 </form>
