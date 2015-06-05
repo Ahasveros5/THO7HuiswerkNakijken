@@ -145,6 +145,16 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 		<url-pattern>/HuiswerkOverzichtServlet.do</url-pattern>
 	</servlet-mapping>
 	
+		<servlet>
+		<servlet-name>HuiswerkNakijkenServlet</servlet-name>
+		<servlet-class>huiswerknakijken.hu.Servlets.HuiswerkNakijkenServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>HuiswerkNakijkenServlet</servlet-name>
+		<url-pattern>/HuiswerkNakijkenServlet.do</url-pattern>
+	</servlet-mapping>
+	
 	<servlet>
 		<servlet-name>VraagMakenServlet</servlet-name>
 		<servlet-class>huiswerknakijken.hu.Servlets.VraagMakenServlet

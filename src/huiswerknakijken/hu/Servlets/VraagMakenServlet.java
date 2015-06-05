@@ -29,6 +29,10 @@ public class VraagMakenServlet extends HttpServlet {
 		adao.addGivenAnswer(a, q, p);
 		System.out.println("answer: " + a);
 		Homework h = (Homework)session.getAttribute("HwObj");
+		if(h.getStudent() == null){
+			System.out.println("Creating student for homework in questionthingy");
+			h.setStudent((Person)session.getAttribute("user"));
+		}
 		h.setCurrentQuestion(Integer.parseInt(qnumber));
 		if (h.getStatus() == Status.Nieuw){
 			h.setStatus(Status.Begonnen);

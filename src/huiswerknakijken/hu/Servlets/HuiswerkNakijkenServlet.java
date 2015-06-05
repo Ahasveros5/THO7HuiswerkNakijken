@@ -22,7 +22,6 @@ public class HuiswerkNakijkenServlet extends HttpServlet {
 		RequestDispatcher rd = null;
 		HttpSession session = req.getSession();
 		ArrayList<Homework> hws = (ArrayList<Homework>) session.getAttribute("HwObj");
-		int hwID = Integer.parseInt((String)session.getAttribute("hwID"));
 		AnswerDAO adao = new AnswerDAO();
 		int correct = 0;
 		for(Homework h : hws){
@@ -37,7 +36,7 @@ public class HuiswerkNakijkenServlet extends HttpServlet {
 		}
 		session.setAttribute("HwObj", hws);
 		
-		rd = req.getRequestDispatcher("HuiswerkMaken.jsp");
+		rd = req.getRequestDispatcher("HuiswerkOverzicht.jsp");
 		
 		if(rd!= null){
 			rd.forward(req, resp);

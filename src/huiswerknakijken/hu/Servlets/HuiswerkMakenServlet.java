@@ -2,8 +2,8 @@ package huiswerknakijken.hu.Servlets;
 
 import huiswerknakijken.hu.DAO.HomeworkDAO;
 import huiswerknakijken.hu.Domain.Homework;
+import huiswerknakijken.hu.Domain.Person;
 import huiswerknakijken.hu.Domain.Question;
-import huiswerknakijken.hu.Domain.Homework.Status;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class HuiswerkMakenServlet extends HttpServlet {
 		
 		String id = req.getParameter("id");
 		System.out.println("retrieving!");
-		Homework hw = dao.retrieveByID(Integer.parseInt(id), 2);
+		Homework hw = dao.retrieveHomeworkByStudent(Integer.parseInt(id), ((Person)session.getAttribute("user")).getID(), 1);
 		session.setAttribute("HwObj", hw);
 		ArrayList<Question> questions = hw.getQuestions();
 		session.setAttribute("QuestObj", questions);
