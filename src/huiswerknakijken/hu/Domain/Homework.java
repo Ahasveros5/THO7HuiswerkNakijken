@@ -19,6 +19,7 @@ public class Homework {
 	private int numberQuestions = 0;
 	private Status status = Status.Nieuw;
 	private int currentQuestion = 1;
+	public float cijfer;
 	
 	public enum Status{
 		Nieuw(1),
@@ -163,6 +164,14 @@ public class Homework {
 
 	public void setStudent(Person student) {
 		this.student = (Student)student;
+	}
+
+	public float getCijfer() {
+		return cijfer;
+	}
+
+	public void setCijfer(float cijfer) {
+		this.cijfer = cijfer;
 	}
 	
 }
