@@ -1,11 +1,22 @@
 <%@ include file="header.jsp" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="huiswerknakijken.hu.Domain.Course" %>
  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
  <h3>vakken overzicht</h3>
  
  <div id = "vakkenbox">
- 
+<%  ArrayList<Course> vakken = (ArrayList<Course>) session.getAttribute("vakken");
+	
+	if (vakken!=null){
+			for(int i = 0; i< vakken.size(); i++){
+				out.println();
+				
+			}	
+		}
+	
+	%>
  </div>
- 
+ <button id="show">Vak Aanmaken</button> 
  <div id ="PopUpWindow">
  <dialog id="window">  
     <h3>Vak Aanmaken</h3>  
