@@ -88,7 +88,8 @@ public class MultipleChoiceAanmakenServlet extends HttpServlet {
 			b.setQuestion(q);
 			c.setQuestion(q);
 			d.setQuestion(q);
-			Homework h = (Homework)session.getAttribute("HwObj");
+			ArrayList<Homework> hl = (ArrayList<Homework>)session.getAttribute("HwObj");
+			Homework h = hl.get(0);
 			q.setHomework(h);
 			HomeworkDAO hdao = new HomeworkDAO();
 			h.addQuestion(q);
