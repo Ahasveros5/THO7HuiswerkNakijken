@@ -33,6 +33,31 @@ public class PersonDAO implements DAOInterface<Person> {
 		return Students;
 	}
 	
+	public List<Person> retrieveAllMatching(String keyword, int layerLevel) {
+		ResultSet rs = null;
+		ArrayList<Person> users = null;
+		Connection connection = OracleConnectionPool.getConnection();
+		try {
+			PreparedStatement statement = null;
+			statement = connection.prepareStatement("SELECT * FROM person, C_class WHERE (lower(email) LIKE lower(?) OR lower(class_name) LIKE lower(?) OR lower(first_name) LIKE lower(?) OR lower(last_name) LIKE lower(?)) AND role=1 AND PERSON.class_id = C_Class.class_id");
+			
+			statement.setString(1, keyword);
+			statement.setString(2, keyword);
+			statement.setString(3, keyword);
+			statement.setString(4, keyword);
+			statement.setString(5, keyword);
+			
+			rs = statement.executeQuery();
+			users = resultSetExtractor(rs, layerLevel, connection);
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return users;
+	}
+	
 	public List<Person> retrieveAllByRole(int role, int layerLevel) {
 		ResultSet rs = null;
 		ArrayList<Person> Students = null;
@@ -50,29 +75,7 @@ public class PersonDAO implements DAOInterface<Person> {
 		}
 		return Students;
 	}
-	
-	public List<Person> retrieveAllMatching(String email, String firstName, String lastName, int layerLevel) {
-		ResultSet rs = null;
-		ArrayList<Person> Students = null;
-		Connection connection = OracleConnectionPool.getConnection();
-		try {
-			PreparedStatement statement = null;
-			statement = connection.prepareStatement("SELECT * FROM Person WHERE lower(email) LIKE lower(?) AND lower(first_name) LIKE lower(?) AND lower(last_name) LIKE lower(?)");
 
-			statement.setString(2, "%"+email+"%");
-			statement.setString(3, "%"+firstName+"%");
-			statement.setString(4, "%"+lastName+"%");
-			
-			rs = statement.executeQuery();
-			Students = resultSetExtractor(rs, layerLevel, connection);
-			statement.close();
-			connection.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return Students;
-	}
 
 	@Override
 	public boolean delete(Person s) {

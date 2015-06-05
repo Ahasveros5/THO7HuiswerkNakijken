@@ -137,3 +137,12 @@ if :new.id = -1 then
 end if;
 end; 
 /
+CREATE OR REPLACE TRIGGER TRIGGER_Course_ID
+  before insert on Course           
+  for each row  
+begin   
+if :NEW.Course_id is null then 
+    select SEQ_Course_ID.nextval into :NEW.Course_ID from dual; 
+  end if; 
+end; 
+/

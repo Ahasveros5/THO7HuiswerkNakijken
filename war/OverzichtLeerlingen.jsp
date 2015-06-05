@@ -12,11 +12,39 @@
 	<%@ page import="huiswerknakijken.hu.Domain.Student" %>
 	<%@ page import="huiswerknakijken.hu.Domain.Klass" %>
 	
-	<div class="overzichtLeerlingen">
-	
+	<div>
+	<form action = "SearchLeerlingenServlet.do">
+	<label>Zoeken naar:</label><br/>
+	<input class="searchfield" type="text" name="searchfield"/>
+	<input class="searchbutton" type="submit" name="search" value="search"/>
+	</form>
 	</div>
 	
-	<div id = "wrapper">
+	<div class="overzichtLeerlingen">
+	<table border="1">
+	 	<thead>
+			<tr>
+				<td>ID</td>
+				<td>Naam</td>
+				<td>Klas</td>
+			</tr>
+		</thead>
+	<tbody>
+	<%
+		ArrayList<Person> leerlingen = (ArrayList<Person>)session.getAttribute("GevondenLeerlingen");
+		if (leerlingen != null){
+			for(Person p : leerlingen){
+				out.println("<tr>");
+				out.println("<td class='border'><a href = 'HuiswerkMakenServlet.do?id="+p.getID()+"'>"+p.getID()+"</a></td>>");
+				out.println("<td class='border'><a href = 'HuiswerkMakenServlet.do?id="+p.getID()+"'>"+p.getFirstName()+ " " +p.getLastName()+"</a></td>>");
+				out.println("<td class='border'><a href = 'HuiswerkMakenServlet.do?id="+p.getID()+"'>"+p.getClass().getName()+"</a></td>>");
+				out.println("</tr>");
+			}
+		}
+	%>
+	</div>
+	
+	<!--<div id = "wrapper">
 	<h3>Studenten</h3>
 	<div id="LeerlingContainer">
 	<%
@@ -70,7 +98,7 @@
         dialog.close();  
     };  
 })();
-</script>
+</script>-->
 
 	</body>
 </html>

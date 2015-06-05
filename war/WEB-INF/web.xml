@@ -75,6 +75,16 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	</servlet-mapping>
 	
 	<servlet>
+		<servlet-name>SearchLeerlingenServlet</servlet-name>
+		<servlet-class>huiswerknakijken.hu.Servlets.SearchLeerlingenServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SearchLeerlingenServlet</servlet-name>
+		<url-pattern>/SearchLeerlingenServlet.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<servlet-name>NieuwWachtwoordServlet</servlet-name>
 		<servlet-class>huiswerknakijken.hu.Servlets.NieuwWachtwoordServlet
 		</servlet-class>
