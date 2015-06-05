@@ -1,6 +1,7 @@
 package huiswerknakijken.hu.DAO;
 
-import huiswerknakijken.hu.Domain.Klass;
+import huiswerknakijken.hu.Domain.Course;
+import huiswerknakijken.hu.Domain.Person;
 import huiswerknakijken.hu.Util.OracleConnectionPool;
 
 import java.sql.Connection;
@@ -11,36 +12,36 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CourseDAO implements DAOInterface<Klass> {
-	public List<Klass> retrieveAll(int layerLevel) {
+public class CourseDAO implements DAOInterface<Course> {
+	public List<Course> retrieveAll(int layerLevel) {
 		ResultSet rs = null;
-		ArrayList<Klass> classes = null;
+		ArrayList<Course> courses = null;
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
-			PreparedStatement statement = connection.prepareStatement("SELECT * FROM C_CLASS");
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM COURSE");
 			rs = statement.executeQuery();
-			classes = resultSetExtractor(rs, layerLevel, connection);
+			courses = resultSetExtractor(rs, layerLevel, connection);
 			statement.close();
 			connection.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return classes;
+		return courses;
 	}
 	
-	public Klass retrieveByName(String name, int layerLevel) {
-		Klass retrievedClass = null;
+	public Course retrieveByName(String name, int layerLevel) {
+		Course retrievedCourse = null;
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
-			PreparedStatement statement = connection.prepareStatement("SELECT * FROM C_CLASS WHERE class_name=?");
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Course WHERE course_name=?");
 			statement.setString(1, name);
 			ResultSet rs = statement.executeQuery();
-			ArrayList<Klass> Class = resultSetExtractor(rs, layerLevel, connection);
+			ArrayList<Course> Class = resultSetExtractor(rs, layerLevel, connection);
 			if(Class.size() == 0){
-				retrievedClass = null;
+				retrievedCourse = null;
 			} else{
-				retrievedClass = Class.get(0);
+				retrievedCourse = Class.get(0);
 			}
 			statement.close();
 			connection.close();
@@ -48,18 +49,41 @@ public class CourseDAO implements DAOInterface<Klass> {
 			e.printStackTrace();
 		}
 
-		return retrievedClass;
+		return retrievedCourse;
+
+	}
+	
+	public Course retrieveByPerson(int pid, int layerLevel) {
+		Course retrievedCourse = null;
+		Connection connection = OracleConnectionPool.getConnection();
+		try {
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Course, Person_Course WHERE Person_Course.person_id=? AND Person_Course.course_id = Course.course_id");
+			statement.setInt(1, pid);
+			ResultSet rs = statement.executeQuery();
+			ArrayList<Course> Class = resultSetExtractor(rs, layerLevel, connection);
+			if(Class.size() == 0){
+				retrievedCourse = null;
+			} else{
+				retrievedCourse = Class.get(0);
+			}
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return retrievedCourse;
 
 	}
 
 	@Override
-	public boolean delete(Klass s) {
+	public boolean delete(Course s) {
 		System.out.println("Deleting NYI");
 		return false;
 	}
 
 	@Override
-	public boolean add(Klass s) {
+	public boolean add(Course s) {
 		boolean b = false;
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
@@ -71,26 +95,26 @@ public class CourseDAO implements DAOInterface<Klass> {
 
 			String sql;
 			PreparedStatement statement = null;
-			//if (s.getClassID() == -1){
-				String generatedColumns[] = { "class_id" };
-				sql = "INSERT INTO C_Class(class_name) VALUES (?)";
+				String generatedColumns[] = { "course_id" };
+				sql = "INSERT INTO COURSE(course_name) VALUES (?)";
 				statement = connection.prepareStatement(sql, generatedColumns);
-			/*} else {
-				sql = "INSERT INTO C_Class(class_name, class_id) VALUES (?,?)";
-				statement = connection.prepareStatement(sql);
-				statement.setInt(2,s.getClassID());
-			}*/
 				statement.setString(1, s.getName());
 				statement.executeUpdate();
-				if(s.getClassID() == -1){
+				if(s.getID() == -1){
 					int ID = -1;
 					ResultSet rsid = statement.getGeneratedKeys();
 					if (rsid != null && rsid.next()) {
 						ID = rsid.getInt(1);
-						s.setClassID(ID);
+						s.setID(ID);
 					}
 				}
 			statement.close();
+			for (Person p : s.getStudents()){
+				addPerson(p, s, connection);
+			}
+			for (Person p : s.getTeachers()){
+				addPerson(p,s,connection);
+			}
 
 
 			b = true;
@@ -114,37 +138,41 @@ public class CourseDAO implements DAOInterface<Klass> {
 		}
 		return b;
 	}
+	
+	public void addPerson(Person p, Course c, Connection con) throws SQLException{
+		PreparedStatement statementKoppel = null;
+		String sqlKoppel = "INSERT INTO PERSON_COURSE(person_id,course_id) VALUES (?,?)";
+		statementKoppel = con.prepareStatement(sqlKoppel);
+				statementKoppel.setInt(1, p.getID());
+				statementKoppel.setInt(2, c.getID());
+		statementKoppel.executeUpdate();
+		statementKoppel.close();
+	}
 
 	@Override
-	public boolean update(Klass s) {
+	public boolean update(Course s) {
 		boolean b = false;
 		return b;
 	}
 
 
-	private ArrayList<Klass> resultSetExtractor(ResultSet rs, int layerLevel, Connection connection) {
-		ArrayList<Klass> extractedStudents = new ArrayList<Klass>();
+	private ArrayList<Course> resultSetExtractor(ResultSet rs, int layerLevel, Connection connection) {
+		ArrayList<Course> extractedStudents = new ArrayList<Course>();
 		
 		try {
 			while (rs.next()) {
 				boolean notInCache = true;
-				/*if (cacheStudents.containsKey(StudentID)) {
-					Class cacheStudent = cacheStudents.get(StudentID);
-					if (cacheStudent.getLayerLevel() >= layerLevel) {
-						extractedStudents.add(cacheStudents.get(StudentID));
-						notInCache = false;
-					}
-				}*/
 				if (notInCache) {
-					Klass c;
-					c = new Klass();
-					c.setClassID(rs.getInt("class_id"));
-					c.setName(rs.getString("class_name"));
+					Course c;
+					c = new Course();
+					c.setID(rs.getInt("course_id"));
+					c.setName(rs.getString("course_name"));
 					//u.setLayerLevel(layerLevel);
 
-					if (layerLevel > 1) { //students to class
+					if (layerLevel > 1) { //students to course
 						PersonDAO pDAO = new PersonDAO();
-						c.setStudents(pDAO.retrieveAllByClass(c.getClassID(), 0));
+						c.setStudents(pDAO.retrieveStudentsByCourse(c.getID(), 0));
+						c.setTeachers(pDAO.retrieveTeachersByCourse(c.getID(), 0));
 					}
 
 					if (layerLevel > 2) {
@@ -164,12 +192,12 @@ public class CourseDAO implements DAOInterface<Klass> {
 	}
 
 	@Override
-	public List<Klass> retrieveAll() {
+	public List<Course> retrieveAll() {
 		return retrieveAll(4);
 	}
 
 	@Override
-	public Klass retrieve(String s) {
+	public Course retrieve(String s) {
 		System.out.println("ERROR NOT WORKING METHOD RETRIEVE(string)");
 		return null;//retrieve(s, 10);
 	}
