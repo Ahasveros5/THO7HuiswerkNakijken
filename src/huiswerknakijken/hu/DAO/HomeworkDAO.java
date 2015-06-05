@@ -290,7 +290,6 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 	public boolean update(Homework s) {
 		boolean b = false;
 		Connection connection = OracleConnectionPool.getConnection();
-		//Service.getService().getStudents().put(u.getStudentid(), u);
 		try {
 			connection.setAutoCommit(false);
 			PreparedStatement statement = connection.prepareStatement("UPDATE HOMEWORK SET Homework_Name=?, Deadline=?, Questions=? WHERE Homework_id=?");
@@ -298,6 +297,39 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 			statement.setString(2, s.getDeadline());
 			statement.setInt(3, s.getNumberQuestions());
 			statement.setInt(4, s.getID());
+			statement.executeUpdate();
+			statement.close();
+			updatePersonHomework(s, connection);
+			if(s.getStudents().size() > 0){
+				for(Student st : s.getStudents()){
+					updateStudentHomework(connection, s, st);
+				}
+			}
+
+			connection.commit();
+			connection.close();
+			b = true;
+		} catch (SQLException e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}
+		return b;
+	}
+	
+	public boolean updatePersonHomework(Homework s, Connection c) {
+		boolean b = false;
+		Connection connection = c;
+		try {
+			connection.setAutoCommit(false);			
+			PreparedStatement statement = connection.prepareStatement("UPDATE PERSON_HOMEWORK SET Status=?, CurrentQuestion=? WHERE Homework_id=? AND Student_id=?");
+			statement.setInt(1, s.getStatus().getIndex());
+			statement.setInt(2, s.getCurrentQuestion());
+			statement.setInt(3, s.getID());
+			statement.setInt(4, s.getStudent().getID());
 			statement.executeUpdate();
 			statement.close();
 			if(s.getStudents().size() > 0){

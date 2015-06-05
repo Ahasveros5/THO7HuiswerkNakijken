@@ -88,7 +88,6 @@ public class LeerlingImporteerServlet extends HttpServlet {
 				s.setEmail(s.getFirstName() + "." + s.getLastName() + "@student.hu.nl");
 				i = -1;
 				s.setRole(UserRole.Student);
-				//Class shit moet hier nog
 				s.setPassword("");
 				if (dao.retrieveByEmail(s.getEmail(), 0) == null)
 					dao.addStudent(s);

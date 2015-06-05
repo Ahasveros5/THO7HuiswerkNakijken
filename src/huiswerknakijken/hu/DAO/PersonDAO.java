@@ -94,40 +94,6 @@ public class PersonDAO implements DAOInterface<Person> {
 
 			String sql;
 			PreparedStatement statement;
-			/*if(s.getID() == -1){
-				
-				if(s.getRole() == UserRole.Student){
-					sql = "INSERT INTO Person(first_name, last_name, email, password, role, class_id) VALUES (?,?,?,?,?,?)";
-					statement = connection.prepareStatement(sql, generatedColumns);
-					Student st = (Student)s;
-					statement.setInt(6,st.getMainClass().getClassID());
-				} else{
-					sql = "INSERT INTO Person(first_name, last_name, email, password, role) VALUES (?,?,?,?,?)";
-					statement = connection.prepareStatement(sql, generatedColumns);
-				}
-				System.out.println("ATTENTION:: While adding Person generating new ID.");
-			}
-			else{*/
-				/*if(s.getRole() == UserRole.Student){
-						sql = "INSERT INTO Person(first_name, last_name, email, password, role, id,class_id) VALUES (?,?,?,?,?,?,?)";
-						if (s.getID() == -1){
-							String generatedColumns[] = { "id" };
-							statement = connection.prepareStatement(sql,generatedColumns);
-						} else
-							statement = connection.prepareStatement(sql);
-						System.out.println("testo");
-						statement.setInt(6, s.getID());
-
-					Student st = s.toStudent();
-					if(st.getMainClass() != null){
-						System.out.println("Adding class id: " + st.getMainClass().getClassID());
-						statement.setInt(7,st.getMainClass().getClassID());}
-					else{
-						statement.setInt(7,0);
-						System.out.println("Testo2");
-					}
-				} else{
-					*/
 			sql = "INSERT INTO Person(first_name, last_name, email, password, role, id) VALUES (?,?,?,?,?,?)";
 			if (s.getID() == -1){
 				String generatedColumns[] = { "id" };
@@ -398,6 +364,40 @@ public class PersonDAO implements DAOInterface<Person> {
 		ArrayList<Person> eU = null;
 		try {
 			PreparedStatement statement = connection.prepareStatement("SELECT * FROM PERSON WHERE class_id=?");
+			statement.setInt(1, classID);
+			ResultSet rs = statement.executeQuery();
+			eU = resultSetExtractor(rs, layerLevel, connection);
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return eU;
+	}
+	
+	public ArrayList<Person> retrieveStudentsByCourse(int courseID, int layerLevel) {
+		Connection connection = OracleConnectionPool.getConnection();
+		ArrayList<Person> eU = null;
+		try {
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM PERSON WHERE course_id=? AND role=1");
+			statement.setInt(1, courseID);
+			ResultSet rs = statement.executeQuery();
+			eU = resultSetExtractor(rs, layerLevel, connection);
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return eU;
+	}
+	
+	public ArrayList<Person> retrieveTeachersByCourse(int classID, int layerLevel) {
+		Connection connection = OracleConnectionPool.getConnection();
+		ArrayList<Person> eU = null;
+		try {
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM PERSON WHERE course_id=? AND role=2");
 			statement.setInt(1, classID);
 			ResultSet rs = statement.executeQuery();
 			eU = resultSetExtractor(rs, layerLevel, connection);

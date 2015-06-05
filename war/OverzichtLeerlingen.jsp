@@ -12,6 +12,10 @@
 	<%@ page import="huiswerknakijken.hu.Domain.Student" %>
 	<%@ page import="huiswerknakijken.hu.Domain.Klass" %>
 	
+	<div class="overzichtLeerlingen">
+	
+	</div>
+	
 	<div id = "wrapper">
 	<h3>Studenten</h3>
 	<div id="LeerlingContainer">

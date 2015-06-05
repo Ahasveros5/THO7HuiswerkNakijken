@@ -69,3 +69,11 @@ table thead{
 	margin-top: -80px;
 	float: right;
 }
+
+.leerlingenOverzicht{
+	width: 40%;
+	height: 50%;
+	border-radius: 25px;
+    border: 2px solid #000000;
+	
+}
