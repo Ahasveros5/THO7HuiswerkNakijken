@@ -35,11 +35,14 @@
 		if(hwpp!=null){
 			for(int i = 0; i<hwpp.size(); i++){
 				
-			out.println(hwpp.get(i).getStudent().toString()+" status:  "+hwpp.get(i).getStatus()+ "<br/>");
+			out.println(hwpp.get(i).getStudent().toString()+" status:  "+hwpp.get(i).getStatus()+ " ");
+			if(hwpp.get(i).getCijfer() != -1) {
+				out.println("Cijfer: " + hwpp.get(i).getCijfer());
+			}
 		}
 	}
 		%>
 		</div>
- 	<form action = "HuiswerkNakijkenServlet.jsp">
+ 	<form action = "HuiswerkNakijkenServlet.do">
 	 <input class = "button" value = "Nakijken" type = "submit" name="knop" />
 	 </form>

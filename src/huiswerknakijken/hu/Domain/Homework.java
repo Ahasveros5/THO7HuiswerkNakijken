@@ -19,7 +19,7 @@ public class Homework {
 	private int numberQuestions = 0;
 	private Status status = Status.Nieuw;
 	private int currentQuestion = 1;
-	public float cijfer;
+	public float cijfer = -1;
 	
 	public enum Status{
 		Nieuw(1),

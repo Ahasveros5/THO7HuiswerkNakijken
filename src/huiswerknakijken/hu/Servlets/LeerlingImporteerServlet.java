@@ -95,9 +95,13 @@ public class LeerlingImporteerServlet extends HttpServlet {
 			}
 			i++;
 		}
+		System.out.println("Tim tam tom");
 		rd = req.getRequestDispatcher("LeraarOverzicht.jsp");
-		if (rd != null)
+		if (rd != null){
+			System.out.println("ForWARDING: " + rd.FORWARD_CONTEXT_PATH);
+			
 			rd.forward(req, resp);
+		}
 		//doGet(req, resp);
 	}
 	

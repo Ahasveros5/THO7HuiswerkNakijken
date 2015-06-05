@@ -40,6 +40,7 @@
 				<ul>
 				<li><a href="LeraarOverzichtServlet.do" class="regbutton">Overzicht huiswerk</a></li>
 				<li><a href="OverzichtLeerlingenServlet.do" class="regbutton">Overzicht leerlingen</a></li>
+				<li><a href="LeerlingImporteren.jsp" class="regbutton">Leerlingen importeren</a></li>
 				<li><a href="LogoutServlet.do">Uitloggen</a></li>
 			</ul>
 

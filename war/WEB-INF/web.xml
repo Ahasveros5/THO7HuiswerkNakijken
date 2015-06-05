@@ -155,6 +155,7 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 		<url-pattern>/VraagMakenServlet.do</url-pattern>
 	</servlet-mapping>
 	
+	
 	<servlet>
 		<servlet-name>OverzichtLeerlingenServlet</servlet-name>
 		<servlet-class>huiswerknakijken.hu.Servlets.OverzichtLeerlingenServlet
