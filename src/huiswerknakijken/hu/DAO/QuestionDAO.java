@@ -70,7 +70,6 @@ public class QuestionDAO implements DAOInterface<Question> {
 	
 	public ArrayList<Question> retrieveAllByHomework(int id, int layerLevel) {
 		ArrayList<Question> Questions = null;
-		System.out.println("id: "+ id + "  layer: " + layerLevel);
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
 			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Question WHERE homework_id=?");
@@ -165,7 +164,6 @@ public class QuestionDAO implements DAOInterface<Question> {
 
 	private ArrayList<Question> resultSetExtractor(ResultSet rs, int layerLevel, Connection connection) {
 		ArrayList<Question> extractedStudents = new ArrayList<Question>();
-		System.out.println("QUESTION:::: " + layerLevel);
 		try {
 			while (rs.next()) {
 					Question c;
@@ -177,10 +175,8 @@ public class QuestionDAO implements DAOInterface<Question> {
 					//u.setLayerLevel(layerLevel);
 
 					if (layerLevel > 1) { //answers"
-						System.out.println("Going for the answers!!");
 						AnswerDAO adao = new AnswerDAO();
 						c.setAnswers(adao.retrieveAllByQuestion(c.getID(), 1));
-						System.out.println("retrieving answers");
 					}
 
 					if (layerLevel > 2) {

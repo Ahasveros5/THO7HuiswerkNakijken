@@ -371,12 +371,11 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 					Person p = dao.retrieve(rs.getInt("student_id"),1);
 					if (p.getRole() == UserRole.Teacher){
 						c.setTeacher(p);
-						System.out.println("Teacher found!");
 					}
 					else if (p.getRole() == UserRole.Student)
 						c.setStudent(dao.retrieve(rs.getInt("student_id"), 1));
 					else
-						System.out.println("Getting homework from someone who's not a teacher nor a student, ID: " + p.getID());
+						System.out.println("ERROR_HOMEWORK-DAO::: Getting homework from someone who's not a teacher nor a student, ID: " + p.getID());
 					if(c.getTeacher() == null)
 						c.setTeacher(dao.retrieveTeacherByHomework(c, 1));
 					//u.setLayerLevel(layerLevel);

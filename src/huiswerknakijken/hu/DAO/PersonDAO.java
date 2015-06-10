@@ -104,7 +104,6 @@ public class PersonDAO implements DAOInterface<Person> {
 			} else
 				statement = connection.prepareStatement(sql);
 			statement.setInt(6, s.getID());
-			System.out.println("Teacher id is wel bestaand");
 				//}
 			//}
 			statement.setString(1, s.getFirstName());
@@ -156,8 +155,6 @@ public class PersonDAO implements DAOInterface<Person> {
 	public boolean addStudent(Student s) {
 		boolean b = false;
 		Connection connection = OracleConnectionPool.getConnection();
-		if(s.getMainClass() == null)
-			System.out.println("GEEN MAIN CLASS BITCHEZZZ");
 		try {
 			connection.setAutoCommit(false);
 		} catch (SQLException e1) {
@@ -175,15 +172,12 @@ public class PersonDAO implements DAOInterface<Person> {
 						statement = connection.prepareStatement(sql,generatedColumns);
 					} else
 						statement = connection.prepareStatement(sql);
-					System.out.println("testo");
 					statement.setInt(6, s.getID());
 
 				if(s.getMainClass() != null){
-					System.out.println("Adding class id: " + s.getMainClass().getClassID());
 					statement.setInt(7,s.getMainClass().getClassID());}
 				else{
 					statement.setInt(7,0);
-					System.out.println("Testo2");
 				}
 			}
 			statement.setString(1, s.getFirstName());
@@ -239,8 +233,6 @@ public class PersonDAO implements DAOInterface<Person> {
 		//Service.getService().getStudents().put(u.getStudentid(), u);
 		try {
 			connection.setAutoCommit(false);
-			System.out.println("In update, id: " + s.getID());
-			System.out.println("In update, pass: " + s.getPassword());
 			PreparedStatement statement = connection.prepareStatement("UPDATE PERSON SET first_name=?, last_name=?, email=?, password=? WHERE id=?");
 			statement.setString(1, s.getFirstName());
 			statement.setString(2, s.getLastName());
@@ -289,16 +281,12 @@ public class PersonDAO implements DAOInterface<Person> {
 		Person retrievedStudent = null;
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
-			System.out.println("ID: " +  h.getID());
 			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Person, Person_Homework WHERE PERSON_HOMEWORK.homework_id = ? AND PERSON.role = 2 AND PERSON.id = PERSON_HOMEWORK.student_id");
 			statement.setInt(1, h.getID());
 			ResultSet rs = statement.executeQuery();
-			System.out.println("adding teacher");
 			ArrayList<Person> Person = resultSetExtractor(rs, layerLevel, connection);
 			if(Person.size() > 0)
 				retrievedStudent = Person.get(0);
-			else
-				System.out.println("nulllaksdjfkjas");
 			statement.close();
 			connection.close();
 		} catch (SQLException e) {
@@ -448,10 +436,8 @@ public class PersonDAO implements DAOInterface<Person> {
 				}*/
 				if (notInCache) {
 					Person p;
-					System.out.println("creating person");
 					int role = rs.getInt("role");
 					if(role == 1){//student
-						System.out.println("STUDENT CREATED");
 						p = new Student();
 						p.setID(ID);
 						p.setFirstName(rs.getString("first_name"));
@@ -463,7 +449,6 @@ public class PersonDAO implements DAOInterface<Person> {
 						p.setPassword(s);
 						p.setRole(UserRole.Student);
 					} else if (role == 2){//teacher
-						System.out.println("TEACHER CREATED");
 						p = new Teacher();
 						p.setID(ID);
 						p.setFirstName(rs.getString("first_name"));
@@ -472,7 +457,6 @@ public class PersonDAO implements DAOInterface<Person> {
 						p.setPassword(rs.getString("password"));
 						p.setRole(UserRole.Teacher);
 					} else{ //no teacher or student, so it's someone not belonging to HU
-						System.out.println("PERSON CREATED");
 						p = new Person();
 						p.setID(ID);
 						p.setFirstName(rs.getString("first_name"));

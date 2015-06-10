@@ -19,7 +19,6 @@ public class OracleConnectionPool {
 			System.out.println("Unable to connect to database.");
 			e.printStackTrace();
 		}
-		System.out.println("Succesfully connected with the database!");
 		return connection;
 	}
 
