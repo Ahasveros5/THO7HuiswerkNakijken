@@ -33,6 +33,16 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	</servlet-mapping>
 	
 	<servlet>
+		<servlet-name>SpecifiekeLeerlingServlet</servlet-name>
+		<servlet-class>huiswerknakijken.hu.Servlets.SpecifiekeLeerlingServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SpecifiekeLeerlingServlet</servlet-name>
+		<url-pattern>/SpecifiekeLeerlingServlet.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
 		<servlet-name>LeerlingOverzichtServlet</servlet-name>
 		<servlet-class>huiswerknakijken.hu.Servlets.LeerlingOverzichtServlet
 		</servlet-class>

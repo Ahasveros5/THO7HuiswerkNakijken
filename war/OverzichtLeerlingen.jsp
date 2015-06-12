@@ -25,9 +25,9 @@
 		if (leerlingen != null){
 			for(Person p : leerlingen){
 				out.println("<tr>");
-				out.println("<td><a href = 'HuiswerkMakenServlet.do?id="+p.getID()+"'>"+p.getID()+"</a></td>");
-				out.println("<td><a href = 'HuiswerkMakenServlet.do?id="+p.getID()+"'>"+p.getFirstName()+ " " +p.getLastName()+"</a></td>");
-				out.println("<td><a href = 'HuiswerkMakenServlet.do?id="+p.getID()+"'>"+p.getClass().getName()+"</a></td>");
+				out.println("<td><a href = 'SpecifiekeLeerlingServlet.do?id="+p.getID()+"'>"+p.getID()+"</a></td>");
+				out.println("<td><a href = 'SpecifiekeLeerlingServlet.do?id="+p.getID()+"'>"+p.getFirstName()+ " " +p.getLastName()+"</a></td>");
+				out.println("<td><a href = 'SpecifiekeLeerlingServlet.do?id="+p.getID()+"'>"+p.getClass().getName()+"</a></td>");
 				out.println("</tr>");
 			}
 		}
