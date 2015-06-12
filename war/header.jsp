@@ -5,13 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <%@ page import="huiswerknakijken.hu.Domain.Person"%>
 <%@ page import="huiswerknakijken.hu.Domain.Person.UserRole"%>
+<link rel="stylesheet" type="text/css" href="/THO7HuiswerkNakijken/css/style.css">
 
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>HU automatisch huiswerk nakijksysteem</title>
 </head>
 <body>
-		<div class="headerlist headerborder">
+		<div class="headerlist headerborder huImage">
 		<% if(session.getAttribute("user") != null){ 
 		Person p = (Person) session.getAttribute("user");
 		out.println("Welkom: " + p.getFirstName() +" " +  p.getLastName());
