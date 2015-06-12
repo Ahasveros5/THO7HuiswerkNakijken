@@ -28,7 +28,7 @@ public class LoginServlet extends HttpServlet {
 		PersonDAO pdao = new PersonDAO();
 		Person p = pdao.retrieveByEmail(userEmail, 1);
 		ClassDAO kdao = new ClassDAO();
-		ArrayList<Klass> klassen = (ArrayList<Klass>) kdao.retrieveAll(2);
+		
 		RequestDispatcher rd = null;
 		HttpSession session = req.getSession();
 		if(userEmail.isEmpty()) {
@@ -39,14 +39,13 @@ public class LoginServlet extends HttpServlet {
 				if (p != null && (p.getPassword() == null || PasswordHash.validatePassword(password, p.getPassword()))){ //nog de p.getpassword null check apart maken
 						System.out.println("test: " + p.getFirstName() + " " + p.getLastName());
 						session.setAttribute("user",p );
-						session.setAttribute("klassen", klassen);
-						for(int i =0; i<klassen.size(); i++){
-						}
 						rd = req.getRequestDispatcher("index.jsp");
 						System.out.println("testi");
 						if(p.getRole() == null)
 							System.out.println("ROLE IS NULL");
 						if(p.getRole()==UserRole.Teacher){
+							ArrayList<Klass> klassen = (ArrayList<Klass>) kdao.retrieveAll(2);
+							session.setAttribute("klassen", klassen);
 							rd= req.getRequestDispatcher("LeraarOverzichtServlet.do");
 						}
 						if(p.getRole()==UserRole.Student){

@@ -35,21 +35,21 @@ public class OverzichtLeerlingenServlet extends HttpServlet {
 		HttpSession session = req.getSession();
 		RequestDispatcher rd = null;
 				
-		klassen.addAll(cdao.retrieveAll());
+		/*klassen.addAll(cdao.retrieveAll());
 		for(int i =0; i<klassen.size(); i++){
 			if(klassen.get(i).getName().equals("Geen Naam")){
 				Klass k = klassen.get(i);
 				klassen.remove(k);
 				break;
 			}
-		}
-		List<Person> list = dao.retrieveAllByRole(UserRole.Student.getIndex(), 1);
+		}*/
+		/*List<Person> list = dao.retrieveAllByRole(UserRole.Student.getIndex(), 1);
 		for(int i = 0; i<list.size(); i++){
 			students.add(list.get(i).toStudent());
-		}
+		}*/
 		
-		session.setAttribute("Leerlingen", students);
-		session.setAttribute("klassen", klassen);
+		//session.setAttribute("Leerlingen", students);
+		//session.setAttribute("klassen", klassen);
 		rd = req.getRequestDispatcher("OverzichtLeerlingen.jsp");
 		
 		if(rd!=null){

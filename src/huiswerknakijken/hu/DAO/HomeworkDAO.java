@@ -307,7 +307,7 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 			}
 
 			connection.commit();
-			connection.close();
+			
 			b = true;
 		} catch (SQLException e) {
 			try {
@@ -317,19 +317,27 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 			}
 			e.printStackTrace();
 		}
+		try {
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return b;
 	}
 	
-	public boolean updatePersonHomework(Homework s, Connection c) {
+	private boolean updatePersonHomework(Homework s, Connection c) {
 		boolean b = false;
 		Connection connection = c;
 		try {
 			connection.setAutoCommit(false);			
-			PreparedStatement statement = connection.prepareStatement("UPDATE PERSON_HOMEWORK SET Status=?, CurrentQuestion=? WHERE Homework_id=? AND Student_id=?");
+			PreparedStatement statement = connection.prepareStatement("UPDATE PERSON_HOMEWORK SET Status=?, CurrentQuestion=?, grade=? WHERE Homework_id=? AND Student_id=?");
 			statement.setInt(1, s.getStatus().getIndex());
 			statement.setInt(2, s.getCurrentQuestion());
-			statement.setInt(3, s.getID());
-			statement.setInt(4, s.getStudent().getID());
+			statement.setFloat(3, s.getCijfer());
+			statement.setInt(4, s.getID());
+			statement.setInt(5, s.getStudent().getID());
 			statement.executeUpdate();
 			statement.close();
 			if(s.getStudents().size() > 0){
@@ -366,6 +374,7 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 					c.setNumberQuestions(rs.getInt("questions"));
 					c.setCurrentQuestion(rs.getInt("currentQuestion"));
 					c.setStatus(Status.getValue(rs.getInt("status")));
+					c.setCijfer(rs.getInt("Grade"));
 					PersonDAO dao = new PersonDAO();
 					//c.setTeacher(dao.retrieveTeacherByHomework(c, 1));
 					Person p = dao.retrieve(rs.getInt("student_id"),1);

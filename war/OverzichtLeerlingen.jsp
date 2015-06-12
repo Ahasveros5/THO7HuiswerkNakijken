@@ -1,11 +1,3 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<title>Vraag aanmaken</title>
-		<link rel="stylesheet" type="text/css" href="style.css" />
-	</head>
-	
-	<body>
 	<%@ include file="header.jsp" %>	
 	<%@ page import="java.util.ArrayList" %>
 	<%@ page import="huiswerknakijken.hu.Domain.Person" %>
@@ -20,42 +12,41 @@
 	</form>
 	</div>
 	
-	<div class="overzichtLeerlingen">
-	<table border="1">
-	 	<thead>
+	<div class="TableStyle">
+	<table>
 			<tr>
 				<td>ID</td>
 				<td>Naam</td>
 				<td>Klas</td>
 			</tr>
-		</thead>
-	<tbody>
+	
 	<%
 		ArrayList<Person> leerlingen = (ArrayList<Person>)session.getAttribute("GevondenLeerlingen");
 		if (leerlingen != null){
 			for(Person p : leerlingen){
 				out.println("<tr>");
-				out.println("<td class='border'><a href = 'HuiswerkMakenServlet.do?id="+p.getID()+"'>"+p.getID()+"</a></td>>");
-				out.println("<td class='border'><a href = 'HuiswerkMakenServlet.do?id="+p.getID()+"'>"+p.getFirstName()+ " " +p.getLastName()+"</a></td>>");
-				out.println("<td class='border'><a href = 'HuiswerkMakenServlet.do?id="+p.getID()+"'>"+p.getClass().getName()+"</a></td>>");
+				out.println("<td><a href = 'HuiswerkMakenServlet.do?id="+p.getID()+"'>"+p.getID()+"</a></td>");
+				out.println("<td><a href = 'HuiswerkMakenServlet.do?id="+p.getID()+"'>"+p.getFirstName()+ " " +p.getLastName()+"</a></td>");
+				out.println("<td><a href = 'HuiswerkMakenServlet.do?id="+p.getID()+"'>"+p.getClass().getName()+"</a></td>");
 				out.println("</tr>");
 			}
 		}
 	%>
+	</table>
 	</div>
 	
 	<!--<div id = "wrapper">
 	<h3>Studenten</h3>
 	<div id="LeerlingContainer">
 	<%
-	ArrayList<Student> students = (ArrayList<Student>) session.getAttribute("Leerlingen");
+	/*ArrayList<Student> students = (ArrayList<Student>) session.getAttribute("Leerlingen");
 	out.println("<select size='"+students.size()+"' multiple>");
 	if (students!=null){
 			for(int i = 0; i< students.size(); i++){
 				out.println("<option value ='"+students.get(i).getID() +"'>" +students.get(i).getFirstName()+" "+students.get(i).getLastName()+" "+students.get(i).getID()+"</option>");
 				
 			}	
-		}out.println("</select>");
+		}out.println("</select>");*/
 	%>
 	</div>
 	<div id ="addButton">
@@ -64,7 +55,7 @@
 	<div id ="KlassenContainer">
 	<h3>Klassen</h3>
 	<%
-	ArrayList<Klass> klassen = (ArrayList<Klass>) session.getAttribute("klassen");
+	/*ArrayList<Klass> klassen = (ArrayList<Klass>) session.getAttribute("klassen");
 	out.println("<select size='"+klassen.size()+"'>");
 	if (klassen!=null){
 			for(int i = 0; i< klassen.size(); i++){
@@ -72,7 +63,7 @@
 				
 			}	
 		}
-	out.println("</select>");
+	out.println("</select>");*/
 	%>
 	<br />
 	<button id="show">Klas Aanmaken</button> 
@@ -99,6 +90,3 @@
     };  
 })();
 </script>-->
-
-	</body>
-</html>

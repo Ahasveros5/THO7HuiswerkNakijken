@@ -1,16 +1,9 @@
 package huiswerknakijken.hu.Servlets;
 
-import huiswerknakijken.hu.DAO.ClassDAO;
 import huiswerknakijken.hu.DAO.PersonDAO;
 import huiswerknakijken.hu.Domain.Person;
-import huiswerknakijken.hu.Domain.Person.UserRole;
-import huiswerknakijken.hu.Domain.Student;
-import huiswerknakijken.hu.Domain.Klass;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -36,7 +29,6 @@ public class SearchLeerlingenServlet extends HttpServlet {
 		String searchvalues = req.getParameter("searchfield");
 		System.out.println("searching on: "+ searchvalues);
 		List<Person> list = dao.retrieveAllMatching(searchvalues, 1);
-		System.out.println("Aantal gevonden: " + list.size());
 		session.setAttribute("GevondenLeerlingen", list);
 		//session.setAttribute("klassen", klassen);
 		rd = req.getRequestDispatcher("OverzichtLeerlingen.jsp");

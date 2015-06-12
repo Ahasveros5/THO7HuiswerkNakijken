@@ -30,7 +30,7 @@ public class HuiswerkOverzichtServlet extends HttpServlet {
 		ArrayList<Person> studenten = (ArrayList<Person>) pdao.retrieveStudentsByHomework(id, 1);
 		ArrayList<Homework> hwlist = new ArrayList<Homework>();
 		for(int i = 0; i<studenten.size(); i++){
-		Homework hw = dao.retrieveHomeworkByStudent(dao.retrieveByID(id, 1).getID(), studenten.get(i).getID(), 1);
+		Homework hw = dao.retrieveHomeworkByStudent(dao.retrieveByID(id, 1).getID(), studenten.get(i).getID(), 2);
 		hwlist.add(hw);
 		}
 		

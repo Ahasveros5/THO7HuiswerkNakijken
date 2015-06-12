@@ -39,13 +39,13 @@ public class PersonDAO implements DAOInterface<Person> {
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
 			PreparedStatement statement = null;
+			keyword = "%" + keyword + "%";
 			statement = connection.prepareStatement("SELECT * FROM person, C_class WHERE (lower(email) LIKE lower(?) OR lower(class_name) LIKE lower(?) OR lower(first_name) LIKE lower(?) OR lower(last_name) LIKE lower(?)) AND role=1 AND PERSON.class_id = C_Class.class_id");
 			
 			statement.setString(1, keyword);
 			statement.setString(2, keyword);
 			statement.setString(3, keyword);
 			statement.setString(4, keyword);
-			statement.setString(5, keyword);
 			
 			rs = statement.executeQuery();
 			users = resultSetExtractor(rs, layerLevel, connection);

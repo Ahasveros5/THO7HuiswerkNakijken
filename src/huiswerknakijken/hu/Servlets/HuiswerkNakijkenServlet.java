@@ -1,6 +1,7 @@
 package huiswerknakijken.hu.Servlets;
 
 import huiswerknakijken.hu.DAO.AnswerDAO;
+import huiswerknakijken.hu.DAO.HomeworkDAO;
 import huiswerknakijken.hu.Domain.Homework;
 import huiswerknakijken.hu.Domain.Homework.Status;
 import huiswerknakijken.hu.Domain.Question;
@@ -23,15 +24,18 @@ public class HuiswerkNakijkenServlet extends HttpServlet {
 		HttpSession session = req.getSession();
 		ArrayList<Homework> hws = (ArrayList<Homework>) session.getAttribute("HwObj");
 		AnswerDAO adao = new AnswerDAO();
+		HomeworkDAO hdao = new HomeworkDAO();
 		int correct = 0;
 		for(Homework h : hws){
 			if(h.getStatus() != Status.Af)
 				continue;
 			for(Question q : h.getQuestions()){
-				if(CheckAnswers.HasGivenCorrectAnswer(q, adao.retrieveGivenAnswer(q, h.getStudent(), 1)))
+				if(CheckAnswers.HasGivenCorrectAnswer(q, adao.retrieveGivenAnswer(q, h.getStudent(), 1))){
 					correct++;
+				}
 			}
 			h.cijfer = correct/h.getNumberQuestions()*9+1;
+			hdao.update(h);
 			System.out.println("cijfer: " + h.cijfer);
 		}
 		session.setAttribute("HwObj", hws);

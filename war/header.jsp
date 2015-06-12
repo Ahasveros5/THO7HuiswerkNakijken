@@ -5,8 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <%@ page import="huiswerknakijken.hu.Domain.Person"%>
 <%@ page import="huiswerknakijken.hu.Domain.Person.UserRole"%>
-<link rel="stylesheet" type="text/css" href="/THO7HuiswerkNakijken/css/style.css">
-<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
 
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -16,7 +14,6 @@
 		<div class="headerlist headerborder">
 		<% if(session.getAttribute("user") != null){ 
 		Person p = (Person) session.getAttribute("user");
-		System.out.println("hallo: " + p.getFirstName());
 		out.println("Welkom: " + p.getFirstName() +" " +  p.getLastName());
 		
 		}else{
