@@ -19,7 +19,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
@@ -29,76 +28,63 @@ import org.apache.commons.io.FilenameUtils;
 
 
 public class LeerlingImporteerServlet extends HttpServlet {
-	private String saveFile=System.getProperty("java.io.tmpdir");
+	private String saveFile=System.getProperty("java.io.tmpdir"); //The excel file get's saved in the temp directory of Tomcat
 	
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/html");
 		RequestDispatcher rd = null;
-		HttpSession session = req.getSession();
-		File file;
-		//System.out.println("ummmm: " + saveFile);
-		file = getFileFromServer(req,resp);
+		File file = getFileFromServer(req,resp);
 		List<Object> users = ExcelImport.readFile(file);
 		PersonDAO dao = new PersonDAO();
 		Student s = null;
 		int i = -4;
+		//Here we loop through the objects retrieved from the excel file
+		//We use 'i' to determine which value we retrieve:
+		//0 = studentID
+		//1 = First name
+		//2 = Last name
+		//3 = Class name
+		//4 = Email
 		for (Object o : users){
 			if(i<0){
-				System.out.println(o.toString());
 				i++;
 				continue;
 			}
 			if(i == 0){
-				System.out.println("in i == 0");
 				if (s == null){
 					s = new Student();
-					try{
-						s.setID(Integer.parseInt((String) o));
-					}catch(NumberFormatException e){
-						e.printStackTrace();
-					}
-					
-				} else {
-					s = new Student();
 					s.setID(Integer.parseInt((String) o));
+					s.setRole(UserRole.Student);
+					s.setPassword("");
 				}
 			}
 			
 			
-			if(i==1){
+			if(i==1)
 				s.setFirstName(o.toString());
-			}
-			else if(i==2){
-
+			else if(i==2)
 				s.setLastName(o.toString());
-			}
 			else if(i==3){
 				ClassDAO cdao = new ClassDAO();
-				System.out.println("troeloeloeloeloe");
 				Klass c = cdao.retrieveByName(o.toString(), 1);
-				System.out.println("tralalalala");
 				if (c == null){
-					System.out.println("Creating new class");
 					c = new Klass(o.toString());
 					cdao.add(c);
 				}
-				System.out.println("c.id: " + c.getClassID());
-				s.setMainClass(c);
-				
-				s.setEmail(s.getFirstName() + "." + s.getLastName() + "@student.hu.nl");
-				i = -1;
-				s.setRole(UserRole.Student);
-				s.setPassword("");
+				s.setMainClass(c);		
+			}
+			else if(i==4)
+			{
+				System.out.println("FIX EXCEL FILE!");
+				s.setEmail(o.toString());
 				if (dao.retrieveByEmail(s.getEmail(), 0) == null)
 					dao.addStudent(s);
+				i = -1;
 			}
 			i++;
 		}
-		System.out.println("Tim tam tom");
 		rd = req.getRequestDispatcher("LeraarOverzicht.jsp");
 		if (rd != null){
-			System.out.println("ForWARDING: " + rd.FORWARD_CONTEXT_PATH);
-			
 			rd.forward(req, resp);
 		}
 		//doGet(req, resp);
@@ -129,7 +115,6 @@ public class LeerlingImporteerServlet extends HttpServlet {
 				 Iterator itr = items.iterator();
 				 while(itr.hasNext()){
 					 Object o = itr.next();
-					 System.out.println(o.toString() + "\n");
 					 FileItem item = (FileItem)o;
 					 
 					 if(item.isFormField()){
@@ -158,9 +143,7 @@ public class LeerlingImporteerServlet extends HttpServlet {
 	 private File checkExist(String fileName) {
 		 File f = new File(saveFile+"/"+fileName);
 		 
-		 System.out.println("saving");
 		 if(!f.exists()){
-			 System.out.println("Creating new");
 			try {
 				f.createNewFile();
 			} catch (IOException e) {
@@ -169,7 +152,6 @@ public class LeerlingImporteerServlet extends HttpServlet {
 			}
 		 }
 		else{
-			 System.out.println("saved");
 			 StringBuffer sb = new StringBuffer(fileName);
 			 sb.insert(sb.lastIndexOf("."),"-"+new Date().getTime());
 			 f = new File(saveFile+"/"+sb.toString());
