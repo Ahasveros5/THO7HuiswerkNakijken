@@ -34,7 +34,7 @@ public class HuiswerkAanmakenServlet extends HttpServlet {
 		String DLtime = req.getParameter("DLTime");		
 		datevals = deadline.split("-");
 		timevals = DLtime.split(":");
-		ArrayList<Homework> hwList = new ArrayList<Homework>();
+		ArrayList<Homework> hwList = (ArrayList<Homework>) session.getAttribute("Huiswerk");
 		int day = Integer.parseInt(datevals[2]);
 		int month = Integer.parseInt(datevals[1]);
 		int year = Integer.parseInt(datevals[0]);

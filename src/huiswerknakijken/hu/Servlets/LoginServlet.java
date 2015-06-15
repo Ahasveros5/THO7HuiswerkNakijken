@@ -27,7 +27,6 @@ public class LoginServlet extends HttpServlet {
 		String password = req.getParameter("ww_login");
 		PersonDAO pdao = new PersonDAO();
 		Person p = pdao.retrieveByEmail(userEmail, 1);
-		ClassDAO kdao = new ClassDAO();
 		
 		RequestDispatcher rd = null;
 		HttpSession session = req.getSession();
@@ -44,8 +43,6 @@ public class LoginServlet extends HttpServlet {
 						if(p.getRole() == null)
 							System.out.println("ROLE IS NULL");
 						if(p.getRole()==UserRole.Teacher){
-							ArrayList<Klass> klassen = (ArrayList<Klass>) kdao.retrieveAll(2);
-							session.setAttribute("klassen", klassen);
 							rd= req.getRequestDispatcher("LeraarOverzichtServlet.do");
 						}
 						if(p.getRole()==UserRole.Student){

@@ -140,7 +140,7 @@ public class PersonDAO implements DAOInterface<Person> {
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
-			System.out.println("Unique constraint error");//as
+			System.out.println("Unique constraint error");
 		} catch (SQLException e) {
 			try {
 				connection.rollback();
