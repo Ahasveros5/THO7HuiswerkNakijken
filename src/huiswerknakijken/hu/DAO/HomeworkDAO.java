@@ -243,7 +243,7 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 			String sql;
 			PreparedStatement statement;
 				String generatedColumns[] = { "homework_id" };
-				sql = "INSERT INTO Homework(homework_name, deadline,questions,course) VALUES (?,?,?,?)";
+				sql = "INSERT INTO Homework(homework_name, deadline,questions,course_id) VALUES (?,?,?,?)";
 				statement = connection.prepareStatement(sql, generatedColumns);
 				statement.setString(1, s.getName());
 				statement.setString(2, s.getDeadline());
@@ -293,11 +293,12 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
 			connection.setAutoCommit(false);
-			PreparedStatement statement = connection.prepareStatement("UPDATE HOMEWORK SET Homework_Name=?, Deadline=?, Questions=? WHERE Homework_id=?");
+			PreparedStatement statement = connection.prepareStatement("UPDATE HOMEWORK SET Homework_Name=?, Deadline=?, Questions=?, course_id=? WHERE Homework_id=?");
 			statement.setString(1, s.getName());
 			statement.setString(2, s.getDeadline());
 			statement.setInt(3, s.getNumberQuestions());
-			statement.setInt(4, s.getID());
+			statement.setInt(4, s.getCourse().getID());
+			statement.setInt(5, s.getID());
 			statement.executeUpdate();
 			statement.close();
 			updatePersonHomework(s, connection);
