@@ -91,6 +91,7 @@ public class CourseDAO implements DAOInterface<Course> {
 
 			String sql;
 			PreparedStatement statement = null;
+			System.out.println("adding course");
 				String generatedColumns[] = { "course_id" };
 				sql = "INSERT INTO COURSE(course_name) VALUES (?)";
 				statement = connection.prepareStatement(sql, generatedColumns);
@@ -114,6 +115,7 @@ public class CourseDAO implements DAOInterface<Course> {
 
 
 			b = true;
+			System.out.println("added");
 			connection.commit();
 			connection.close();
 		} catch (SQLIntegrityConstraintViolationException e) {
