@@ -6,7 +6,7 @@
  <h3>vakken overzicht</h3>
  
  <div id = "vakkenbox">
-<%  ArrayList<Course> vakken = (ArrayList<Course>) session.getAttribute("vakken");
+<%  ArrayList<Course> vakken = (ArrayList<Course>) session.getAttribute("Vakken");
 
 	if (vakken!=null){
 			for(int i = 0; i< vakken.size(); i++){
