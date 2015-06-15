@@ -11,6 +11,7 @@ public class Course
 	private ArrayList<Person> students = new ArrayList<Person>();
 	private ArrayList<Goal> goals = new ArrayList<Goal>();
 	
+	
 	public String getName() {
 		return name;
 	}

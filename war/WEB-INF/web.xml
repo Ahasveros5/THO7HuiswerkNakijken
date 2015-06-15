@@ -235,4 +235,24 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 		<servlet-name>VakkenOverzichtServlet</servlet-name>
 		<url-pattern>/VakkenOverzichtServlet.do</url-pattern>
 	</servlet-mapping>
+	
+			<servlet>
+		<servlet-name>VakSpecifiek</servlet-name>
+		<servlet-class>huiswerknakijken.hu.Servlets.VakSpecifiek
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>VakSpecifiek</servlet-name>
+		<url-pattern>/VakSpecifiek.do</url-pattern>
+	</servlet-mapping>
+	
+				<servlet>
+		<servlet-name>AddClassToCourse</servlet-name>
+		<servlet-class>huiswerknakijken.hu.Servlets.AddClassToCourse
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AddClassToCourse</servlet-name>
+		<url-pattern>/AddClassToCourse.do</url-pattern>
+	</servlet-mapping>
 </web-app>
