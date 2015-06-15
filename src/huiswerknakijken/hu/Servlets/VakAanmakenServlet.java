@@ -30,7 +30,7 @@ public class VakAanmakenServlet extends HttpServlet {
 		
 		String naam = req.getParameter("Vaknaam");
 		String[] teacherIDs = req.getParameterValues("teacherSelect");
-		ArrayList<Course>vakken = new ArrayList<Course>();
+		ArrayList<Course>vakken = (ArrayList<Course>) session.getAttribute("vakken");
 		ArrayList<Person>teachers = new ArrayList<Person>();
 		for(int i = 0; i<teacherIDs.length; i++){
 			teachers.add(pdao.retrieve(Integer.parseInt(teacherIDs[i]), 1));

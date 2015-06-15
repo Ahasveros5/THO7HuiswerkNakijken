@@ -91,31 +91,37 @@ public class CourseDAO implements DAOInterface<Course> {
 
 			String sql;
 			PreparedStatement statement = null;
+			System.out.println("adding course");
 				String generatedColumns[] = { "course_id" };
 				sql = "INSERT INTO COURSE(course_name) VALUES (?)";
 				statement = connection.prepareStatement(sql, generatedColumns);
 				statement.setString(1, s.getName());
 				statement.executeUpdate();
-				if(s.getID() == -1){
+				System.out.println("temp");
 					int ID = -1;
 					ResultSet rsid = statement.getGeneratedKeys();
 					if (rsid != null && rsid.next()) {
 						ID = rsid.getInt(1);
 						s.setID(ID);
 					}
-				}
 			statement.close();
+			
+			System.out.println("COURSEID: " + s.getID());
 			for (Person p : s.getStudents()){
-				addPerson(p, s, connection);
+					addPerson(p, s, connection);
 			}
 			for (Person p : s.getTeachers()){
-				addPerson(p,s,connection);
+					addPerson(p,s,connection);
 			}
+			
+			connection.commit();
+			connection.close();
 
 
 			b = true;
-			connection.commit();
-			connection.close();
+			System.out.println("added");
+			
+			
 		} catch (SQLIntegrityConstraintViolationException e) {
 			e.printStackTrace();
 			try {

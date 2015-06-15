@@ -14,7 +14,7 @@
 	<label>Voor Klas: </label>
 	<%
 	ArrayList<Klass> klassen = (ArrayList<Klass>) session.getAttribute("klassen");
-	out.println("<select name = 'KlasSelect' size='"+klassen.size()+"'>");
+	out.println("<select name = 'KlasSelect'>");
 	if (klassen!=null){
 			for(int i = 0; i< klassen.size(); i++){
 				out.println("<option value ='"+klassen.get(i).getName()+"'>"+klassen.get(i).getName()+"</option>");

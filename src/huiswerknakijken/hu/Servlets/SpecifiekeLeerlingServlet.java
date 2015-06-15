@@ -1,12 +1,12 @@
 package huiswerknakijken.hu.Servlets;
 
+import huiswerknakijken.hu.DAO.ClassDAO;
 import huiswerknakijken.hu.DAO.PersonDAO;
-import huiswerknakijken.hu.Domain.Homework;
+import huiswerknakijken.hu.Domain.Klass;
 import huiswerknakijken.hu.Domain.Person;
-import huiswerknakijken.hu.Domain.Question;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,11 +21,13 @@ public class SpecifiekeLeerlingServlet extends HttpServlet {
 		RequestDispatcher rd = null;
 		HttpSession session = req.getSession();
 		PersonDAO dao = new PersonDAO();
-		
+		ClassDAO kdao = new ClassDAO();
 		String id = req.getParameter("id");
 		System.out.println("retrieving!");
+		List<Klass> klassen = kdao.retrieveAll(1);
 		Person p = dao.retrieve(Integer.parseInt(id), 1);
 		session.setAttribute("selectedStudent", p);
+		session.setAttribute("klassen", klassen);
 		rd = req.getRequestDispatcher("SpecifiekeLeerling.jsp");
 		
 		if(rd!= null){
