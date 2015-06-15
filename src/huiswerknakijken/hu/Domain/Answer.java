@@ -3,7 +3,7 @@ package huiswerknakijken.hu.Domain;
 
 public class Answer 
 {
-	private int ID;
+	private int ID;//hi
 	private String answer;
 	private Correct correct;
 	private Question question;
