@@ -10,7 +10,7 @@
 
 	if (vakken!=null){
 			for(int i = 0; i< vakken.size(); i++){
-				out.println(vakken.get(i).getName()+"<br>");			
+				out.println("<a href = 'VakSpecifiek.do?id="+vakken.get(i).getID()+"'>"+vakken.get(i).getName() +"</a><br>");			
 			}			
 		}
 	else{
