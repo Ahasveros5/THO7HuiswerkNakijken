@@ -1,11 +1,11 @@
 package huiswerknakijken.hu.Servlets;
 
 import huiswerknakijken.hu.DAO.ClassDAO;
+import huiswerknakijken.hu.DAO.CourseDAO;
 import huiswerknakijken.hu.DAO.HomeworkDAO;
+import huiswerknakijken.hu.Domain.Course;
 import huiswerknakijken.hu.Domain.Homework;
-import huiswerknakijken.hu.Domain.Klass;
 import huiswerknakijken.hu.Domain.Person;
-import huiswerknakijken.hu.Domain.Student;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,9 +24,10 @@ public class HuiswerkAanmakenServlet extends HttpServlet {
 		HttpSession session = req.getSession();
 		HomeworkDAO dao = new HomeworkDAO();
 		ClassDAO kdao = new ClassDAO();
-		String klas = req.getParameter("KlasSelect");
-		Klass klassen = kdao.retrieveByName(klas, 2);
-		ArrayList<Student> studenten = klassen.getStudents();
+		CourseDAO cdao = new CourseDAO();
+		String course = req.getParameter("VakSelect");
+		Course vak = cdao.retrieveByName(course, 1);
+		
 		String[]datevals;
 		String[]timevals;
 		String hwnaam = req.getParameter("HWName");
@@ -50,7 +51,7 @@ public class HuiswerkAanmakenServlet extends HttpServlet {
 		hw.setName(hwnaam);
 		hw.setDeadline(Dline);
 		hw.setTeacher(teacher);
-		hw.setStudents(studenten);
+		hw.setCourse(vak);
 		hwList.add(hw);
 		dao.add(hw);
 		session.setAttribute("Huiswerk", hwList);

@@ -2,7 +2,7 @@
  
  	<%@ page import="java.util.ArrayList" %>
  	<%@ page import="huiswerknakijken.hu.Domain.Homework" %>
- 	<%@ page import="huiswerknakijken.hu.Domain.Klass"  %>
+ 	<%@ page import="huiswerknakijken.hu.Domain.Course"  %>
 	<div id = "HW">
 	<h3> Huiswerk opgeven</h3>
 	<form action = "HuiswerkAanmakenServlet.do"method="post">
@@ -11,13 +11,13 @@
 	<label>Deadline:</label>
 	<input type="date" name="deadline"/>
 	<input type = "time" name="DLTime"/><br><br>
-	<label>Voor Klas: </label>
+	<label>Vak: </label>
 	<%
-	ArrayList<Klass> klassen = (ArrayList<Klass>) session.getAttribute("klassen");
-	out.println("<select name = 'KlasSelect'>");
-	if (klassen!=null){
-			for(int i = 0; i< klassen.size(); i++){
-				out.println("<option value ='"+klassen.get(i).getName()+"'>"+klassen.get(i).getName()+"</option>");
+	ArrayList<Course> vakken = (ArrayList<Course>) session.getAttribute("Vakken");
+	out.println("<select name = 'VakSelect'>");
+	if (vakken!=null){
+			for(int i = 0; i< vakken.size(); i++){
+				out.println("<option value ='"+vakken.get(i).getName()+"'>"+vakken.get(i).getName()+"</option>");
 			}	
 		}
 	out.println("</select>");

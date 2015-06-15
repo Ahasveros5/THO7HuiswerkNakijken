@@ -1,7 +1,10 @@
 package huiswerknakijken.hu.Servlets;
 
 import huiswerknakijken.hu.DAO.ClassDAO;
+import huiswerknakijken.hu.DAO.CourseDAO;
+import huiswerknakijken.hu.Domain.Course;
 import huiswerknakijken.hu.Domain.Klass;
+import huiswerknakijken.hu.Domain.Person;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,8 +31,11 @@ public class HuiswerkAanmaken extends HttpServlet{
 		HttpSession session = req.getSession();
 		RequestDispatcher rd = null;
 		ClassDAO kdao = new ClassDAO();
+		CourseDAO cdao = new CourseDAO();
 		ArrayList<Klass> klassen = (ArrayList<Klass>) kdao.retrieveAll(2);
+		ArrayList<Course>vakken = cdao.retrieveAllByPerson(((Person) session.getAttribute("user")).getID(), 1);
 		session.setAttribute("klassen", klassen);
+		session.setAttribute("Vakken",vakken);
 		rd = req.getRequestDispatcher("HuiswerkAanmaken.jsp");
 		
 		if(rd!=null){
