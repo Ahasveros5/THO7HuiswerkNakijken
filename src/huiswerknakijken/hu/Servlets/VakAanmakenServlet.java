@@ -30,17 +30,20 @@ public class VakAanmakenServlet extends HttpServlet {
 		
 		String naam = req.getParameter("Vaknaam");
 		String[] teacherIDs = req.getParameterValues("teacherSelect");
+		ArrayList<Course>vakken = new ArrayList<Course>();
 		ArrayList<Person>teachers = new ArrayList<Person>();
 		for(int i = 0; i<teacherIDs.length; i++){
 			teachers.add(pdao.retrieve(Integer.parseInt(teacherIDs[i]), 1));
 		}
 		
+		if(!naam.equals("")&&!(naam==null)){
 		Course c = new Course();
 		c.setTeachers(teachers);
 		c.setName(naam);
-		
+		vakken.add(c);
 		dao.add(c);
-		
+		}
+		session.setAttribute("Vakken", vakken);
 		rd = req.getRequestDispatcher("VakkenOverzicht.jsp");
 		if(rd!= null){
 			rd.forward(req, resp);
