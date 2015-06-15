@@ -1,5 +1,7 @@
 package huiswerknakijken.hu.Domain;
 
+import huiswerknakijken.hu.Domain.Person.UserRole;
+
 import java.util.ArrayList;
 
 
@@ -12,6 +14,34 @@ public class Question
 	protected Homework homework;
 	protected int number;
 
+	
+	public enum Type{
+		Meerkeuze(1),
+		Openvraag(2),
+		Openwoord(3),
+		Unknown(4);
+		
+		private final int index;   
+		 
+		Type(int index) {
+			this.index = index;
+		}
+
+		public int getIndex() { 
+			return index; 
+		}
+		
+		public static Type getValue(int i){
+			Type ur = Type.Unknown;
+			for (Type us : Type.values()) {
+				if (us.getIndex() == i) {
+					ur = us;
+				}
+			}
+			return ur;
+		}
+	}
+	
 	public Question(){
 		
 	}

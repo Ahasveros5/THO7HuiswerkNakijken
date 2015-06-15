@@ -53,6 +53,29 @@ public class CourseDAO implements DAOInterface<Course> {
 
 	}
 	
+	public Course retrieveByID(int id, int layerLevel) {
+		Course retrievedCourse = null;
+		Connection connection = OracleConnectionPool.getConnection();
+		try {
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Course WHERE course_id=?");
+			statement.setInt(1, id);
+			ResultSet rs = statement.executeQuery();
+			ArrayList<Course> Class = resultSetExtractor(rs, layerLevel, connection);
+			if(Class.size() == 0){
+				retrievedCourse = null;
+			} else{
+				retrievedCourse = Class.get(0);
+			}
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return retrievedCourse;
+
+	}
+	
 	public ArrayList<Course> retrieveAllByPerson(int pid, int layerLevel) {
 		ArrayList<Course> retrievedCourse = null;
 		Connection connection = OracleConnectionPool.getConnection();
