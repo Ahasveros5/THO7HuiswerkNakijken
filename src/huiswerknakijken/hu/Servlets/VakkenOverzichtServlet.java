@@ -24,9 +24,7 @@ public class VakkenOverzichtServlet extends HttpServlet {
 		CourseDAO dao = new CourseDAO();
 		PersonDAO pdao = new PersonDAO();
 		int userID = ((Person) session.getAttribute("user")).getID();
-		System.out.println("Ingelogde user = "+userID);
 		ArrayList<Course> vakken  = dao.retrieveAllByPerson(userID, 2);
-		System.out.println("hoeveel vakken :"+vakken.size());
 		ArrayList<Person> teachers = (ArrayList<Person>) pdao.retrieveAllByRole(UserRole.Teacher.getIndex(), 1);
 		System.out.println("Sizetest"+ vakken.size());
 	
