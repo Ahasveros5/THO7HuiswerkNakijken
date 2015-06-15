@@ -20,6 +20,7 @@
 					<td>Name</td>
 					<td>Deadline</td>
 					<td>Aantal vragen</td>
+					<td>Vak</td>
 				</tr>
 		
 		<%
@@ -30,6 +31,7 @@
 					out.println("<td><a href = 'HuiswerkOverzichtServlet.do?id="+h.getID()+"'>"+h.getName()+"</a></td>");
 					out.println("<td><a href = 'HuiswerkOverzichtServlet.do?id="+h.getID()+"'>"+h.getDeadline()+"</a></td>");
 					out.println("<td><a href = 'HuiswerkOverzichtServlet?id="+h.getID()+"'>"+h.getNumberQuestions()+"</a></td>");
+					out.println("<td><a href = 'HuiswerkOverzichtServlet?id="+h.getID()+"'>"+h.getCourse()+"</a></td>");
 					out.println("</tr>");
 				}
 			}
