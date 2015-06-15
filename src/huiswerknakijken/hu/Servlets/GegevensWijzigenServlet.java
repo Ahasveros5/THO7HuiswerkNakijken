@@ -1,6 +1,10 @@
 package huiswerknakijken.hu.Servlets;
 
+import huiswerknakijken.hu.DAO.ClassDAO;
+import huiswerknakijken.hu.DAO.PersonDAO;
+import huiswerknakijken.hu.Domain.Klass;
 import huiswerknakijken.hu.Domain.Person;
+import huiswerknakijken.hu.Domain.Student;
 import huiswerknakijken.hu.Util.PasswordHash;
 
 import java.io.IOException;
@@ -28,7 +32,7 @@ public class GegevensWijzigenServlet extends HttpServlet{
 		resp.setContentType("text/html");
 		HttpSession session = req.getSession();
 		RequestDispatcher rd = null;
-		Person p = (Person) session.getAttribute("selectedStudent");
+		Student p = ((Person) session.getAttribute("selectedStudent")).toStudent();
 		p.setFirstName(req.getParameter("voornaam"));
 		p.setLastName(req.getParameter("achternaam"));
 		p.setEmail(req.getParameter("email"));
@@ -38,7 +42,9 @@ public class GegevensWijzigenServlet extends HttpServlet{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		p.setFirstName(req.getParameter("voornaam"));
+		Klass k = new ClassDAO().retrieveByName(req.getParameter("KlasSelect"), 1);
+		p.setMainClass(k);
+		new PersonDAO().update(p);
 		rd = req.getRequestDispatcher("SpecifiekeLeerling.jsp");
 		
 		if(rd!=null){
