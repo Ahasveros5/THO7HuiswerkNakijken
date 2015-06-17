@@ -2,7 +2,7 @@ package huiswerknakijken.hu.Domain;
 
 import huiswerknakijken.hu.Domain.Answer.Correct;
 
-public class Person {
+public class Person implements Comparable {
 	
 	public void print(){
 		System.out.println("Printing out Person:\n" + 
@@ -105,6 +105,12 @@ public class Person {
 	
 	public String toString(){
 		return firstName +" "+lastName;
+	}
+
+	@Override
+	public int compareTo(Object compTo) {
+		int id = ((Person)compTo).getID();
+		return ID-id;
 	}
 	
 	

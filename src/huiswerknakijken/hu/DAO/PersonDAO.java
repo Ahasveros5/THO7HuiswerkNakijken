@@ -6,6 +6,7 @@ import huiswerknakijken.hu.Domain.Person.UserRole;
 import huiswerknakijken.hu.Domain.Student;
 import huiswerknakijken.hu.Domain.Teacher;
 import huiswerknakijken.hu.Util.OracleConnectionPool;
+import huiswerknakijken.hu.Util.Util;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,7 +14,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 public class PersonDAO implements DAOInterface<Person> {
 	public List<Person> retrieveAll(int layerLevel) {
@@ -33,24 +37,56 @@ public class PersonDAO implements DAOInterface<Person> {
 		return Students;
 	}
 	
-	public List<Person> retrieveAllMatching(String keyword, int layerLevel) {
+	public List<Person> retrieveAllMatching(String keyword, int layerLevel){
+		Connection con = OracleConnectionPool.getConnection();
+		List<Person> ps = retrieveAllMatching(keyword, layerLevel, con);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return ps;
+	}
+	
+	public List<Person> retrieveAllMatching(String keyword, int layerLevel, Connection con) {
 		ResultSet rs = null;
 		ArrayList<Person> users = null;
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
 			PreparedStatement statement = null;
-			keyword = "%" + keyword + "%";
-			statement = connection.prepareStatement("SELECT * FROM person, C_class WHERE (lower(email) LIKE lower(?) OR lower(class_name) LIKE lower(?) OR lower(first_name) LIKE lower(?) OR lower(last_name) LIKE lower(?)) AND role=1 AND PERSON.class_id = C_Class.class_id");
 			
-			statement.setString(1, keyword);
-			statement.setString(2, keyword);
-			statement.setString(3, keyword);
-			statement.setString(4, keyword);
+			String[] keywords = keyword.split(" ");
+			if (keywords.length > 1){
+				users = new ArrayList<Person>();
+				for(String s : keywords)
+					users.addAll(retrieveAllMatching(s,layerLevel,con));
+				Set<Integer> ids = new HashSet<Integer>();
+				for (Iterator<Person> it = users.iterator(); it.hasNext(); ) {
+				    if (!ids.add(it.next().getID())) {
+				        it.remove();
+				    }
+				}
+			} else{
+				if(!Util.isInteger(keyword)){
+					keyword = "%" + keyword + "%";
+					statement = connection.prepareStatement("SELECT * FROM person, C_class WHERE (lower(email) LIKE lower(?) OR lower(class_name) LIKE lower(?) OR lower(first_name) LIKE lower(?) OR lower(last_name) LIKE lower(?)) AND role=1 AND PERSON.class_id = C_Class.class_id");
+					
+					statement.setString(1, keyword);
+					statement.setString(2, keyword);
+					statement.setString(3, keyword);
+					statement.setString(4, keyword);
+				} else{
+					statement = connection.prepareStatement("SELECT * FROM Person WHERE id=? AND role=1 ");
+					statement.setInt(1, Integer.parseInt(keyword));
+				}
 			
-			rs = statement.executeQuery();
-			users = resultSetExtractor(rs, layerLevel, connection);
-			statement.close();
-			connection.close();
+			
+				rs = statement.executeQuery();
+				users = resultSetExtractor(rs, layerLevel, connection);
+				statement.close();
+			}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

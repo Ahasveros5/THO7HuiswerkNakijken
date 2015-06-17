@@ -9,6 +9,7 @@ import huiswerknakijken.hu.Util.OracleConnectionPool;
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -33,10 +34,12 @@ public class SearchLeerlingenServlet extends HttpServlet {
 		HttpSession session = req.getSession();
 		RequestDispatcher rd = null;
 		String searchvalues = req.getParameter("searchfield");
+		session.setAttribute("Keyword", searchvalues);
 		System.out.println("searching on: "+ searchvalues);
 		List<Person> list = dao.retrieveAllMatching(searchvalues, 1);
 		List<Klass> klassen = new ArrayList<Klass>();
 		Connection con = OracleConnectionPool.getConnection();
+		Collections.sort(list);
 		for(Person p : list){
 			klassen.add(cdao.retrieveByPerson(p.getID(), 1, con));
 		}

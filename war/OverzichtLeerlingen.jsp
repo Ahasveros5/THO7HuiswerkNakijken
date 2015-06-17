@@ -6,7 +6,11 @@
 	
 	<div>
 	<form action = "SearchLeerlingenServlet.do">
-	<label>Zoeken naar:</label><br/>
+	<%
+		String keyword = (String)session.getAttribute("Keyword");
+		if(keyword != null)
+			out.println("<label size='250'>Gezocht naar: " + keyword + " </label><br/>");
+	%>
 	<input class="searchfield" type="text" name="searchfield"/>
 	<input class="searchbutton" type="submit" name="search" value="search"/>
 	</form>
