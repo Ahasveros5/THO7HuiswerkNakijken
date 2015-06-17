@@ -10,7 +10,7 @@
 	ArrayList<Person> studenten = (ArrayList<Person>) session.getAttribute("studenten");
 	if (studenten!=null){
 			for(int i = 0; i< studenten.size(); i++){
-				out.println(studenten.get(i).getFirstName()+" "+studenten.get(i).getLastName()+"  "+studenten.get(i).getID());
+				out.println(studenten.get(i).getFirstName()+" "+studenten.get(i).getLastName()+"  "+studenten.get(i).getID()+"<br>");
 			}	
 		}
 	else{

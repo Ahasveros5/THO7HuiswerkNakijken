@@ -33,6 +33,7 @@ public class AddClassToCourse extends HttpServlet {
 		for(int i= 0; i<k.getStudents().size(); i++){
 		students.add(k.getStudents().get(i));
 		}
+		c.setStudents(students);
 		session.setAttribute("studenten",students);
 		rd = req.getRequestDispatcher("VakSpecifiek.jsp?id="+vakId);
 		
