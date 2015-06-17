@@ -242,9 +242,8 @@ public class CourseDAO implements DAOInterface<Course> {
 			List<Person> temp = dao.retrieveStudentsByCourse(s.getID(), 1,connection);
 			List<Person> temp2 = new ArrayList<Person>();
 			for(Person p : s.getStudents())
-				for(Person p2 : temp)
-					if(p.getID() != p2.getID() && temp2.contains(p) == false)
-						temp2.add(p);
+				if(!temp.contains(p))
+					temp2.add(p);
 			
 			
 			/*for (Iterator<Person> it=s.getStudents().iterator(); it.hasNext();) {
