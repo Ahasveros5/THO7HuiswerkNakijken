@@ -30,8 +30,8 @@
 					out.println("<tr>");
 					out.println("<td><a href = 'HuiswerkOverzichtServlet.do?id="+h.getID()+"'>"+h.getName()+"</a></td>");
 					out.println("<td><a href = 'HuiswerkOverzichtServlet.do?id="+h.getID()+"'>"+h.getDeadline()+"</a></td>");
-					out.println("<td><a href = 'HuiswerkOverzichtServlet?id="+h.getID()+"'>"+h.getNumberQuestions()+"</a></td>");
-					out.println("<td><a href = 'HuiswerkOverzichtServlet?id="+h.getID()+"'>"+h.getCourse().getName()+"</a></td>");
+					out.println("<td><a href = 'HuiswerkOverzichtServlet.do?id="+h.getID()+"'>"+h.getNumberQuestions()+"</a></td>");
+					out.println("<td><a href = 'HuiswerkOverzichtServlet.do?id="+h.getID()+"'>"+h.getCourse().getName()+"</a></td>");
 					out.println("</tr>");
 				}
 			}
