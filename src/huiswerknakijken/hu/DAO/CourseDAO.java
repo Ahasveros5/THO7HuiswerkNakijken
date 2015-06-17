@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class CourseDAO implements DAOInterface<Course> {
@@ -230,9 +231,18 @@ public class CourseDAO implements DAOInterface<Course> {
 		try {
 			connection.setAutoCommit(false);
 			PersonDAO dao = new PersonDAO();
-			System.out.println("all before: \n"+s.getStudents().toString());
-			s.getStudents().removeAll(dao.retrieveStudentsByCourse(s.getID(), 1,connection));
+/*			System.out.println("all before: \n"+s.getStudents().toString());
+			
+			System.out.println("temp: \n"+ temp.toString());
+			s.getStudents().removeAll(temp);
 			System.out.println("all after: \n"+s.getStudents().toString());
+			*/
+			List<Person> temp = dao.retrieveStudentsByCourse(s.getID(), 1,connection);
+			for (Iterator<Person> it=s.getStudents().iterator(); it.hasNext();) {
+				for(Person p : temp)
+					if (it.next().getID() == p.getID())
+						it.remove(); // NOTE: Iterator's remove method, not ArrayList's, is used.
+			}
 			for(Person p : s.getStudents()){
 				System.out.println("Person: " + p.getID() + "|||| COURSE: " + s.getID());
 				addPerson(p,s,connection);
