@@ -93,6 +93,56 @@ public class CourseDAO implements DAOInterface<Course> {
 		return retrievedCourse;
 
 	}
+	
+	public boolean removePerson(Person p, Course s, Connection connection){
+		try {
+			connection.setAutoCommit(false);
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		try {
+
+			String sql;
+			PreparedStatement statement = null;
+				sql = "DELETE FROM PERSON_COURSE WHERE course_id=? AND person_id=?";
+				statement = connection.prepareStatement(sql);
+				statement.setInt(1, s.getID());
+				statement.setInt(2, p.getID());
+				statement.executeUpdate();
+			statement.close();
+			connection.commit();
+		
+		} catch (SQLIntegrityConstraintViolationException e) {
+			e.printStackTrace();
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			System.out.println("Unique constraint error");
+		} catch (SQLException e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}
+		
+		return true;
+	}
+	
+	public boolean removePerson(Person p, Course s){
+		Connection connection = OracleConnectionPool.getConnection();
+		boolean b = removePerson(p,s,connection);
+		try {
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return b;
+	}
 
 	@Override
 	public boolean delete(Course s) {

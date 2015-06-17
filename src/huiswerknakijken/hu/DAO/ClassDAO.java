@@ -53,7 +53,15 @@ public class ClassDAO implements DAOInterface<Klass> {
 	}
 	
 	public Klass retrieveByPerson(int id, int layerLevel){
-		return retrieveByPerson(id,layerLevel,OracleConnectionPool.getConnection());
+		Connection con = OracleConnectionPool.getConnection();
+		Klass k = retrieveByPerson(id,layerLevel,con);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return k;
 	}
 	
 	public Klass retrieveByPerson(int id, int layerLevel, Connection con) {
@@ -70,7 +78,6 @@ public class ClassDAO implements DAOInterface<Klass> {
 				retrievedClass = Class.get(0);
 			}
 			statement.close();
-			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -165,7 +172,7 @@ public class ClassDAO implements DAOInterface<Klass> {
 
 					if (layerLevel > 1) { //students to class
 						PersonDAO pDAO = new PersonDAO();
-						c.setStudents(pDAO.retrieveAllByClass(c.getClassID(), 0));
+						c.setStudents(pDAO.retrieveAllByClass(c.getClassID(), 0, connection));
 					}
 
 					if (layerLevel > 2) {

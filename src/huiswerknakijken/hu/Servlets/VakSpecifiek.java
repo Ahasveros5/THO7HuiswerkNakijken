@@ -8,6 +8,8 @@ import huiswerknakijken.hu.Domain.Person;
 import huiswerknakijken.hu.Util.OracleConnectionPool;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -25,7 +27,14 @@ public class VakSpecifiek extends HttpServlet {
 		ClassDAO kdao = new ClassDAO();
 		RequestDispatcher rd = null;
 		String vakId = req.getParameter("id");
-		Course c = cdao.retrieveByID(Integer.parseInt(vakId), 2, OracleConnectionPool.getConnection());
+		Connection con = OracleConnectionPool.getConnection();
+		Course c = cdao.retrieveByID(Integer.parseInt(vakId), 2, con);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		ArrayList<Klass>klassen = (ArrayList<Klass>) kdao.retrieveAll();
 		ArrayList<Person> students = c.getStudents();
 		session.setAttribute("Vak", c);

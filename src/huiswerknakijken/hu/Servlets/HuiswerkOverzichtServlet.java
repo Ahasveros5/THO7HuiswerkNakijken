@@ -4,10 +4,12 @@ import huiswerknakijken.hu.DAO.HomeworkDAO;
 import huiswerknakijken.hu.DAO.PersonDAO;
 import huiswerknakijken.hu.Domain.Homework;
 import huiswerknakijken.hu.Domain.Person;
-import huiswerknakijken.hu.Domain.Person.UserRole;
 import huiswerknakijken.hu.Domain.Question;
+import huiswerknakijken.hu.Util.OracleConnectionPool;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -29,11 +31,17 @@ public class HuiswerkOverzichtServlet extends HttpServlet {
 
 		ArrayList<Person> studenten = (ArrayList<Person>) pdao.retrieveStudentsByHomework(id, 1);
 		ArrayList<Homework> hwlist = new ArrayList<Homework>();
+		Connection con = OracleConnectionPool.getConnection();
 		for(int i = 0; i<studenten.size(); i++){
-		Homework hw = dao.retrieveHomeworkByStudent(dao.retrieveByID(id, 1).getID(), studenten.get(i).getID(), 2);
-		hwlist.add(hw);
+			Homework hw = dao.retrieveHomeworkByStudent(dao.retrieveByID(id, 1).getID(), studenten.get(i).getID(), 2, con);
+			hwlist.add(hw);
 		}
-		
+		try {
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		session.setAttribute("HwObj", hwlist);
 		ArrayList<Question> questions = null;
 		if(hwlist.get(0) != null)
