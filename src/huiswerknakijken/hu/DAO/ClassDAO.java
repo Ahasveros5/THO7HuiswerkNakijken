@@ -51,6 +51,29 @@ public class ClassDAO implements DAOInterface<Klass> {
 		return retrievedClass;
 
 	}
+	
+	public Klass retrieveByPerson(int id, int layerLevel) {
+		Klass retrievedClass = null;
+		Connection connection = OracleConnectionPool.getConnection();
+		try {
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM C_CLASS, PERSON WHERE C_CLASS.class_id=PERSON.class_id AND id=?");
+			statement.setInt(1, id);
+			ResultSet rs = statement.executeQuery();
+			ArrayList<Klass> Class = resultSetExtractor(rs, layerLevel, connection);
+			if(Class.size() == 0){
+				retrievedClass = null;
+			} else{
+				retrievedClass = Class.get(0);
+			}
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return retrievedClass;
+
+	}
 
 	@Override
 	public boolean delete(Klass s) {

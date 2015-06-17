@@ -6,6 +6,7 @@ import huiswerknakijken.hu.Domain.Answer;
 import huiswerknakijken.hu.Domain.Answer.Correct;
 import huiswerknakijken.hu.Domain.Homework;
 import huiswerknakijken.hu.Domain.Question;
+import huiswerknakijken.hu.Domain.Question.Type;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -81,6 +82,7 @@ public class MultipleChoiceAanmakenServlet extends HttpServlet {
 			rd = req.getRequestDispatcher("LeraarVraagAanmaken.jsp");
 		}else{
 			q = new Question();
+			q.setType(Type.Meerkeuze);
 			q.setName(naam);
 			q.setDescription(vraag);
 			q.setAnswers(antwoorden);

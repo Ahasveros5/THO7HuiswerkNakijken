@@ -25,16 +25,14 @@ public class HuiswerkNakijkenServlet extends HttpServlet {
 		ArrayList<Homework> hws = (ArrayList<Homework>) session.getAttribute("HwObj");
 		AnswerDAO adao = new AnswerDAO();
 		HomeworkDAO hdao = new HomeworkDAO();
-		int correct = 0;
+		double points = 0;
 		for(Homework h : hws){
 			if(h.getStatus() != Status.Af)
 				continue;
 			for(Question q : h.getQuestions()){
-				if(CheckAnswers.HasGivenCorrectAnswer(q, adao.retrieveGivenAnswer(q, h.getStudent(), 1))){
-					correct++;
-				}
+				points += CheckAnswers.getGivenAnswerPoints(q, h.getStudent());
 			}
-			h.cijfer = correct/h.getNumberQuestions()*9+1;
+			h.cijfer = points/h.getNumberQuestions()*9+1;
 			hdao.update(h);
 			System.out.println("cijfer: " + h.cijfer);
 		}

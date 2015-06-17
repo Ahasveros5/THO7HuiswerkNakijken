@@ -30,11 +30,8 @@ public class LeraarOverzichtServlet extends HttpServlet{
 		HttpSession session = req.getSession();
 		Person teacher = (Person) session.getAttribute("user");
 		int teacherID = teacher.getID();
-		ArrayList<Homework> hwList = new ArrayList<Homework>();
+		ArrayList<Homework> hwList = dao.retrieveAllByPerson(teacherID, 1);
 		RequestDispatcher rd = null;
-		if(dao.retrieveAllByPerson(teacherID, 1).size() < 1)
-			System.out.println("empty list");
-		hwList.addAll(dao.retrieveAllByPerson(teacherID, 1));
 		session.setAttribute("Huiswerk", hwList);
 		rd = req.getRequestDispatcher("LeraarOverzicht.jsp");
 		

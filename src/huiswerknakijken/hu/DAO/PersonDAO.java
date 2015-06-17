@@ -371,7 +371,7 @@ public class PersonDAO implements DAOInterface<Person> {
 		Connection connection = OracleConnectionPool.getConnection();
 		ArrayList<Person> eU = null;
 		try {
-			PreparedStatement statement = connection.prepareStatement("SELECT * FROM PERSON WHERE course_id=? AND role=1");
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM PERSON, PERSON_COURSE WHERE course_id=? AND role=1 AND PERSON.ID = PERSON_COURSE.PERSON_ID	");
 			statement.setInt(1, courseID);
 			ResultSet rs = statement.executeQuery();
 			eU = resultSetExtractor(rs, layerLevel, connection);
@@ -388,7 +388,7 @@ public class PersonDAO implements DAOInterface<Person> {
 		Connection connection = OracleConnectionPool.getConnection();
 		ArrayList<Person> eU = null;
 		try {
-			PreparedStatement statement = connection.prepareStatement("SELECT * FROM PERSON WHERE course_id=? AND role=2");
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM PERSON, PERSON_COURSE WHERE course_id=? AND role=2 AND PERSON.ID = PERSON_COURSE.PERSON_ID	");
 			statement.setInt(1, classID);
 			ResultSet rs = statement.executeQuery();
 			eU = resultSetExtractor(rs, layerLevel, connection);

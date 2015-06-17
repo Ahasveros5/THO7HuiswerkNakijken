@@ -6,6 +6,7 @@ import huiswerknakijken.hu.Domain.Answer;
 import huiswerknakijken.hu.Domain.Homework;
 import huiswerknakijken.hu.Domain.Question;
 import huiswerknakijken.hu.Domain.Answer.Correct;
+import huiswerknakijken.hu.Domain.Question.Type;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -28,9 +29,8 @@ public class OpenVraagAanmakenServlet extends HttpServlet {
 		ArrayList<Answer>antwoorden = new ArrayList<Answer>();
 		HttpSession session = req.getSession();
 		String naam = req.getParameter("naam");
-		String vraag = req.getParameter("vraagMultipleChoice");
+		String vraag = req.getParameter("OpenVraag");
 		String keywords = req.getParameter("Keywords");
-		int goedeAntwoord = Integer.parseInt(req.getParameter("GoedeAntwoord"));
 		ArrayList<Question> questions = new ArrayList<Question>();
 		
 		Question q = null;
@@ -40,12 +40,13 @@ public class OpenVraagAanmakenServlet extends HttpServlet {
 
 		if( 
 			vraag.isEmpty()||
-			goedeAntwoord==0){
+			keywords.isEmpty()){
 			
 			req.setAttribute("msgs", "Vul alle velden in.");
 			rd = req.getRequestDispatcher("LeraarVraagAanmaken.jsp");
 		}else{
 			q = new Question();
+			q.setType(Type.Openvraag);
 			q.setName(naam);
 			q.setDescription(vraag);
 			

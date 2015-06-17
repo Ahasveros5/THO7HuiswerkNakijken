@@ -26,8 +26,8 @@
 	 <form action = "OpenWoordAanmaken.jsp">
 	 <input class = "button" value = "Open woord vraag toevoegen(NYI)" type = "submit" name="knop" />
 	 </form>
-	 <form action = "MultipleChoiceAanmaken.jsp">
-	 <input class = "button" value = "Open vraag toevoegen(NYI)" type = "submit" name="knop" />
+	 <form action = "OpenVraagAanmaken.jsp">
+	 <input class = "button" value = "Open vraag toevoegen" type = "submit" name="knop" />
 	 </form>
 	 <div id = "studentBox">
 	 <h3>Huiswerk status leerlingen</h3>

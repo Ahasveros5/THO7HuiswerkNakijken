@@ -2,6 +2,7 @@ package huiswerknakijken.hu.DAO;
 
 import huiswerknakijken.hu.Domain.Answer;
 import huiswerknakijken.hu.Domain.Question;
+import huiswerknakijken.hu.Domain.Question.Type;
 import huiswerknakijken.hu.Util.OracleConnectionPool;
 
 import java.sql.Connection;
@@ -106,12 +107,13 @@ public class QuestionDAO implements DAOInterface<Question> {
 			String sql;
 			PreparedStatement statement;
 				String generatedColumns[] = { "question_id" };
-				sql = "INSERT INTO Question(question_name, question, homework_id,nr) VALUES (?,?,?,?)";
+				sql = "INSERT INTO Question(question_name, question, homework_id,nr,type) VALUES (?,?,?,?,?)";
 				statement = connection.prepareStatement(sql, generatedColumns);
 				statement.setString(1, s.getName());
 				statement.setString(2, s.getDescription());
 				statement.setInt(3,s.getHomework().getID());
 				statement.setInt(4,s.getNumber());
+				statement.setInt(5,s.getType().getIndex());
 				statement.executeUpdate();
 				int ID = -1;
 				ResultSet rsid = statement.getGeneratedKeys();
@@ -172,6 +174,7 @@ public class QuestionDAO implements DAOInterface<Question> {
 					c.setName(rs.getString("question_name"));
 					c.setDescription(rs.getString("question"));
 					c.setNumber(rs.getInt("nr"));
+					c.setType(Type.getValue(rs.getInt("type")));
 					//u.setLayerLevel(layerLevel);
 
 					if (layerLevel > 1) { //answers"

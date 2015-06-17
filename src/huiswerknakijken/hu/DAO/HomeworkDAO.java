@@ -337,7 +337,7 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 			PreparedStatement statement = connection.prepareStatement("UPDATE PERSON_HOMEWORK SET Status=?, CurrentQuestion=?, grade=? WHERE Homework_id=? AND Student_id=?");
 			statement.setInt(1, s.getStatus().getIndex());
 			statement.setInt(2, s.getCurrentQuestion());
-			statement.setFloat(3, s.getCijfer());
+			statement.setDouble(3, s.getCijfer());
 			statement.setInt(4, s.getID());
 			statement.setInt(5, s.getStudent().getID());
 			statement.executeUpdate();
@@ -376,12 +376,22 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 					c.setNumberQuestions(rs.getInt("questions"));
 					c.setCurrentQuestion(rs.getInt("currentQuestion"));
 					c.setStatus(Status.getValue(rs.getInt("status")));
-					c.setCourse((new CourseDAO()).retrieveByID(rs.getInt("course_id"), 1));
+					c.setCourse((new CourseDAO()).retrieveByID(rs.getInt("course_id"), 1,connection));
 					c.setCijfer(rs.getInt("Grade"));
 					PersonDAO dao = new PersonDAO();
 					//c.setTeacher(dao.retrieveTeacherByHomework(c, 1));
-					Person p = dao.retrieve(rs.getInt("student_id"),1);
-					if (p.getRole() == UserRole.Teacher){
+					//Person p = dao.retrieve(rs.getInt("student_id"),1);
+					if(rs.getInt("student_id") > 0){
+						Person p = dao.retrieve(rs.getInt("student_id"),1,connection);
+						if (p.getRole() == UserRole.Teacher){
+							c.setTeacher(p);
+						}
+						else if (p.getRole() == UserRole.Student)
+							c.setStudent(dao.retrieve(rs.getInt("student_id"), 1,connection));
+						else
+							System.out.println("ERROR_HOMEWORK-DAO::: Getting homework from someone who's not a teacher nor a student, ID: " + p.getID());
+					}
+					/*if (p.getRole() == UserRole.Teacher){
 						c.setTeacher(p);
 					}
 					else if (p.getRole() == UserRole.Student)
@@ -390,7 +400,7 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 						System.out.println("ERROR_HOMEWORK-DAO::: Getting homework from someone who's not a teacher nor a student, ID: " + p.getID());
 					if(c.getTeacher() == null)
 						c.setTeacher(dao.retrieveTeacherByHomework(c, 1));
-					//u.setLayerLevel(layerLevel);
+					//u.setLayerLevel(layerLevel);*/
 
 					if (layerLevel > 1) { //questions
 						QuestionDAO qDAO = new QuestionDAO();
