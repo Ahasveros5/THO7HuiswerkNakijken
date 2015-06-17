@@ -2,7 +2,6 @@ package huiswerknakijken.hu.DAO;
 
 import huiswerknakijken.hu.Domain.Course;
 import huiswerknakijken.hu.Domain.Person;
-import huiswerknakijken.hu.Domain.Student;
 import huiswerknakijken.hu.Util.OracleConnectionPool;
 
 import java.sql.Connection;
@@ -180,6 +179,10 @@ public class CourseDAO implements DAOInterface<Course> {
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
 			connection.setAutoCommit(false);
+			PersonDAO dao = new PersonDAO();
+			System.out.println("all before: \n"+s.getStudents().toString());
+			s.getStudents().removeAll(dao.retrieveStudentsByCourse(s.getID(), 1,connection));
+			System.out.println("all after: \n"+s.getStudents().toString());
 			for(Person p : s.getStudents()){
 				System.out.println("Person: " + p.getID() + "|||| COURSE: " + s.getID());
 				addPerson(p,s,connection);
