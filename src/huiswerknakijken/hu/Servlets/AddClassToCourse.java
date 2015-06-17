@@ -5,6 +5,7 @@ import huiswerknakijken.hu.DAO.CourseDAO;
 import huiswerknakijken.hu.Domain.Course;
 import huiswerknakijken.hu.Domain.Klass;
 import huiswerknakijken.hu.Domain.Person;
+import huiswerknakijken.hu.Domain.Student;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class AddClassToCourse extends HttpServlet {
 		int vakId = c.getID();
 		String klas = req.getParameter("VakSelect");
 		Klass k = cdao.retrieveByName(klas, 2);
-		ArrayList<Person> students = (ArrayList<Person>) session.getAttribute("studenten");
+		ArrayList<Student> students = (ArrayList<Student>) session.getAttribute("studenten");
 		
 		for(int i= 0; i<k.getStudents().size(); i++){
 			if(!students.contains(k.getStudents().get(i))){

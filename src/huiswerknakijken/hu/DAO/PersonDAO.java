@@ -402,20 +402,25 @@ public class PersonDAO implements DAOInterface<Person> {
 		return eU;
 	}
 	
-	public ArrayList<Person> retrieveStudentsByCourse(int courseID, int layerLevel, Connection con) {
+	public ArrayList<Student> retrieveStudentsByCourse(int courseID, int layerLevel, Connection con) {
 		Connection connection = con;
 		ArrayList<Person> eU = null;
+		ArrayList<Student> sts = null;
 		try {
 			PreparedStatement statement = connection.prepareStatement("SELECT * FROM PERSON, PERSON_COURSE WHERE course_id=? AND role=1 AND PERSON.ID = PERSON_COURSE.PERSON_ID	");
 			statement.setInt(1, courseID);
 			ResultSet rs = statement.executeQuery();
 			eU = resultSetExtractor(rs, layerLevel, connection);
+			sts = new ArrayList<Student>();
+			for (Person p : eU){
+				sts.add(p.toStudent());
+			}
 			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		return eU;
+		return sts;
 	}
 	
 	public ArrayList<Person> retrieveTeachersByCourse(int classID, int layerLevel, Connection con) {

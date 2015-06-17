@@ -52,6 +52,7 @@ public class HuiswerkAanmakenServlet extends HttpServlet {
 		hw.setDeadline(Dline);
 		hw.setTeacher(teacher);
 		hw.setCourse(vak);
+		hw.setStudents(vak.getStudents());
 		hwList.add(hw);
 		dao.add(hw);
 		session.setAttribute("Huiswerk", hwList);
