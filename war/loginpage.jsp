@@ -1,5 +1,8 @@
 
 		<%@ include file="header.jsp" %>
+		<%if(request.getParameter("id") != null && request.getParameter("id").equals("1"))
+			out.println("Session is afgelopen, log opnieuw in.");
+		%>
    	<div id="Inlogfield">
    		<h2>Inloggen</h2>
    		<form action="LoginServlet.do" method="post">
