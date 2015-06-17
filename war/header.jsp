@@ -13,7 +13,13 @@
 </head>
 <body>
 		<div class="headerlist headerborder huImage">
-		<% if(session.getAttribute("user") != null){ 
+		<% 
+		if(request.getSession(false) == null){
+			RequestDispatcher rd = request.getRequestDispatcher("loginpage.jsp?id=1");
+			rd.forward(request, response);
+		}
+			
+		if(session.getAttribute("user") != null){ 
 		Person p = (Person) session.getAttribute("user");
 		out.println("Welkom: " + p.getFirstName() +" " +  p.getLastName());
 		
