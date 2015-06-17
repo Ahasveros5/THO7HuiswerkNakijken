@@ -1,10 +1,10 @@
 package huiswerknakijken.hu.Servlets;
 
 import huiswerknakijken.hu.DAO.ClassDAO;
+import huiswerknakijken.hu.DAO.CourseDAO;
 import huiswerknakijken.hu.Domain.Course;
 import huiswerknakijken.hu.Domain.Klass;
 import huiswerknakijken.hu.Domain.Person;
-import huiswerknakijken.hu.Domain.Student;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,6 +22,7 @@ public class AddClassToCourse extends HttpServlet {
 		HttpSession session = req.getSession();
 		RequestDispatcher rd = null;
 		ClassDAO cdao = new ClassDAO();
+		CourseDAO dao = new CourseDAO();
 		Course c = (Course) session.getAttribute("Vak");
 		int vakId = c.getID();
 		String klas = req.getParameter("VakSelect");
@@ -34,6 +35,7 @@ public class AddClassToCourse extends HttpServlet {
 		students.add(k.getStudents().get(i));
 		}
 		c.setStudents(students);
+		dao.update(c);
 		session.setAttribute("studenten",students);
 		rd = req.getRequestDispatcher("VakSpecifiek.jsp?id="+vakId);
 		
