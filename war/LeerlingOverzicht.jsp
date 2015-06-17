@@ -5,6 +5,7 @@
  	<div class="TableStyle">
  	<table>
 			<tr>
+				<td>Vak</td>
 				<td>Naam</td>
 				<td>Deadline</td>
 				<td>Leraar</td>

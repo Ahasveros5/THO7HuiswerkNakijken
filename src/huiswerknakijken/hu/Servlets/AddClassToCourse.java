@@ -28,13 +28,18 @@ public class AddClassToCourse extends HttpServlet {
 		String klas = req.getParameter("VakSelect");
 		Klass k = cdao.retrieveByName(klas, 2);
 		ArrayList<Person> students = (ArrayList<Person>) session.getAttribute("studenten");
-		if(students == null){
-			System.out.println("Geen studenten!!");
-		}
+		
 		for(int i= 0; i<k.getStudents().size(); i++){
+			if(!students.contains(k.getStudents().get(i))){
 		students.add(k.getStudents().get(i));
+			}
+			else{
+				req.setAttribute("msgs", "Deze leerlingen zijn al toegevoegd");
+			}
 		}
+		
 		c.setStudents(students);
+		System.out.println("aantal studenten :"+ students.size());
 		dao.update(c);
 		session.setAttribute("studenten",students);
 		rd = req.getRequestDispatcher("VakSpecifiek.jsp?id="+vakId);

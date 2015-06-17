@@ -10,8 +10,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 public class CourseDAO implements DAOInterface<Course> {
 	public List<Course> retrieveAll(int layerLevel) {
@@ -238,12 +240,20 @@ public class CourseDAO implements DAOInterface<Course> {
 			System.out.println("all after: \n"+s.getStudents().toString());
 			*/
 			List<Person> temp = dao.retrieveStudentsByCourse(s.getID(), 1,connection);
-			for (Iterator<Person> it=s.getStudents().iterator(); it.hasNext();) {
-				for(Person p : temp)
-					if (it.next().getID() == p.getID())
-						it.remove(); // NOTE: Iterator's remove method, not ArrayList's, is used.
-			}
-			for(Person p : s.getStudents()){
+			List<Person> temp2 = new ArrayList<Person>();
+			for(Person p : s.getStudents())
+				for(Person p2 : temp)
+					if(p.getID() != p2.getID() && temp2.contains(p) == false)
+						temp2.add(p);
+			
+			
+			/*for (Iterator<Person> it=s.getStudents().iterator(); it.hasNext();) {
+				if(it.hasNext())
+					for(Person p : temp)
+						if (it.next().getID() == p.getID())
+							it.remove(); // NOTE: Iterator's remove method, not ArrayList's, is used.
+			}*/
+			for(Person p : temp2){
 				System.out.println("Person: " + p.getID() + "|||| COURSE: " + s.getID());
 				addPerson(p,s,connection);
 			}

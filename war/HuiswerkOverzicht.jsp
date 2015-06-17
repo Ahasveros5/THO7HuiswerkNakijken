@@ -33,12 +33,17 @@
 	 <h3>Huiswerk status leerlingen</h3>
 	 <%  ArrayList<Homework> hwpp = (ArrayList<Homework>)session.getAttribute("HwObj");
 		if(hwpp!=null){
+			
 			for(int i = 0; i<hwpp.size(); i++){
-				
-			out.println(hwpp.get(i).getStudent().toString()+" status:  "+hwpp.get(i).getStatus()+ " ");
-			if(hwpp.get(i).getCijfer() != -1) {
-				out.println("Cijfer: " + hwpp.get(i).getCijfer());
+				if(hwpp.get(i).getStudent() != null){
+					out.println(hwpp.get(i).getStudent().toString()+" status:  "+hwpp.get(i).getStatus()+ " ");
+				if(hwpp.get(i).getCijfer() != -1) {
+					out.println("Cijfer: " + hwpp.get(i).getCijfer());
 			}
+				}else{
+					out.println("Er zijn nog geen studenten die dit vak volgen");
+				}
+			
 		}
 	}
 		%>
