@@ -4,8 +4,10 @@ import huiswerknakijken.hu.DAO.ClassDAO;
 import huiswerknakijken.hu.DAO.PersonDAO;
 import huiswerknakijken.hu.Domain.Klass;
 import huiswerknakijken.hu.Domain.Person;
+import huiswerknakijken.hu.Util.OracleConnectionPool;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,8 +36,9 @@ public class SearchLeerlingenServlet extends HttpServlet {
 		System.out.println("searching on: "+ searchvalues);
 		List<Person> list = dao.retrieveAllMatching(searchvalues, 1);
 		List<Klass> klassen = new ArrayList<Klass>();
+		Connection con = OracleConnectionPool.getConnection();
 		for(Person p : list){
-			klassen.add(cdao.retrieveByPerson(p.getID(), 1));
+			klassen.add(cdao.retrieveByPerson(p.getID(), 1, con));
 		}
 		
 		session.setAttribute("GevondenLeerlingen", list);

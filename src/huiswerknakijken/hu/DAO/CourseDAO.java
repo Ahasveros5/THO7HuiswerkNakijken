@@ -181,6 +181,7 @@ public class CourseDAO implements DAOInterface<Course> {
 		try {
 			connection.setAutoCommit(false);
 			for(Person p : s.getStudents()){
+				System.out.println("Person: " + p.getID() + "|||| COURSE: " + s.getID());
 				addPerson(p,s,connection);
 			}
 			connection.commit();

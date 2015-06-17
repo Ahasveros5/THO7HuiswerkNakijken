@@ -52,9 +52,13 @@ public class ClassDAO implements DAOInterface<Klass> {
 
 	}
 	
-	public Klass retrieveByPerson(int id, int layerLevel) {
+	public Klass retrieveByPerson(int id, int layerLevel){
+		return retrieveByPerson(id,layerLevel,OracleConnectionPool.getConnection());
+	}
+	
+	public Klass retrieveByPerson(int id, int layerLevel, Connection con) {
 		Klass retrievedClass = null;
-		Connection connection = OracleConnectionPool.getConnection();
+		Connection connection = con;
 		try {
 			PreparedStatement statement = connection.prepareStatement("SELECT * FROM C_CLASS, PERSON WHERE C_CLASS.class_id=PERSON.class_id AND id=?");
 			statement.setInt(1, id);

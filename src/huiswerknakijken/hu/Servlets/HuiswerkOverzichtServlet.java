@@ -35,7 +35,9 @@ public class HuiswerkOverzichtServlet extends HttpServlet {
 		}
 		
 		session.setAttribute("HwObj", hwlist);
-		ArrayList<Question> questions = hwlist.get(0).getQuestions();
+		ArrayList<Question> questions = null;
+		if(hwlist.get(0) != null)
+			questions = hwlist.get(0).getQuestions();
 		session.setAttribute("QuestObj", questions);
 
 		rd = req.getRequestDispatcher("HuiswerkOverzicht.jsp?id="+id);
