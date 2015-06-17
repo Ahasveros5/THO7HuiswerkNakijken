@@ -23,6 +23,7 @@ public class OracleConnectionPool {
 	}
 
 	public static Connection getConnection() {
+		//Thread.dumpStack();
 		return instance.createConnection();
 		
 	}
