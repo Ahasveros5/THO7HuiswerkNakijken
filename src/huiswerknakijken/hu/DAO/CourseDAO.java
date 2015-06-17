@@ -2,6 +2,7 @@ package huiswerknakijken.hu.DAO;
 
 import huiswerknakijken.hu.Domain.Course;
 import huiswerknakijken.hu.Domain.Person;
+import huiswerknakijken.hu.Domain.Student;
 import huiswerknakijken.hu.Util.OracleConnectionPool;
 
 import java.sql.Connection;
@@ -176,6 +177,30 @@ public class CourseDAO implements DAOInterface<Course> {
 	@Override
 	public boolean update(Course s) {
 		boolean b = false;
+		Connection connection = OracleConnectionPool.getConnection();
+		try {
+			connection.setAutoCommit(false);
+			for(Person p : s.getStudents()){
+				addPerson(p,s,connection);
+			}
+			connection.commit();
+			
+			b = true;
+		} catch (SQLException e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}
+		try {
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return b;
 	}
 
@@ -195,8 +220,8 @@ public class CourseDAO implements DAOInterface<Course> {
 
 					if (layerLevel > 1) { //students to course
 						PersonDAO pDAO = new PersonDAO();
-						c.setStudents(pDAO.retrieveStudentsByCourse(c.getID(), 0));
-						c.setTeachers(pDAO.retrieveTeachersByCourse(c.getID(), 0));
+						c.setStudents(pDAO.retrieveStudentsByCourse(c.getID(), 0, connection));
+						c.setTeachers(pDAO.retrieveTeachersByCourse(c.getID(), 0, connection));
 					}
 
 					if (layerLevel > 2) {

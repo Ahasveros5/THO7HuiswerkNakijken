@@ -367,8 +367,8 @@ public class PersonDAO implements DAOInterface<Person> {
 		return eU;
 	}
 	
-	public ArrayList<Person> retrieveStudentsByCourse(int courseID, int layerLevel) {
-		Connection connection = OracleConnectionPool.getConnection();
+	public ArrayList<Person> retrieveStudentsByCourse(int courseID, int layerLevel, Connection con) {
+		Connection connection = con;
 		ArrayList<Person> eU = null;
 		try {
 			PreparedStatement statement = connection.prepareStatement("SELECT * FROM PERSON, PERSON_COURSE WHERE course_id=? AND role=1 AND PERSON.ID = PERSON_COURSE.PERSON_ID	");
@@ -376,7 +376,6 @@ public class PersonDAO implements DAOInterface<Person> {
 			ResultSet rs = statement.executeQuery();
 			eU = resultSetExtractor(rs, layerLevel, connection);
 			statement.close();
-			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -384,8 +383,8 @@ public class PersonDAO implements DAOInterface<Person> {
 		return eU;
 	}
 	
-	public ArrayList<Person> retrieveTeachersByCourse(int classID, int layerLevel) {
-		Connection connection = OracleConnectionPool.getConnection();
+	public ArrayList<Person> retrieveTeachersByCourse(int classID, int layerLevel, Connection con) {
+		Connection connection = con;
 		ArrayList<Person> eU = null;
 		try {
 			PreparedStatement statement = connection.prepareStatement("SELECT * FROM PERSON, PERSON_COURSE WHERE course_id=? AND role=2 AND PERSON.ID = PERSON_COURSE.PERSON_ID	");
@@ -393,7 +392,6 @@ public class PersonDAO implements DAOInterface<Person> {
 			ResultSet rs = statement.executeQuery();
 			eU = resultSetExtractor(rs, layerLevel, connection);
 			statement.close();
-			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

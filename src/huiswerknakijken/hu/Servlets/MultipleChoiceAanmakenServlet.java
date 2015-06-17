@@ -28,7 +28,7 @@ public class MultipleChoiceAanmakenServlet extends HttpServlet {
 		resp.setContentType("text/html");
 		ArrayList<Answer>antwoorden = new ArrayList<Answer>();
 		HttpSession session = req.getSession();
-		String naam = req.getParameter("naam");
+		String naam = req.getParameter("Naam");
 		String vraag = req.getParameter("vraagMultipleChoice");
 		String antwoord1 = req.getParameter("Antwoord1");
 		String antwoord2 = req.getParameter("Antwoord2");

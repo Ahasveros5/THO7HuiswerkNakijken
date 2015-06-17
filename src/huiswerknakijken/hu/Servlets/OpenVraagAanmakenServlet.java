@@ -28,7 +28,7 @@ public class OpenVraagAanmakenServlet extends HttpServlet {
 		resp.setContentType("text/html");
 		ArrayList<Answer>antwoorden = new ArrayList<Answer>();
 		HttpSession session = req.getSession();
-		String naam = req.getParameter("naam");
+		String naam = req.getParameter("Naam");
 		String vraag = req.getParameter("OpenVraag");
 		String keywords = req.getParameter("Keywords");
 		ArrayList<Question> questions = new ArrayList<Question>();
