@@ -32,6 +32,7 @@ public class HuiswerkOverzichtServlet extends HttpServlet {
 		ArrayList<Person> studenten = (ArrayList<Person>) pdao.retrieveStudentsByHomework(id, 1);
 		ArrayList<Homework> hwlist = new ArrayList<Homework>();
 		Connection con = OracleConnectionPool.getConnection();
+		hwlist.add(dao.retrieveByID(id, 2));
 		for(int i = 0; i<studenten.size(); i++){
 			Homework hw = dao.retrieveHomeworkByStudent(dao.retrieveByID(id, 1).getID(), studenten.get(i).getID(), 2, con);
 			hwlist.add(hw);
@@ -44,8 +45,10 @@ public class HuiswerkOverzichtServlet extends HttpServlet {
 		}
 		session.setAttribute("HwObj", hwlist);
 		ArrayList<Question> questions = null;
-		if(hwlist.get(0) != null)
+		System.out.println("size: "+ hwlist.size());
+		if(hwlist.size() > 0 && hwlist.get(0) != null)
 			questions = hwlist.get(0).getQuestions();
+		
 		session.setAttribute("QuestObj", questions);
 
 		rd = req.getRequestDispatcher("HuiswerkOverzicht.jsp?id="+id);
