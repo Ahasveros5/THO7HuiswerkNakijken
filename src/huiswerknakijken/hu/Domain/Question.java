@@ -13,6 +13,7 @@ public class Question
 	private ArrayList<Answer> answers = new ArrayList<Answer>();
 	protected Homework homework;
 	protected int number;
+	private Type type;
 
 	
 	public enum Type{
@@ -89,6 +90,14 @@ public class Question
 	
 	public void setNumber(int i){
 		number = i;
+	}
+
+	public Type getType() {
+		return type;
+	}
+
+	public void setType(Type type) {
+		this.type = type;
 	}
 	
 }

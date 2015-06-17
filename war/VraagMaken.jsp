@@ -3,6 +3,7 @@
 	<div id ="hwbox">
 	<%@ page import="huiswerknakijken.hu.Domain.Answer" %>
 	<%@ page import="huiswerknakijken.hu.Domain.Question" %>
+	<%@ page import="huiswerknakijken.hu.Domain.Question.Type" %>
 	<%@ page import="java.util.ArrayList" %>
 	<%  ArrayList<Question> qs = (ArrayList<Question>)session.getAttribute("QuestObj");
 	if(qs == null){
@@ -28,9 +29,13 @@
 			int i = 0;
 			String[] str = {"A","B","C","D","E","F","G","H","J"};
 			out.println("<form action='VraagMakenServlet.do'<br>");
-			for(Answer a : ans){
-				out.println(str[i] +": <input type='radio' name='answer' value='"+ a.getID()+"'> " + a.getAnswer() +"<br>");
-				i++;
+			if(cur.getType() == Type.Meerkeuze ){
+				for(Answer a : ans){
+					out.println(str[i] +": <input type='radio' name='answer' value='"+ a.getID()+"'> " + a.getAnswer() +"<br>");
+					i++;
+				}
+			} else if (cur.getType() == Type.Openvraag){
+				out.println("<input type='text' size='50' name='answer'<br/>");
 			}
 			out.println("<input type='hidden' value='"+(id+1)+"' name='id' />");
 			out.println("<input type='hidden' value='"+cur.getID()+"' name='qid' />");

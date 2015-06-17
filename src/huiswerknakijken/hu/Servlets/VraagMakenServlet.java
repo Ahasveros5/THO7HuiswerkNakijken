@@ -2,9 +2,14 @@ package huiswerknakijken.hu.Servlets;
 
 import huiswerknakijken.hu.DAO.AnswerDAO;
 import huiswerknakijken.hu.DAO.HomeworkDAO;
+import huiswerknakijken.hu.DAO.QuestionDAO;
+import huiswerknakijken.hu.Domain.Answer;
+import huiswerknakijken.hu.Domain.Answer.Correct;
 import huiswerknakijken.hu.Domain.Homework;
 import huiswerknakijken.hu.Domain.Homework.Status;
 import huiswerknakijken.hu.Domain.Person;
+import huiswerknakijken.hu.Domain.Question;
+import huiswerknakijken.hu.Domain.Question.Type;
 
 import java.io.IOException;
 
@@ -22,11 +27,22 @@ public class VraagMakenServlet extends HttpServlet {
 		HttpSession session = req.getSession();
 
 		String qnumber = req.getParameter("id");
-		int a = Integer.parseInt(req.getParameter("answer"));
+		String a = req.getParameter("answer");
 		int q = Integer.parseInt(req.getParameter("qid"));
 		int p = ((Person) session.getAttribute("user")).getID();
 		AnswerDAO adao = new AnswerDAO();
-		adao.addGivenAnswer(a, q, p);
+		QuestionDAO qdao = new QuestionDAO();
+		Question cur = qdao.retrieveById(q, 1);
+		if (cur.getType() == Type.Meerkeuze)
+			adao.addGivenAnswer(Integer.parseInt(a), q, p);
+		else{
+			Answer ans = new Answer();
+			ans.setAnswer(a);
+			ans.setCorrect(Correct.None);
+			ans.setQuestion(cur);
+			adao.add(ans);
+			adao.addGivenAnswer(ans.getID(), q, p);
+		}
 		System.out.println("answer: " + a);
 		Homework h = (Homework)session.getAttribute("HwObj");
 		if(h.getStudent() == null){

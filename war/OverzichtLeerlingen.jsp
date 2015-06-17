@@ -21,13 +21,15 @@
 			</tr>
 	
 	<%
-		ArrayList<Person> leerlingen = (ArrayList<Person>)session.getAttribute("GevondenLeerlingen");
+		ArrayList<Student> leerlingen = (ArrayList<Student>)session.getAttribute("GevondenLeerlingen");
+		ArrayList<Klass> klassen = (ArrayList<Klass>)session.getAttribute("GevondenKlassen");
 		if (leerlingen != null){
-			for(Person p : leerlingen){
+			for(int i = 0; i<leerlingen.size(); i++){
+				Person p = leerlingen.get(i);
 				out.println("<tr>");
 				out.println("<td><a href = 'SpecifiekeLeerlingServlet.do?id="+p.getID()+"'>"+p.getID()+"</a></td>");
 				out.println("<td><a href = 'SpecifiekeLeerlingServlet.do?id="+p.getID()+"'>"+p.getFirstName()+ " " +p.getLastName()+"</a></td>");
-				out.println("<td><a href = 'SpecifiekeLeerlingServlet.do?id="+p.getID()+"'>"+p.getClass().getName()+"</a></td>");
+				out.println("<td><a href = 'SpecifiekeLeerlingServlet.do?id="+p.getID()+"'>"+klassen.get(i).getName()+"</a></td>");
 				out.println("</tr>");
 			}
 		}
