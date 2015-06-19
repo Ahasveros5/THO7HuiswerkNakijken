@@ -1,5 +1,7 @@
 package huiswerknakijken.hu.Util;
 
+import java.util.Date;
+
 public class Util {
 	
 	public static int boolToInt(boolean b){
@@ -31,6 +33,11 @@ public class Util {
 	        if(Character.digit(s.charAt(i),radix) < 0) return false;
 	    }
 	    return true;
+	}
+	
+	public static boolean isBefore(Date date1, Date date2){
+		//date1.get
+		Calendar.get
 	}
 
 }

@@ -52,7 +52,9 @@ public class HuiswerkMakenServlet extends HttpServlet {
 	        } catch (ParseException pe) {
 	            pe.printStackTrace();
 	        }
-		if(date.after(new Date()))
+			Date temp = new Date();
+			System.out.println("hwdate: " + date.toString() + "||| cur: " + temp);
+		if(date.after(temp))
 			rd = req.getRequestDispatcher("HuiswerkLeerlingOverzicht.jsp");
 		else
 			rd = req.getRequestDispatcher("HuiswerkMaken.jsp");
