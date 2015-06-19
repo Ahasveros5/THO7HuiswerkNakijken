@@ -26,7 +26,7 @@ public class HuiswerkAanmakenServlet extends HttpServlet {
 		ClassDAO kdao = new ClassDAO();
 		CourseDAO cdao = new CourseDAO();
 		String course = req.getParameter("VakSelect");
-		Course vak = cdao.retrieveByName(course, 1);
+		Course vak = cdao.retrieveByName(course, 2);
 		
 		String[]datevals;
 		String[]timevals;
@@ -57,7 +57,7 @@ public class HuiswerkAanmakenServlet extends HttpServlet {
 		dao.add(hw);
 		session.setAttribute("Huiswerk", hwList);
 		req.setAttribute("msgs", "Huiswerk aangemaakt");
-		
+		System.out.println("huiswerk aangemaakt");
 		}
 		rd = req.getRequestDispatcher("LeraarOverzicht.jsp");
 		if(rd!=null){

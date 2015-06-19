@@ -317,7 +317,7 @@ public class PersonDAO implements DAOInterface<Person> {
 		Person retrievedStudent = null;
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
-			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Person, Person_Homework WHERE PERSON_HOMEWORK.homework_id = ? AND PERSON.role = 2 AND PERSON.id = PERSON_HOMEWORK.student_id");
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Person, Homework WHERE HOMEWORK.homework_id = ? AND PERSON.role = 2 AND PERSON.id = HOMEWORK.teacher_id");
 			statement.setInt(1, h.getID());
 			ResultSet rs = statement.executeQuery();
 			ArrayList<Person> Person = resultSetExtractor(rs, layerLevel, connection);

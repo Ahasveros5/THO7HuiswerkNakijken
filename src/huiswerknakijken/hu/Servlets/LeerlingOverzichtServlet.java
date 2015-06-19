@@ -6,7 +6,11 @@ import huiswerknakijken.hu.Domain.Homework.Status;
 import huiswerknakijken.hu.Domain.Person;
 
 import java.io.IOException;
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.text.DateFormat;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -30,10 +34,15 @@ public class LeerlingOverzichtServlet extends HttpServlet{
 		ArrayList<Homework> hwList = new ArrayList<Homework>();
 		RequestDispatcher rd = null;
 		hwList = dao.retrieveAllByPersonNotStatus(studentID, Status.Af, 1); //retrieves all homework that is NOT finished
+		ArrayList<Homework> hwListAf = dao.retrieveAllByPersonStatus(studentID, Status.Af, 1);
 		if(hwList.size() < 1)
 			System.out.println("empty list");
+		if(hwListAf.size() < 1)
+			System.out.println("empty list2");
+
 		
 		session.setAttribute("Huiswerk", hwList);
+		session.setAttribute("HuiswerkAf", hwListAf);
 		rd = req.getRequestDispatcher("LeerlingOverzicht.jsp");
 		
 		if(rd!=null){
