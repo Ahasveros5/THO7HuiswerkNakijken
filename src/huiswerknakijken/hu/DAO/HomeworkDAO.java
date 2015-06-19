@@ -96,8 +96,10 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Homework, Person_Homework WHERE Homework.homework_id=? AND Homework.homework_id = Person_Homework.homework_id");
 			statement.setInt(1, id);
 			ResultSet rs = statement.executeQuery();
+			System.out.println("ID: "+ id);
 			ArrayList<Homework> Homework = resultSetExtractor(rs, layerLevel, connection);
-			retrievedHomework = Homework.get(0);
+			if(Homework != null && Homework.size() > 0)
+				retrievedHomework = Homework.get(0);
 			statement.close();
 			connection.close();
 		} catch (SQLException e) {

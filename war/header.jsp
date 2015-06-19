@@ -40,10 +40,14 @@
 					<li><a href="LogoutServlet.do">Uitloggen</a></li>
 				</ul>
 		<%}	else if(p.getRole() == UserRole.Teacher){%>
+				<ul id="header">
+				<li><span>Overzichten</span>
 				<ul>
-				<li><a href="VakkenOverzichtServlet.do" class="regbutton">Overzicht Vakken</a>
-				<li><a href="LeraarOverzichtServlet.do" class="regbutton">Overzicht Huiswerk</a></li>
-				<li><a href="OverzichtLeerlingenServlet.do" class="regbutton">Overzicht Leerlingen</a></li>
+					<li><a href="VakkenOverzichtServlet.do" class="regbutton">Overzicht Vakken</a></li>
+					<li><a href="LeraarOverzichtServlet.do" class="regbutton">Overzicht Huiswerk</a></li>
+					<li><a href="OverzichtLeerlingenServlet.do" class="regbutton">Overzicht Leerlingen</a></li>
+				</ul>
+				</li>
 				<li><a href="LeerlingImporteren.jsp" class="regbutton">Leerlingen importeren</a></li>
 				<li><a href="LeraarRegistreren.jsp" class="regbutton">Registreer leraar</a></li>
 				<li><a href="LogoutServlet.do">Uitloggen</a></li>
@@ -57,6 +61,16 @@
 			</ul>
 		<%}}%>
 		</div>
+
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('#header').find('UL').hide();
+	$('#header').find('SPAN').click(function(e){
+    	$(this).parent().children('UL').toggle();
+	});
+});
+</script>
 	<div class="container">
 	<% Object msgs = request.getAttribute("msgs");
 	if (msgs != null) {

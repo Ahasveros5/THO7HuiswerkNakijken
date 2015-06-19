@@ -33,22 +33,26 @@
 	 </form>
 	 <div id = "studentBox">
 	 <h3>Huiswerk status leerlingen</h3>
-	 <%  Homework hwpp  = (Homework)session.getAttribute("HwObj");
-	 	 Course c = hwpp.getCourse();
-		 ArrayList<Student> students = c.getStudents();
+	 <%  ArrayList<Homework> hwpp  = (ArrayList<Homework>)session.getAttribute("Hwpp");
+	 	 
+		 
 	 if(hwpp!=null){
-		 if(students.size()>0){
-			for(int i = 0; i<students.size(); i++){
-				
-					out.println(students.get(i).toString()+" status:  "+hwpp.getStatus()+ " ");
-				if(hwpp.getCijfer() != -1) {
-					out.println("Cijfer: " + hwpp.getCijfer());
-			}
-			}
-		 }
-				else{
+		 for (Homework h : hwpp){
+			 Course c = h.getCourse();
+			 ArrayList<Student> students = c.getStudents();
+			 if(students.size()>0){
+				for(int i = 0; i<students.size(); i++){
+					
+						out.println(students.get(i).toString()+" status:  "+h.getStatus()+ " ");
+					if(h.getCijfer() != -1) {
+						out.println("Cijfer: " + h.getCijfer());
+					}
+				}
+			 }else{
 					out.println("Er zijn nog geen studenten die dit vak volgen");
-				}		
+				}	
+		 }
+					
 		}
 	
 		%>
