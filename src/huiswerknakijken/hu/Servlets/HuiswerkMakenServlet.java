@@ -9,7 +9,11 @@ import huiswerknakijken.hu.Util.OracleConnectionPool;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -38,9 +42,20 @@ public class HuiswerkMakenServlet extends HttpServlet {
 		session.setAttribute("HwObj", hw);
 		ArrayList<Question> questions = hw.getQuestions();
 		session.setAttribute("QuestObj", questions);
-		for(Question q : questions)
-			System.out.println("tra:::: " + q.getAnswers().size());
-		rd = req.getRequestDispatcher("HuiswerkMaken.jsp");
+		Date date = new Date();
+			try {
+	            String target = hw.getDeadline();
+	            target = target.replace(" Om ", " ");
+	            DateFormat df = new SimpleDateFormat("dd - mm - yyyy hh:mm");
+	            date =  df.parse(target);
+	            System.out.println(date); 
+	        } catch (ParseException pe) {
+	            pe.printStackTrace();
+	        }
+		if(date.after(new Date()))
+			rd = req.getRequestDispatcher("HuiswerkLeerlingOverzicht.jsp");
+		else
+			rd = req.getRequestDispatcher("HuiswerkMaken.jsp");
 		
 		if(rd!= null){
 			rd.forward(req, resp);

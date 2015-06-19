@@ -138,11 +138,27 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 		return homework;
 	}
 	
-	public ArrayList<Homework> retrieveAllByPerson(int teacherID, int layerLevel) {
+	public ArrayList<Homework> retrieveAllByStudent(int studentID, int layerLevel) {
 		ArrayList<Homework> homework = null;
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
 			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Homework, Person_Homework WHERE Person_Homework.Student_id=? AND Homework.homework_id = Person_Homework.homework_id");
+			statement.setInt(1, studentID);
+			ResultSet rs = statement.executeQuery();
+			homework = resultSetExtractor(rs, layerLevel, connection);
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return homework;
+	}
+	
+	public ArrayList<Homework> retrieveAllByTeacher(int teacherID, int layerLevel) {
+		ArrayList<Homework> homework = null;
+		Connection connection = OracleConnectionPool.getConnection();
+		try {
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Homework WHERE Homework.teacher_id=?");
 			statement.setInt(1, teacherID);
 			ResultSet rs = statement.executeQuery();
 			homework = resultSetExtractor(rs, layerLevel, connection);
@@ -154,12 +170,12 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 		return homework;
 	}
 	
-	public ArrayList<Homework> retrieveAllByPersonStatus(int teacherID, Status s, int layerLevel) {
+	public ArrayList<Homework> retrieveAllByPersonStatus(int studentID, Status s, int layerLevel) {
 		ArrayList<Homework> homework = null;
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
 			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Homework, Person_Homework WHERE Person_Homework.Student_id=? AND Homework.homework_id = Person_Homework.homework_id AND Status=?");
-			statement.setInt(1, teacherID);
+			statement.setInt(1, studentID);
 			statement.setInt(2, s.getIndex());
 			ResultSet rs = statement.executeQuery();
 			homework = resultSetExtractor(rs, layerLevel, connection);
@@ -171,12 +187,12 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 		return homework;
 	}
 	
-	public ArrayList<Homework> retrieveAllByPersonNotStatus(int teacherID, Status s, int layerLevel) {
+	public ArrayList<Homework> retrieveAllByPersonNotStatus(int studentID, Status s, int layerLevel) {
 		ArrayList<Homework> homework = null;
 		Connection connection = OracleConnectionPool.getConnection();
 		try {
 			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Homework, Person_Homework WHERE Person_Homework.Student_id=? AND Homework.homework_id = Person_Homework.homework_id AND Status!=?");
-			statement.setInt(1, teacherID);
+			statement.setInt(1, studentID);
 			statement.setInt(2, s.getIndex());
 			ResultSet rs = statement.executeQuery();
 			homework = resultSetExtractor(rs, layerLevel, connection);
@@ -192,16 +208,6 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 	public boolean delete(Homework s) {
 		System.out.println("Deleting NYI");
 		return false;
-	}
-
-	private void addTeacher(Connection connection, Homework h) throws SQLException {
-		PreparedStatement statementKoppel = null;
-		String sqlKoppel = "INSERT INTO PERSON_HOMEWORK(student_id,homework_id) VALUES (?,?)";
-		statementKoppel = connection.prepareStatement(sqlKoppel);
-				statementKoppel.setInt(1, h.getTeacher().getID());
-				statementKoppel.setInt(2, h.getID());
-		statementKoppel.executeUpdate();
-		statementKoppel.close();
 	}
 	
 	private void addStudent(Connection connection, Homework h,Student s) throws SQLException {
@@ -242,12 +248,13 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 			String sql;
 			PreparedStatement statement;
 				String generatedColumns[] = { "homework_id" };
-				sql = "INSERT INTO Homework(homework_name, deadline,questions,course_id) VALUES (?,?,?,?)";
+				sql = "INSERT INTO Homework(homework_name, deadline,questions,course_id, teacher_id) VALUES (?,?,?,?,?)";
 				statement = connection.prepareStatement(sql, generatedColumns);
 				statement.setString(1, s.getName());
 				statement.setString(2, s.getDeadline());
 				statement.setInt(3, s.getNumberQuestions());
 				statement.setInt(4, s.getCourse().getID());
+				statement.setInt(5, s.getTeacher().getID());
 				statement.executeUpdate();
 				
 				int ID = -1;
@@ -257,13 +264,13 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 					s.setID(ID);
 				}
 			statement.close();
-			if(s.getStudents().size() > 0){
+			System.out.println("Student size: "+s.getStudents().size());
+			if(s.getStudents() != null && s.getStudents().size() > 0){
 				for(Student st : s.getStudents()){
 					addStudent(connection, s, st);
 					updateStudentHomework(connection, s, st);
 				}
 			}
-			addTeacher(connection,s);
 			b = true;
 			connection.commit();
 			connection.close();
@@ -380,15 +387,14 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 					PersonDAO dao = new PersonDAO();
 					//c.setTeacher(dao.retrieveTeacherByHomework(c, 1));
 					//Person p = dao.retrieve(rs.getInt("student_id"),1);
+					Person t = dao.retrieve(rs.getInt("teacher_id"), 1,connection);
+					c.setTeacher(t);
 					if(rs.getInt("student_id") > 0){
 						Person p = dao.retrieve(rs.getInt("student_id"),1,connection);
-						if (p.getRole() == UserRole.Teacher){
-							c.setTeacher(p);
-						}
-						else if (p.getRole() == UserRole.Student)
+						if (p.getRole() == UserRole.Student)
 							c.setStudent(dao.retrieve(rs.getInt("student_id"), 1,connection));
 						else
-							System.out.println("ERROR_HOMEWORK-DAO::: Getting homework from someone who's not a teacher nor a student, ID: " + p.getID());
+							System.out.println("ERROR_HOMEWORK-DAO::: Getting homework from someone who's not a student, ID: " + p.getID());
 					}
 					/*if (p.getRole() == UserRole.Teacher){
 						c.setTeacher(p);

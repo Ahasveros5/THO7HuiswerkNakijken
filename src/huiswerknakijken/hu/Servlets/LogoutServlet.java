@@ -16,15 +16,7 @@ public class LogoutServlet extends HttpServlet {
 		resp.setContentType("text/html");
 		RequestDispatcher rd = null;
 		HttpSession session = req.getSession();
-		session.setAttribute("user", null);
-		
-/*		for (Cookie cookie : req.getCookies()) {
-			if (cookie.getName().equals("userName")) { 
-				userName = cookie.getValue();
-				cookie.setMaxAge(0);
-				break;
-			}
-		}*/
+		session.invalidate();
 
 		rd = req.getRequestDispatcher("loginpage.jsp");
 		rd.forward(req, resp);

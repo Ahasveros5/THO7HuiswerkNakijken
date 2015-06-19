@@ -29,7 +29,6 @@
 				<ul>
 					<li><a href="loginpage.jsp">Login</a></li>
 					<li><a href="LeerlingRegistreren.jsp" class="regbutton">Registreer leerling</a></li>
-					<li><a href="LeraarRegistreren.jsp" class="regbutton">Registreer leraar</a></li>
 				</ul>
 		<% }else {
 			Person p = (Person)session.getAttribute("user");
@@ -46,6 +45,7 @@
 				<li><a href="LeraarOverzichtServlet.do" class="regbutton">Overzicht Huiswerk</a></li>
 				<li><a href="OverzichtLeerlingenServlet.do" class="regbutton">Overzicht Leerlingen</a></li>
 				<li><a href="LeerlingImporteren.jsp" class="regbutton">Leerlingen importeren</a></li>
+				<li><a href="LeraarRegistreren.jsp" class="regbutton">Registreer leraar</a></li>
 				<li><a href="LogoutServlet.do">Uitloggen</a></li>
 			</ul>
 

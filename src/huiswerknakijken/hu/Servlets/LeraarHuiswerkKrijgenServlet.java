@@ -30,7 +30,7 @@ public class LeraarHuiswerkKrijgenServlet extends HttpServlet {
 		HttpSession session = req.getSession();
 		HomeworkDAO hdao = new HomeworkDAO();
 		Teacher t = (Teacher) session.getAttribute("user");
-		ArrayList<Homework> homework = hdao.retrieveAllByPerson(t.getID(), 2);
+		ArrayList<Homework> homework = hdao.retrieveAllByTeacher(t.getID(), 2);
 	
 		
 		RequestDispatcher rd = null;

@@ -30,6 +30,7 @@ public class LoginServlet extends HttpServlet {
 		
 		RequestDispatcher rd = null;
 		HttpSession session = req.getSession();
+		session.setMaxInactiveInterval(5*60);
 		if(userEmail.isEmpty()) {
 			req.setAttribute("msgs", "Vul een gebruikersnaam in.");
 			rd = req.getRequestDispatcher("loginpage.jsp");
