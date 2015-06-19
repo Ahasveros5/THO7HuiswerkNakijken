@@ -24,6 +24,7 @@
 	%>
 
 	<br />
+	<br>
 	
 	<input class = "button" value = "Huiswerk Aanmaken" type = "submit" name="knop" />
 	</form>

@@ -19,7 +19,7 @@
 	
 	%>
  </div>
- <button id="show">Vak Aanmaken</button> 
+ <input class = "button" id="show" type="submit" value="Vak aanmaken"/>
  <div id ="PopUpWindow">
  <dialog id="window">  
     <h3>Vak Aanmaken</h3>  
@@ -32,12 +32,14 @@
     	out.println("<select name = 'teacherSelect' size='"+teachers.size()+"' multiple>");
    		 for(int i = 0; i< teachers.size(); i++){
    			out.println("<option value ='"+teachers.get(i).getID() +"'>"+teachers.get(i).getFirstName()+" "+teachers.get(i).getLastName()+"</option>");
-   		 }
+   		 }	out.println("<br>");
     }
     %>
-  	<input class="button" type="submit" name="knop" value="Ok" />
-  	<button id="exit">Cancel</button>
+
+  	<input class="button" type="submit" name="knop" value="Ok" /> 
+  	
 	</form>		
+	<button class="button" id="exit">Cancel</button>	
     
 </dialog>  
 <script>

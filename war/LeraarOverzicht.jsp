@@ -40,10 +40,8 @@
 	</div>
  
 	<div id = "HW">
-	<h3> Huiswerk opgeven</h3>
 	<form action = "HuiswerkAanmaken.do"method="post">
 	<br />
-	
 	<input class = "button" value = "Huiswerk Aanmaken" type = "submit" name="knop" />
 	</form>
 	</div>
