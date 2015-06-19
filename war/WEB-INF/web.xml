@@ -15,16 +15,6 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
     	<param-value>client</param-value>
 	</context-param>
 
-<filter>
-    <filter-name>PaginaFilters</filter-name>
-    <filter-class>huiswerknakijken.hu.Util.PaginaFilters</filter-class>
-  </filter>
-<filter-mapping>
-    <filter-name>PaginaFilters</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
-
-
 	<servlet>
 		<servlet-name>LeerlingRegistratieServlet</servlet-name>
 		<servlet-class>huiswerknakijken.hu.Servlets.LeerlingRegistratieServlet
@@ -278,4 +268,5 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 		<servlet-name>AddClassToCourse</servlet-name>
 		<url-pattern>/AddClassToCourse.do</url-pattern>
 	</servlet-mapping>
+
 </web-app>
