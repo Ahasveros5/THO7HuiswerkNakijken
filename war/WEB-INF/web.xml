@@ -9,6 +9,11 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 		<param-name>huiswerknakijken.hu</param-name>
 		<param-value>THO7HuiswerkNakijken</param-value>
 	</init-param>
+	
+	<context-param>
+    	<param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+    	<param-value>client</param-value>
+	</context-param>
 
 <filter>
     <filter-name>PaginaFilters</filter-name>

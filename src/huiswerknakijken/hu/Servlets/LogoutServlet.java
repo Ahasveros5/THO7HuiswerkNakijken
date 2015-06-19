@@ -15,8 +15,10 @@ public class LogoutServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/html");
 		RequestDispatcher rd = null;
-		HttpSession session = req.getSession();
-		session.invalidate();
+		if(req != null && req.getSession() != null){
+			HttpSession session = req.getSession();
+			session.invalidate();
+		}
 
 		rd = req.getRequestDispatcher("loginpage.jsp");
 		rd.forward(req, resp);
