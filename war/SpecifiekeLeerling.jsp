@@ -24,7 +24,8 @@
 			out.println("</form");
 		}
 	%>
-	<br>
+	<br/>
+	<br/>
 	
 	<div class="TableStyle">
 		<table>

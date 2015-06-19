@@ -4,19 +4,8 @@
  	<%@ page import="huiswerknakijken.hu.Domain.Course"  %>
  	<%@ page import="huiswerknakijken.hu.Domain.Klass"  %>
  	<%@ page import="huiswerknakijken.hu.Domain.Person"  %>
+ 	<div class="TableStyle">
  	
- 	<h4>Leerlingen die dit vak volgen:</h4><br>
- 	<%
-	ArrayList<Person> studenten = (ArrayList<Person>) session.getAttribute("studenten");
-	if (studenten!=null){
-			for(int i = 0; i< studenten.size(); i++){
-				out.println(studenten.get(i).getFirstName()+" "+studenten.get(i).getLastName()+"  "+studenten.get(i).getID()+"<br>");
-			}	
-		}
-	else{
-		out.println("Er zijn nog geen leerlingen die dit vak volgen");
-	}
-	%>
  	<form action = "AddClassToCourse.do"method="post">
  	<label>Klas:</label>
  	<%
@@ -32,5 +21,32 @@
 	<br>
 	<input type = "submit" value = "Voeg klas aan vak toe" class = "button"/>
 	</form>
-	<br />
+	<br/>
+ 	
+ 	<table>
+ 	<caption>Leerlingen die dit vak volgen:</caption>
+			<tr>
+				<td>ID</td>
+				<td>Voornaam</td>
+				<td>Achternaam</td>
+			</tr>
+ 	<%
+	ArrayList<Person> studenten = (ArrayList<Person>) session.getAttribute("studenten");
+	if (studenten!=null){
+			for(int i = 0; i< studenten.size(); i++){
+				Person p = studenten.get(i);
+				out.println("<tr>");
+				out.println("<td><a href = 'SpecifiekeLeerlingServlet.do?id="+p.getID()+"'>"+p.getID()+"</a></td>");
+				out.println("<td><a href = 'SpecifiekeLeerlingServlet.do?id="+p.getID()+"'>"+p.getFirstName()+"</a></td>");
+				out.println("<td><a href = 'SpecifiekeLeerlingServlet.do?id="+p.getID()+"'>"+p.getLastName()+"</a></td>");
+ 				out.println("</tr>");
+				//out.println(studenten.get(i).getFirstName()+" "+studenten.get(i).getLastName()+"  "+studenten.get(i).getID()+"<br>");
+			}	
+		}
+	else{
+		out.println("Er zijn nog geen leerlingen die dit vak volgen");
+	}
+	%>
+	</table>
+	</div>
 	
