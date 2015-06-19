@@ -8,36 +8,49 @@ dialog {
 }  
 
 
-.headerlist ul
-{
-margin: 4%;
-padding: 0;
-list-style-type: none;
-text-align: center;
-float: right;
-}
-
-.headerlist ul li { 
-	display: inline;
-	border-radius: 3px;
-	border: 3px solid #ff0000;
-	font-size: 16px !important;
-	list-style-position:inside;
- }
-
-.headerlist ul li a
-{
-text-decoration: none;
-padding: .2em 2em;
-color: #ff0000;
-background-color: #ffffff;
-}
-
-.headerlist ul li a:hover
-{
-color: #fff;
-background-color: #0000ff;
-}
+.headerlist ul{
+        padding: 0;
+        text-align: center;
+        margin-top:3.3%;
+        list-style: none;
+        float: right;
+    }
+    .headerlist ul li{
+        display: inline-block;
+        position: relative;
+		border: 1px solid black;
+		border-radius: 5px;
+		font-size: 18px;
+		text-align: center;
+		text-decoration:none;
+		background-color: red;
+        line-height: 51px;
+        text-align: left;
+    }
+   .headerlist  ul li a{
+        display: block;
+        padding: 0px 15px;
+        color: #ffffff;
+        text-decoration: none;
+    }
+   .headerlist ul li a:hover{
+        color: #ffffff;
+        background: #800000;
+    }
+    .headerlist ul li ul.dropdown{
+        min-width: 200px; /* Set width of the dropdown */
+        background: #ff0000;
+        display: none;
+        position: absolute;
+        z-index: 999;
+        left: 0;
+    }
+    .headerlist ul li:hover ul.dropdown{
+        display: block;	/* Display the dropdown */
+    }
+    .headerlist ul li ul.dropdown li{
+        display: block;
+    }
 
 .headerborder {
     border-radius: 25px;
