@@ -11,6 +11,7 @@ import huiswerknakijken.hu.Util.OracleConnectionPool;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
@@ -380,22 +381,35 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 					c.setName(rs.getString("homework_name"));
 					c.setDeadline(rs.getString("deadline"));
 					c.setNumberQuestions(rs.getInt("questions"));
-					c.setCurrentQuestion(rs.getInt("currentQuestion"));
-					c.setStatus(Status.getValue(rs.getInt("status")));
-					c.setCourse((new CourseDAO()).retrieveByID(rs.getInt("course_id"), 2,connection));
-					c.setCijfer(rs.getInt("Grade"));
+					ResultSetMetaData md = rs.getMetaData();
+					boolean b = false;
+					for(int i = 1; i<md.getColumnCount(); i++){
+						if (md.getColumnName(i).equals("student_id")){
+							b = true;
+							break;
+						}
+					}
 					PersonDAO dao = new PersonDAO();
+					if(b){
+						c.setCurrentQuestion(rs.getInt("currentQuestion"));
+						c.setStatus(Status.getValue(rs.getInt("status")));
+						c.setCijfer(rs.getInt("Grade"));
+						if(rs.getInt("student_id") > 0){
+							Person p = dao.retrieve(rs.getInt("student_id"),1,connection);
+							if (p.getRole() == UserRole.Student)
+								c.setStudent(dao.retrieve(rs.getInt("student_id"), 1,connection));
+							else
+								System.out.println("ERROR_HOMEWORK-DAO::: Getting homework from someone who's not a student, ID: " + p.getID());
+						}
+					}
+					c.setCourse((new CourseDAO()).retrieveByID(rs.getInt("course_id"), 2,connection));
+					
+					
 					//c.setTeacher(dao.retrieveTeacherByHomework(c, 1));
 					//Person p = dao.retrieve(rs.getInt("student_id"),1);
 					Person t = dao.retrieve(rs.getInt("teacher_id"), 1,connection);
 					c.setTeacher(t);
-					if(rs.getInt("student_id") > 0){
-						Person p = dao.retrieve(rs.getInt("student_id"),1,connection);
-						if (p.getRole() == UserRole.Student)
-							c.setStudent(dao.retrieve(rs.getInt("student_id"), 1,connection));
-						else
-							System.out.println("ERROR_HOMEWORK-DAO::: Getting homework from someone who's not a student, ID: " + p.getID());
-					}
+					
 					/*if (p.getRole() == UserRole.Teacher){
 						c.setTeacher(p);
 					}
