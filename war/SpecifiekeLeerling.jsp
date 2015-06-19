@@ -2,6 +2,7 @@
 	
 	<%@ page import="huiswerknakijken.hu.Domain.Person" %>
 	<%@ page import="huiswerknakijken.hu.Domain.Klass" %>
+	<%@ page import="huiswerknakijken.hu.Domain.Homework" %>
 	<%@ page import="java.util.ArrayList" %>
 	
 	 <%  Person p = (Person)session.getAttribute("selectedStudent");
@@ -23,3 +24,30 @@
 			out.println("</form");
 		}
 	%>
+	<br>
+	
+	<div class="TableStyle">
+		<table>
+				<tr>
+					<td>Name</td>
+					<td>Deadline</td>
+					<td>Cijfer</td>
+					<td>Vak</td>
+					
+				</tr>
+
+				<%
+		ArrayList<Homework> hw = (ArrayList<Homework>) session.getAttribute("HwPS");
+			if (hw != null){
+				for(Homework h : hw){
+					out.println("<tr>");
+					out.println("<td><a href = 'HuiswerkOverzichtServlet.do?id="+h.getID()+"'>"+h.getName()+"</a></td>");
+					out.println("<td><a href = 'HuiswerkOverzichtServlet.do?id="+h.getID()+"'>"+h.getDeadline()+"</a></td>");
+					out.println("<td><a href = 'HuiswerkOverzichtServlet.do?id="+h.getID()+"'>"+h.getCijfer()+"</a></td>");
+					out.println("<td><a href = 'VakSpecifiek.do?id="+h.getCourse().getID()+"'>"+h.getCourse().getName()+"</a></td>");
+					out.println("</tr>");
+				}
+			}
+		%>
+		</table>
+		</div>
