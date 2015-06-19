@@ -375,7 +375,7 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 					c.setNumberQuestions(rs.getInt("questions"));
 					c.setCurrentQuestion(rs.getInt("currentQuestion"));
 					c.setStatus(Status.getValue(rs.getInt("status")));
-					c.setCourse((new CourseDAO()).retrieveByID(rs.getInt("course_id"), 1,connection));
+					c.setCourse((new CourseDAO()).retrieveByID(rs.getInt("course_id"), 2,connection));
 					c.setCijfer(rs.getInt("Grade"));
 					PersonDAO dao = new PersonDAO();
 					//c.setTeacher(dao.retrieveTeacherByHomework(c, 1));

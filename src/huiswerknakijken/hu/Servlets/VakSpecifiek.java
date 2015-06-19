@@ -4,7 +4,7 @@ import huiswerknakijken.hu.DAO.ClassDAO;
 import huiswerknakijken.hu.DAO.CourseDAO;
 import huiswerknakijken.hu.Domain.Course;
 import huiswerknakijken.hu.Domain.Klass;
-import huiswerknakijken.hu.Domain.Person;
+import huiswerknakijken.hu.Domain.Student;
 import huiswerknakijken.hu.Util.OracleConnectionPool;
 
 import java.io.IOException;
@@ -36,7 +36,7 @@ public class VakSpecifiek extends HttpServlet {
 			e.printStackTrace();
 		}
 		ArrayList<Klass>klassen = (ArrayList<Klass>) kdao.retrieveAll();
-		ArrayList<Person> students = c.getStudents();
+		ArrayList<Student> students = c.getStudents();
 		session.setAttribute("Vak", c);
 		session.setAttribute("studenten", students);
 		session.setAttribute("Klassen", klassen);

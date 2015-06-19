@@ -4,12 +4,14 @@
 	<%@ page import="huiswerknakijken.hu.Domain.Homework" %>
 	<%@ page import="huiswerknakijken.hu.Domain.Question" %>
 	<%@ page import="huiswerknakijken.hu.Domain.Person" %>
+	<%@ page import="huiswerknakijken.hu.Domain.Student" %>
+	<%@ page import="huiswerknakijken.hu.Domain.Course" %>
 	<%@ page import="java.util.ArrayList" %>
-	<%  Homework hw = ((ArrayList<Homework>)session.getAttribute("HwObj")).get(0);
+	<%  Homework hw = ((Homework)session.getAttribute("HwObj"));
 		ArrayList<Question> q =(ArrayList<Question>)session.getAttribute("questObj");
 
 		if(hw!=null){
-		out.println(hw.toString()+"<br/>");
+		out.println(hw.toString()+" Vak: "+hw.getCourse().getName()+"<br/>");
 		}
 		if(q!=null){
 		for(int i = 0; i < q.size(); i++){
@@ -31,23 +33,28 @@
 	 </form>
 	 <div id = "studentBox">
 	 <h3>Huiswerk status leerlingen</h3>
-	 <%  ArrayList<Homework> hwpp = (ArrayList<Homework>)session.getAttribute("HwObj");
-		if(hwpp!=null){
-			
-			for(int i = 0; i<hwpp.size(); i++){
-				if(hwpp.get(i).getStudent() != null){
-					out.println(hwpp.get(i).getStudent().toString()+" status:  "+hwpp.get(i).getStatus()+ " ");
-				if(hwpp.get(i).getCijfer() != -1) {
-					out.println("Cijfer: " + hwpp.get(i).getCijfer());
+	 <%  Homework hwpp  = (Homework)session.getAttribute("HwObj");
+	 	 Course c = hwpp.getCourse();
+		 ArrayList<Student> students = c.getStudents();
+	 if(hwpp!=null){
+		 if(students.size()>0){
+			for(int i = 0; i<students.size(); i++){
+				
+					out.println(students.get(i).toString()+" status:  "+hwpp.getStatus()+ " ");
+				if(hwpp.getCijfer() != -1) {
+					out.println("Cijfer: " + hwpp.getCijfer());
 			}
-				}else{
+			}
+		 }
+				else{
 					out.println("Er zijn nog geen studenten die dit vak volgen");
-				}
-			
+				}		
 		}
-	}
+	
 		%>
 		</div>
  	<form action = "HuiswerkNakijkenServlet.do">
 	 <input class = "button" value = "Nakijken" type = "submit" name="knop" />
 	 </form>
+	 
+	 

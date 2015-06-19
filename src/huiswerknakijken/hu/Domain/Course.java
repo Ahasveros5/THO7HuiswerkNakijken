@@ -8,7 +8,7 @@ public class Course
 	private String name;
 	private Homework homework;
 	private ArrayList<Person> teachers = new ArrayList<Person>();
-	private ArrayList<Person> students = new ArrayList<Person>();
+	private ArrayList<Student> students = new ArrayList<Student>();
 	private ArrayList<Goal> goals = new ArrayList<Goal>();
 	
 	
@@ -24,10 +24,10 @@ public class Course
 	public void setHomework(Homework homework) {
 		this.homework = homework;
 	}
-	public ArrayList<Person> getStudents() {
+	public ArrayList<Student> getStudents() {
 		return students;
 	}
-	public void setStudents(ArrayList<Person> arrayList) {
+	public void setStudents(ArrayList<Student> arrayList) {
 		this.students = arrayList;
 	}
 	public void addStudent(Student s){

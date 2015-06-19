@@ -30,12 +30,11 @@ public class HuiswerkOverzichtServlet extends HttpServlet {
 		int id = Integer.parseInt(req.getParameter("id"));
 
 		ArrayList<Person> studenten = (ArrayList<Person>) pdao.retrieveStudentsByHomework(id, 1);
-		ArrayList<Homework> hwlist = new ArrayList<Homework>();
+		Homework hw = dao.retrieveByID(id, 2);
 		Connection con = OracleConnectionPool.getConnection();
-		hwlist.add(dao.retrieveByID(id, 2));
+		
 		for(int i = 0; i<studenten.size(); i++){
-			Homework hw = dao.retrieveHomeworkByStudent(dao.retrieveByID(id, 1).getID(), studenten.get(i).getID(), 2, con);
-			hwlist.add(hw);
+			 hw = dao.retrieveHomeworkByStudent(dao.retrieveByID(id, 1).getID(), studenten.get(i).getID(), 2, con);
 		}
 		try {
 			con.close();
@@ -43,11 +42,11 @@ public class HuiswerkOverzichtServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		session.setAttribute("HwObj", hwlist);
+		session.setAttribute("HwObj", hw);
 		ArrayList<Question> questions = null;
-		System.out.println("size: "+ hwlist.size());
-		if(hwlist.size() > 0 && hwlist.get(0) != null)
-			questions = hwlist.get(0).getQuestions();
+
+	//	if(hwlist.size() > 0 && hwlist.get(0) != null)
+			questions = hw.getQuestions();
 		
 		session.setAttribute("QuestObj", questions);
 
