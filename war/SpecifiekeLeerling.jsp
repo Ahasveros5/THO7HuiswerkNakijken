@@ -39,12 +39,17 @@
 
 				<%
 		ArrayList<Homework> hw = (ArrayList<Homework>) session.getAttribute("HwPS");
+				int c = 0;
 			if (hw != null){
 				for(Homework h : hw){
 					out.println("<tr>");
 					out.println("<td><a href = 'HuiswerkOverzichtServlet.do?id="+h.getID()+"'>"+h.getName()+"</a></td>");
 					out.println("<td><a href = 'HuiswerkOverzichtServlet.do?id="+h.getID()+"'>"+h.getDeadline()+"</a></td>");
-					out.println("<td><a href = 'HuiswerkOverzichtServlet.do?id="+h.getID()+"'>"+h.getCijfer()+"</a></td>");
+					if(h.getCijfer()== -1)
+					out.println("<td><a href = 'HuiswerkOverzichtServlet.do?id="+h.getID()+"'>"+c+"</a></td>");
+					else{
+						out.println("<td><a href = 'HuiswerkOverzichtServlet.do?id="+h.getID()+"'>"+h.getCijfer()+"</a></td>");
+					}
 					out.println("<td><a href = 'VakSpecifiek.do?id="+h.getCourse().getID()+"'>"+h.getCourse().getName()+"</a></td>");
 					out.println("</tr>");
 				}
