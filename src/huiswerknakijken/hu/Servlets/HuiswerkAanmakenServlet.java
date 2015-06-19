@@ -56,7 +56,7 @@ public class HuiswerkAanmakenServlet extends HttpServlet {
 		dao.add(hw);
 		session.setAttribute("Huiswerk", hwList);
 		req.setAttribute("msgs", "Huiswerk aangemaakt");
-		
+		System.out.println("huiswerk aangemaakt");
 		}
 		rd = req.getRequestDispatcher("LeraarOverzicht.jsp");
 		if(rd!=null){
