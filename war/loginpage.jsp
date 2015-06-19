@@ -10,7 +10,7 @@
    		<input class = "input" type="text" size="25" name="email_login" placeholder="E-mail adres" ><br />
    		<input class = "input" type="password" size="25" name="ww_login" placeholder="Wachtwoord" /><br />
    		<br />
-   		<input class="button" type="submit" name="knop" value="Inloggen" />
+   		<input class="button-login" type="submit" name="knop" value="Inloggen" />
    		</form>
    	</div>
   
