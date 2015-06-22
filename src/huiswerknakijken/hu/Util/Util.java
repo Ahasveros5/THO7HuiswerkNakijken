@@ -34,10 +34,5 @@ public class Util {
 	    }
 	    return true;
 	}
-	
-	public static boolean isBefore(Date date1, Date date2){
-		//date1.get
-		Calendar.get
-	}
 
 }

@@ -110,21 +110,34 @@ public class AnswerDAO implements DAOInterface<Answer> {
 
 	}
 	
-	public ArrayList<Answer> retrieveAllByQuestion(int id, int layerLevel) {
+	public ArrayList<Answer> retrieveAllByQuestion(int id, int layerLevel, Connection con) {
 		ArrayList<Answer> Answer = null;
-		Connection connection = OracleConnectionPool.getConnection();
+		Connection connection = con;
 		try {
 			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Answer WHERE question_id=?");
 			statement.setInt(1, id);
 			ResultSet rs = statement.executeQuery();
 			Answer = resultSetExtractor(rs, layerLevel, connection);
 			statement.close();
-			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
 		return Answer;
+
+	}
+	
+	public ArrayList<Answer> retrieveAllByQuestion(int id, int layerLevel) {
+	
+		Connection connection = OracleConnectionPool.getConnection();
+		ArrayList<Answer> temp = retrieveAllByQuestion(id, layerLevel, connection);
+		try {
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return temp;
 
 	}
 	

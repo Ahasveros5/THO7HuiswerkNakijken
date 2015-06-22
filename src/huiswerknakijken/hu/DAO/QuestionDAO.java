@@ -69,21 +69,33 @@ public class QuestionDAO implements DAOInterface<Question> {
 
 	}
 	
-	public ArrayList<Question> retrieveAllByHomework(int id, int layerLevel) {
+	public ArrayList<Question> retrieveAllByHomework(int id, int layerLevel, Connection con) {
 		ArrayList<Question> Questions = null;
-		Connection connection = OracleConnectionPool.getConnection();
 		try {
-			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Question WHERE homework_id=?");
+			PreparedStatement statement = con.prepareStatement("SELECT * FROM Question WHERE homework_id=?");
 			statement.setInt(1, id);
 			ResultSet rs = statement.executeQuery();
-			Questions = resultSetExtractor(rs, layerLevel, connection);
+			Questions = resultSetExtractor(rs, layerLevel, con);
 			statement.close();
-			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
 		return Questions;
+
+	}
+	
+	public ArrayList<Question> retrieveAllByHomework(int id, int layerLevel) {
+		
+		Connection connection = OracleConnectionPool.getConnection();
+		ArrayList<Question> temp = retrieveAllByHomework(id, layerLevel, connection);
+		try {
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return temp;
 
 	}
 
@@ -179,7 +191,7 @@ public class QuestionDAO implements DAOInterface<Question> {
 
 					if (layerLevel > 1) { //answers"
 						AnswerDAO adao = new AnswerDAO();
-						c.setAnswers(adao.retrieveAllByQuestion(c.getID(), 1));
+						c.setAnswers(adao.retrieveAllByQuestion(c.getID(), 1, connection));
 					}
 
 					if (layerLevel > 2) {

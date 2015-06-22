@@ -33,29 +33,42 @@
 	 </form>
 	 <div id = "studentBox">
 	 <h3>Huiswerk status leerlingen</h3>
+	 <div class="TableStyle">
+		<table>
+			<tr>
+				<td>Naam</td>
+				<td>Status</td>
+				<td>Cijfer</td>
+			</tr>
 	 <%  ArrayList<Homework> hwpp  = (ArrayList<Homework>)session.getAttribute("Hwpp");
 	 	 
 		 
 	 if(hwpp!=null){
-		 for (Homework h : hwpp){
-			 Course c = h.getCourse();
-			 ArrayList<Student> students = c.getStudents();
-			 if(students.size()>0){
+		 Course c = hw.getCourse();
+		 ArrayList<Student> students = c.getStudents();
+		 if(students.size()>0){
 				for(int i = 0; i<students.size(); i++){
-					
-						out.println(students.get(i).toString()+" status:  "+h.getStatus()+ " ");
-					if(h.getCijfer() != -1) {
-						out.println("Cijfer: " + h.getCijfer());
-					}
+					Homework h = hwpp.get(i);
+					Person p = students.get(i);
+					out.println("<tr>");
+					out.println("<td><a href = 'SpecifiekeLeerlingServlet.do?id="+p.getID()+"'>"+p.toString()+"</a></td>");
+					out.println("<td>"+h.getStatus()+"</td>");
+					if(h.getCijfer() == -1)
+						out.println("<td>-</td>");
+					else
+						out.println("<td>"+h.getCijfer()+"</td>");
+					out.println("</tr>");
 				}
-			 }else{
-					out.println("Er zijn nog geen studenten die dit vak volgen");
-				}	
-		 }
+			 	
+		 }else{
+				out.println("Er zijn nog geen studenten die dit vak volgen");
+			}
 					
 		}
 	
 		%>
+		</table>
+		</div>
 		</div>
  	<form action = "HuiswerkNakijkenServlet.do">
 	 <input class = "button" value = "Nakijken" type = "submit" name="knop" />

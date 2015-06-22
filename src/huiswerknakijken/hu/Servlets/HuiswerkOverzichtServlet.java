@@ -30,12 +30,12 @@ public class HuiswerkOverzichtServlet extends HttpServlet {
 		int id = Integer.parseInt(req.getParameter("id"));
 
 		ArrayList<Person> studenten = (ArrayList<Person>) pdao.retrieveStudentsByHomework(id, 1);
-		Homework hw = dao.retrieveByID(id, 2);
-		ArrayList<Homework> hwlist = new ArrayList<Homework>();
 		Connection con = OracleConnectionPool.getConnection();
+		Homework hw = dao.retrieveByID(id, 2, con);
+		ArrayList<Homework> hwlist = new ArrayList<Homework>();
 		
 		for(int i = 0; i<studenten.size(); i++){
-			 hwlist.add(dao.retrieveHomeworkByStudent(dao.retrieveByID(id, 1).getID(), studenten.get(i).getID(), 1, con));
+			 hwlist.add(dao.retrieveHomeworkByStudent(dao.retrieveByID(id, 1, con).getID(), studenten.get(i).getID(), 1, con));
 		}
 		try {
 			con.close();
