@@ -1,4 +1,4 @@
-package huiswerknakijken.hu.Servlets;
+package huiswerknakijken.hu.LeerlingServlets;
 
 import huiswerknakijken.hu.DAO.PersonDAO;
 import huiswerknakijken.hu.Domain.Person;

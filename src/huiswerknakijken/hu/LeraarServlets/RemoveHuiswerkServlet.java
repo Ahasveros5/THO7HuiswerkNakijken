@@ -1,4 +1,4 @@
-package huiswerknakijken.hu.Servlets;
+package huiswerknakijken.hu.LeraarServlets;
 
 import huiswerknakijken.hu.Domain.Homework;
 

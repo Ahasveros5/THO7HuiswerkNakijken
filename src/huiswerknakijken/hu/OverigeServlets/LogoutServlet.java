@@ -1,4 +1,4 @@
-package huiswerknakijken.hu.Servlets;
+package huiswerknakijken.hu.OverigeServlets;
 
 import huiswerknakijken.hu.Domain.Person;
 
