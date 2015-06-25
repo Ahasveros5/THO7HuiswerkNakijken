@@ -2,14 +2,11 @@ package huiswerknakijken.hu.LeraarServlets;
 
 import huiswerknakijken.hu.DAO.ClassDAO;
 import huiswerknakijken.hu.DAO.PersonDAO;
-import huiswerknakijken.hu.Domain.Person;
-import huiswerknakijken.hu.Domain.Person.UserRole;
-import huiswerknakijken.hu.Domain.Student;
 import huiswerknakijken.hu.Domain.Klass;
+import huiswerknakijken.hu.Domain.Student;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -34,22 +31,6 @@ public class OverzichtLeerlingenServlet extends HttpServlet {
 		ClassDAO cdao = new ClassDAO();
 		HttpSession session = req.getSession();
 		RequestDispatcher rd = null;
-				
-		/*klassen.addAll(cdao.retrieveAll());
-		for(int i =0; i<klassen.size(); i++){
-			if(klassen.get(i).getName().equals("Geen Naam")){
-				Klass k = klassen.get(i);
-				klassen.remove(k);
-				break;
-			}
-		}*/
-		/*List<Person> list = dao.retrieveAllByRole(UserRole.Student.getIndex(), 1);
-		for(int i = 0; i<list.size(); i++){
-			students.add(list.get(i).toStudent());
-		}*/
-		
-		//session.setAttribute("Leerlingen", students);
-		//session.setAttribute("klassen", klassen);
 		rd = req.getRequestDispatcher("OverzichtLeerlingen.jsp");
 		
 		if(rd!=null){

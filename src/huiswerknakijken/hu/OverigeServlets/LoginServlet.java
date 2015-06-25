@@ -1,8 +1,6 @@
 package huiswerknakijken.hu.OverigeServlets;
 
-import huiswerknakijken.hu.DAO.ClassDAO;
 import huiswerknakijken.hu.DAO.PersonDAO;
-import huiswerknakijken.hu.Domain.Klass;
 import huiswerknakijken.hu.Domain.Person;
 import huiswerknakijken.hu.Domain.Person.UserRole;
 import huiswerknakijken.hu.Util.PasswordHash;
@@ -10,7 +8,6 @@ import huiswerknakijken.hu.Util.PasswordHash;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

@@ -9,7 +9,6 @@ public class Course
 	private Homework homework;
 	private ArrayList<Person> teachers = new ArrayList<Person>();
 	private ArrayList<Student> students = new ArrayList<Student>();
-	private ArrayList<Goal> goals = new ArrayList<Goal>();
 	
 	
 	public String getName() {
@@ -32,12 +31,6 @@ public class Course
 	}
 	public void addStudent(Student s){
 		students.add(s);
-	}
-	public ArrayList<Goal> getGoals() {
-		return goals;
-	}
-	public void setGoals(ArrayList<Goal> goals) {
-		this.goals = goals;
 	}	
 	public ArrayList<Person> getTeachers() {
 		return teachers;

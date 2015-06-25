@@ -1,7 +1,5 @@
 package huiswerknakijken.hu.Domain;
 
-import huiswerknakijken.hu.Domain.Person.UserRole;
-
 import java.util.ArrayList;
 
 

@@ -1,7 +1,5 @@
 package huiswerknakijken.hu.OverigeServlets;
 
-import huiswerknakijken.hu.Domain.Person;
-
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;

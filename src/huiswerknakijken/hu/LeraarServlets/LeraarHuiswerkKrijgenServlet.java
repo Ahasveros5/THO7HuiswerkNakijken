@@ -1,11 +1,7 @@
 package huiswerknakijken.hu.LeraarServlets;
 
 import huiswerknakijken.hu.DAO.HomeworkDAO;
-import huiswerknakijken.hu.DAO.PersonDAO;
 import huiswerknakijken.hu.Domain.Homework;
-import huiswerknakijken.hu.Domain.Person;
-import huiswerknakijken.hu.Domain.Person.UserRole;
-import huiswerknakijken.hu.Domain.Student;
 import huiswerknakijken.hu.Domain.Teacher;
 
 import java.io.IOException;

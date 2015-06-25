@@ -1,6 +1,5 @@
 package huiswerknakijken.hu.Domain;
 
-import huiswerknakijken.hu.Domain.Answer.Correct;
 
 public class Person implements Comparable {
 	

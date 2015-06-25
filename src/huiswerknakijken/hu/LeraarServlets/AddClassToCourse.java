@@ -4,7 +4,6 @@ import huiswerknakijken.hu.DAO.ClassDAO;
 import huiswerknakijken.hu.DAO.CourseDAO;
 import huiswerknakijken.hu.Domain.Course;
 import huiswerknakijken.hu.Domain.Klass;
-import huiswerknakijken.hu.Domain.Person;
 import huiswerknakijken.hu.Domain.Student;
 
 import java.io.IOException;

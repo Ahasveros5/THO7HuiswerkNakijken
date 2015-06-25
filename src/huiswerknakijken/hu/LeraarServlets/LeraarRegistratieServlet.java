@@ -2,12 +2,11 @@ package huiswerknakijken.hu.LeraarServlets;
 
 import huiswerknakijken.hu.DAO.PersonDAO;
 import huiswerknakijken.hu.Domain.Person;
-import huiswerknakijken.hu.Domain.Teacher;
 import huiswerknakijken.hu.Domain.Person.UserRole;
+import huiswerknakijken.hu.Domain.Teacher;
 import huiswerknakijken.hu.Util.PasswordHash;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 

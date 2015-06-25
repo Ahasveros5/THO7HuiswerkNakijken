@@ -19,7 +19,39 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+/*
+ * 			PersonDAO
+ * 
+ * Wat doet het	
+ * 			
+ * De PersonDAO is de manier waarop dit programma communiceerd met de Person table in de database.			
+ * Voor het toevoegen (add(Person)) en updaten (update(Person)) zijn methoden gemaakt en zorgt ervoor dat het Person object
+ * meteen wordt toegevoegd of geupdate in de database. In het geval dat je een Student wilt toevoegen gebruik je de methode "addStudent(Student)
+ * Voor het ophalen van een of meerdere personen zijn vele methoden beschikbaar, die allen beginnen met "retrieve".
+ * De retrieve methoden geven een Person of List<Person> object terug.
+ * 
+ * Voorbeeld:
+ * 
+ *\// in een of andere methode
+ * PersonDAO dao = new PersonDAO(); //je maakt altijd een nieuw PersonDAO object aan
+ * dao.add(p) //we voegen Person p toe aan de database (p is ergens hiervoor geinitialiseerd)
+ * 
+ *\//Verderop in de methode gaan we alle personen personen uit de database halen
+ *ArrayList<Person> allPersons = dao.retrieveAll(1); //de '1' die wordt meegegeven is het 'layerLevel' met het layerLevel kan je verdere DAO
+ *aanroepen verhinderen of juist toestaan. Bij de PersonDAO wordt hier geen gebruik van gemaakt momenteel dus we houden het bij 1.
+ *Over het algemeen staat bij LayerLevel de '1' voor alleen de class die ik wil hebben (in dit geval dus Person)
+ *en elke keer als het getal van de LayerLevel omhoog gaat wordt er een laagje aan toegevoegd.
+ *Verder is dit gedaan om performance te verbeteren, als je bijvoorbeeld de naam van een klas nodig hebt is het onnodig om ook alle leerlingen
+ *erbij op te vragen.
+ * 
+*/
+
+
+
+
 public class PersonDAO implements DAOInterface<Person> {
+	
+	//Haalt alle personen op
 	public List<Person> retrieveAll(int layerLevel) {
 		ResultSet rs = null;
 		ArrayList<Person> Students = null;
@@ -49,6 +81,7 @@ public class PersonDAO implements DAOInterface<Person> {
 		return ps;
 	}
 	
+	//Deze methode zoekt de database af naar personen die matchen met de opgegeven keywords, keywords worden gesplitst met een spatie
 	public List<Person> retrieveAllMatching(String keyword, int layerLevel, Connection con) {
 		ResultSet rs = null;
 		ArrayList<Person> users = null;
@@ -94,6 +127,7 @@ public class PersonDAO implements DAOInterface<Person> {
 		return users;
 	}
 	
+	//Geeft een lijst van alle personen met de opgegeven Role
 	public List<Person> retrieveAllByRole(int role, int layerLevel) {
 		ResultSet rs = null;
 		ArrayList<Person> Students = null;
@@ -119,6 +153,7 @@ public class PersonDAO implements DAOInterface<Person> {
 		return false;
 	}
 
+	//Voegt een persoon toe aan de database, maak hiervan gebruik als je een Leraar of overig persoon wilt toevoegen.
 	@Override
 	public boolean add(Person s) {
 		boolean b = false;
@@ -188,6 +223,7 @@ public class PersonDAO implements DAOInterface<Person> {
 		return b;
 	}
 	
+	//Voegt een student toe aan de database
 	public boolean addStudent(Student s) {
 		boolean b = false;
 		Connection connection = OracleConnectionPool.getConnection();
@@ -262,6 +298,7 @@ public class PersonDAO implements DAOInterface<Person> {
 		return b;
 	}
 
+	//Updates een Persoon
 	@Override
 	public boolean update(Person s) {
 		boolean b = false;
@@ -294,25 +331,37 @@ public class PersonDAO implements DAOInterface<Person> {
 	}
 
 
+	//Haalt een persoon op aan de hand van het persoonid (voor studenten is dit het studentID)
 	public Person retrieve(int id, int layerLevel) {
-		Person retrievedStudent = null;
 		Connection connection = OracleConnectionPool.getConnection();
+		Person retrievedStudent = retrieve(id,layerLevel,connection);
 		try {
-			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Person WHERE id = ?");
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return retrievedStudent;
+
+	}
+	
+	public Person retrieve(int id, int layerLevel, Connection connection) {
+		Person retrievedStudent = null;
+		try {
+			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Person WHERE id=?");
 			statement.setInt(1, id);
 			ResultSet rs = statement.executeQuery();
 			ArrayList<Person> Person = resultSetExtractor(rs, layerLevel, connection);
 			retrievedStudent = Person.get(0);
 			statement.close();
-			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 		return retrievedStudent;
 
 	}
 	
+	//Haalt alle leraren op aan de hand van het meegegeven huiswerk object
 	public Person retrieveTeacherByHomework(Homework h, int layerLevel) {
 		Person retrievedStudent = null;
 		Connection connection = OracleConnectionPool.getConnection();
@@ -333,6 +382,7 @@ public class PersonDAO implements DAOInterface<Person> {
 
 	}
 	
+	//Haalt alle leerlingen op aan de hand van het meegegeven huiswerk object
 	public ArrayList<Person> retrieveStudentsByHomework(int hid, int layerLevel) {
 		ArrayList<Person> Persons = null;
 		Connection connection = OracleConnectionPool.getConnection();
@@ -350,23 +400,8 @@ public class PersonDAO implements DAOInterface<Person> {
 		return Persons;
 
 	}
-	
-	public Person retrieve(int id, int layerLevel, Connection connection) {
-		Person retrievedStudent = null;
-		try {
-			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Person WHERE id=?");
-			statement.setInt(1, id);
-			ResultSet rs = statement.executeQuery();
-			ArrayList<Person> Person = resultSetExtractor(rs, layerLevel, connection);
-			retrievedStudent = Person.get(0);
-			statement.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return retrievedStudent;
 
-	}
-
+	//Haalt een student op aan de hand van het email adres
 	public Person retrieveByEmail(String s, int layerLevel) {
 		Person retrievedStudent = null;
 		Connection connection = OracleConnectionPool.getConnection();
@@ -386,6 +421,7 @@ public class PersonDAO implements DAOInterface<Person> {
 		return retrievedStudent;
 	}
 	
+	//Haalt alle studenten uit een klas op
 	public ArrayList<Person> retrieveAllByClass(int classID, int layerLevel, Connection con) {
 		Connection connection = con;
 		ArrayList<Person> eU = null;
@@ -402,6 +438,7 @@ public class PersonDAO implements DAOInterface<Person> {
 		return eU;
 	}
 	
+	//Haalt alle studenten op uit een vak
 	public ArrayList<Student> retrieveStudentsByCourse(int courseID, int layerLevel, Connection con) {
 		Connection connection = con;
 		ArrayList<Person> eU = null;
@@ -423,6 +460,7 @@ public class PersonDAO implements DAOInterface<Person> {
 		return sts;
 	}
 	
+	//Haalt alle leraren uit een vak op
 	public ArrayList<Person> retrieveTeachersByCourse(int classID, int layerLevel, Connection con) {
 		Connection connection = con;
 		ArrayList<Person> eU = null;
@@ -439,40 +477,14 @@ public class PersonDAO implements DAOInterface<Person> {
 		return eU;
 	}
 
-	/*public Person retrieveByStudentname(String s, int layerLevel) {
-		Person retrievedStudent = null;
-		Connection connection = OracleConnectionPool.getConnection();
-		try {
-			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Students WHERE lower(Studentname)=?");
-			statement.setString(1, s.toLowerCase());
-			ResultSet rs = statement.executeQuery();
-			ArrayList<Person> eU = resultSetExtractor(rs, layerLevel, connection);
-			if (eU.size() > 0)
-				retrievedStudent = eU.get(0);
-			statement.close();
-			connection.close();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return retrievedStudent;
-	}*/
-
+	//Hier gebeurt het daadwerkelijke uitlezen van de opgehaalde database gegevens en wordt het Persoon object aangemaakt 
+	//met de correcte gegevens.
 	private ArrayList<Person> resultSetExtractor(ResultSet rs, int layerLevel, Connection connection) {
 		ArrayList<Person> extractedStudents = new ArrayList<Person>();
 		
 		try {
 			while (rs.next()) {
-				boolean notInCache = true;
 				int ID = rs.getInt("id");
-				/*if (cacheStudents.containsKey(StudentID)) {
-					Person cacheStudent = cacheStudents.get(StudentID);
-					if (cacheStudent.getLayerLevel() >= layerLevel) {
-						extractedStudents.add(cacheStudents.get(StudentID));
-						notInCache = false;
-					}
-				}*/
-				if (notInCache) {
 					Person p;
 					int role = rs.getInt("role");
 					if(role == 1){//student
@@ -503,7 +515,6 @@ public class PersonDAO implements DAOInterface<Person> {
 						p.setPassword(rs.getString("password"));
 						p.setRole(UserRole.Unknown);
 					}
-					//u.setLayerLevel(layerLevel);
 
 					if (layerLevel > 1) {
 						
@@ -512,11 +523,8 @@ public class PersonDAO implements DAOInterface<Person> {
 					if (layerLevel > 2) {
 						
 					}
-
-					//cacheStudents.put(u.getStudentid(), u);
 					extractedStudents.add(p);
 				}
-			}
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
