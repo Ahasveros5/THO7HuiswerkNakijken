@@ -150,8 +150,21 @@ public class CourseDAO implements DAOInterface<Course> {
 
 	@Override
 	public boolean delete(Course s) {
-		System.out.println("Deleting NYI");
-		return false;
+		Connection connection = OracleConnectionPool.getConnection();
+		PreparedStatement statement = null;
+		String sql = "DELETE FROM COURSE WHERE COURSE_ID=?";
+		try {
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, s.getID());
+			statement.executeUpdate();
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return true;
 	}
 
 	@Override

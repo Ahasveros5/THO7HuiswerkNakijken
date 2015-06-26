@@ -88,8 +88,21 @@ public class ClassDAO implements DAOInterface<Klass> {
 
 	@Override
 	public boolean delete(Klass s) {
-		System.out.println("Deleting NYI");
-		return false;
+		Connection connection = OracleConnectionPool.getConnection();
+		PreparedStatement statement = null;
+		String sql = "DELETE FROM C_CLASS WHERE CLASS_ID=?";
+		try {
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, s.getClassID());
+			statement.executeUpdate();
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return true;
 	}
 
 	@Override

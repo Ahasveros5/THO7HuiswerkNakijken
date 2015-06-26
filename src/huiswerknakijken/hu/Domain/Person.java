@@ -78,6 +78,15 @@ public class Person implements Comparable {
 		
 	}
 	
+	public Person(String firstName, String lastName, String email, int id, String password, UserRole role){
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.eMail = email;
+		this.ID = id;
+		this.password = password;
+		this.role = role;
+	}
+	
 	public String getFirstName() {
 		return firstName;
 	}

@@ -80,7 +80,8 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 			statement.setString(1, name);
 			ResultSet rs = statement.executeQuery();
 			ArrayList<Homework> Homework = resultSetExtractor(rs, layerLevel, connection);
-			retrievedHomework = Homework.get(0);
+			if(Homework.size() > 0)
+				retrievedHomework = Homework.get(0);
 			statement.close();
 			connection.close();
 		} catch (SQLException e) {
@@ -96,7 +97,7 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 			statement.setInt(1, id);
 			ResultSet rs = statement.executeQuery();
 			ArrayList<Homework> Homework = resultSetExtractor(rs, layerLevel, con);
-			if(Homework != null && Homework.size() > 0)
+			if(Homework.size() > 0)
 				retrievedHomework = Homework.get(0);
 			statement.close();
 		} catch (SQLException e) {
@@ -218,8 +219,33 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 
 	@Override
 	public boolean delete(Homework s) {
-		System.out.println("Deleting NYI");
-		return false;
+		Connection connection = OracleConnectionPool.getConnection();
+		PreparedStatement statement = null;
+		String sql = "";
+		try {			
+			sql = "DELETE FROM QUESTION WHERE HOMEWORK_ID=?";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, s.getID());
+			statement.executeUpdate();
+			
+			sql = "DELETE FROM PERSON_HOMEWORK WHERE HOMEWORK_ID=?";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, s.getID());
+			statement.executeUpdate();
+			
+			sql = "DELETE FROM HOMEWORK WHERE HOMEWORK.HOMEWORK_ID=?";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, s.getID());
+			statement.executeUpdate();
+			
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return true;
 	}
 	
 	private void addStudent(Connection connection, Homework h,Student s) throws SQLException {
@@ -276,7 +302,6 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 					s.setID(ID);
 				}
 			statement.close();
-			System.out.println("Student size: "+s.getStudents().size());
 			if(s.getStudents() != null && s.getStudents().size() > 0){
 				for(Student st : s.getStudents()){
 					addStudent(connection, s, st);
@@ -319,7 +344,8 @@ public class HomeworkDAO implements DAOInterface<Homework> {
 			statement.setInt(5, s.getID());
 			statement.executeUpdate();
 			statement.close();
-			updatePersonHomework(s, connection);
+			if(s.getStudent() != null)
+				updatePersonHomework(s, connection);
 			if(s.getStudents().size() > 0){
 				for(Student st : s.getStudents()){
 					updateStudentHomework(connection, s, st);

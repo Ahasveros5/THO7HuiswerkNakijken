@@ -115,8 +115,32 @@ public class PersonDAO implements DAOInterface<Person> {
 
 	@Override
 	public boolean delete(Person s) {
-		System.out.println("Deleting NYI");
-		return false;
+		Connection connection = OracleConnectionPool.getConnection();
+		PreparedStatement statement = null;
+		String sql = "DELETE FROM PERSON WHERE PERSON.ID=?";
+		try {
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, s.getID());
+			statement.executeUpdate();
+			
+			sql = "DELETE FROM PERSON_COURSE WHERE PERSON_ID=?";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, s.getID());
+			statement.executeUpdate();
+			
+			sql = "DELETE FROM PERSON_HOMEWORK WHERE STUDENT_ID=?";
+			statement = connection.prepareStatement(sql);
+			statement.setInt(1, s.getID());
+			statement.executeUpdate();
+			
+			statement.close();
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return true;
 	}
 
 	@Override
@@ -302,7 +326,8 @@ public class PersonDAO implements DAOInterface<Person> {
 			statement.setInt(1, id);
 			ResultSet rs = statement.executeQuery();
 			ArrayList<Person> Person = resultSetExtractor(rs, layerLevel, connection);
-			retrievedStudent = Person.get(0);
+			if (Person.size() > 0)
+				retrievedStudent = Person.get(0);
 			statement.close();
 			connection.close();
 		} catch (SQLException e) {
@@ -398,8 +423,21 @@ public class PersonDAO implements DAOInterface<Person> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
+		System.out.println("EU.size: " + eU.size());
 		return eU;
+	}
+	
+	public ArrayList<Person> retrieveAllByClass(int classID, int layerLevel) {
+		Connection con = OracleConnectionPool.getConnection();
+		ArrayList<Person> persons = retrieveAllByClass(classID, layerLevel,con);
+		try {
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return persons;
 	}
 	
 	public ArrayList<Student> retrieveStudentsByCourse(int courseID, int layerLevel, Connection con) {
@@ -439,40 +477,12 @@ public class PersonDAO implements DAOInterface<Person> {
 		return eU;
 	}
 
-	/*public Person retrieveByStudentname(String s, int layerLevel) {
-		Person retrievedStudent = null;
-		Connection connection = OracleConnectionPool.getConnection();
-		try {
-			PreparedStatement statement = connection.prepareStatement("SELECT * FROM Students WHERE lower(Studentname)=?");
-			statement.setString(1, s.toLowerCase());
-			ResultSet rs = statement.executeQuery();
-			ArrayList<Person> eU = resultSetExtractor(rs, layerLevel, connection);
-			if (eU.size() > 0)
-				retrievedStudent = eU.get(0);
-			statement.close();
-			connection.close();
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return retrievedStudent;
-	}*/
-
 	private ArrayList<Person> resultSetExtractor(ResultSet rs, int layerLevel, Connection connection) {
 		ArrayList<Person> extractedStudents = new ArrayList<Person>();
 		
 		try {
 			while (rs.next()) {
-				boolean notInCache = true;
 				int ID = rs.getInt("id");
-				/*if (cacheStudents.containsKey(StudentID)) {
-					Person cacheStudent = cacheStudents.get(StudentID);
-					if (cacheStudent.getLayerLevel() >= layerLevel) {
-						extractedStudents.add(cacheStudents.get(StudentID));
-						notInCache = false;
-					}
-				}*/
-				if (notInCache) {
 					Person p;
 					int role = rs.getInt("role");
 					if(role == 1){//student
@@ -515,7 +525,6 @@ public class PersonDAO implements DAOInterface<Person> {
 
 					//cacheStudents.put(u.getStudentid(), u);
 					extractedStudents.add(p);
-				}
 			}
 		} catch (NumberFormatException e) {
 			e.printStackTrace();

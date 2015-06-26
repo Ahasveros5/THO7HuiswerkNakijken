@@ -32,9 +32,9 @@ public class HuiswerkNakijkenServlet extends HttpServlet {
 			for(Question q : h.getQuestions()){
 				points += CheckAnswers.getGivenAnswerPoints(q, h.getStudent());
 			}
-			h.cijfer = points/h.getNumberQuestions()*9+1;
+			h.setCijfer(points/h.getNumberQuestions()*9+1);
 			hdao.update(h);
-			System.out.println("cijfer: " + h.cijfer);
+			System.out.println("cijfer: " + h.getCijfer());
 		}
 		session.setAttribute("HwObj", hws);
 		

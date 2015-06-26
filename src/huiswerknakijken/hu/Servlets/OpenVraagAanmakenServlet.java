@@ -57,9 +57,8 @@ public class OpenVraagAanmakenServlet extends HttpServlet {
 			antwoorden.add(a);
 			
 			q.setAnswers(antwoorden);
-			
-			ArrayList<Homework> hl = (ArrayList<Homework>)session.getAttribute("HwObj");
-			Homework h = hl.get(0);
+
+			Homework h = (Homework) session.getAttribute("HwObj");
 			
 			q.setHomework(h);
 			

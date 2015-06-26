@@ -7,10 +7,9 @@ import java.util.ArrayList;
 public class Homework {
 
 	private String name;
-	private Grade grade;
 	private ArrayList<Question> questions = new ArrayList<Question>();
 	private Course course;
-	private Teacher teacher;
+	private Person teacher;
 	private Student student; //specific student
 	private ArrayList<Student> students = new ArrayList<Student>(); //all students having this homework type
 	private int ID;
@@ -19,7 +18,7 @@ public class Homework {
 	private int numberQuestions = 0;
 	private Status status = Status.Nieuw;
 	private int currentQuestion = 1;
-	public double cijfer = -1;
+	private double cijfer = -1;
 	
 	public enum Status{
 		Nieuw(1),
@@ -47,6 +46,17 @@ public class Homework {
 		}
 	}
 	
+	public Homework(String naam, String deadline, String description){
+		name = naam;
+		this.deadline = deadline;
+		this.description = description;
+		this.status = Status.Nieuw;
+	}
+	
+	public Homework() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public ArrayList<Question> getQuestions() {
 		return questions;
 	}
@@ -63,14 +73,6 @@ public class Homework {
 		this.deadline = deadline;
 	}
 
-	public Grade getGrade() {
-		return grade;
-	}
-
-	public void setGrade(Grade grade) {
-		this.grade = grade;
-	}
-
 	public Course getCourse() {
 		return course;
 	}
@@ -79,12 +81,12 @@ public class Homework {
 		this.course = course;
 	}
 
-	public Teacher getTeacher() {
+	public Person getTeacher() {
 		return teacher;
 	}
 
 	public void setTeacher(Person teacher2) {
-		this.teacher = (Teacher) teacher2;
+		this.teacher =  teacher2;
 	}
 
 	public ArrayList<Student> getStudents() {

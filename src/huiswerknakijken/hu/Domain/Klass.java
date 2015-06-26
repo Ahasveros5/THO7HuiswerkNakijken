@@ -26,6 +26,10 @@ public class Klass {
 	public void setStudents(ArrayList<? extends Person> students) {
 		this.students = (ArrayList<Student>) students;
 	}
+	
+	public void addStudent(Student p){
+		students.add(p);
+	}
 	public ArrayList<Teacher> getTeacher() {
 		return teachers;
 	}
