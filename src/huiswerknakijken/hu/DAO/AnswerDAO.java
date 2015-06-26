@@ -14,8 +14,6 @@ import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
 
-import oracle.net.aso.s;
-
 public class AnswerDAO implements DAOInterface<Answer> {
 	public List<Answer> retrieveAll(int layerLevel) {
 		ResultSet rs = null;
@@ -261,7 +259,6 @@ public class AnswerDAO implements DAOInterface<Answer> {
 					c.setID(rs.getInt("Answer_id"));
 					c.setAnswer(rs.getString("answer"));
 					c.setCorrect(Correct.getValue(rs.getInt("correct")));
-					//u.setLayerLevel(layerLevel);
 
 					if (layerLevel > 1) { 
 						
@@ -270,8 +267,6 @@ public class AnswerDAO implements DAOInterface<Answer> {
 					if (layerLevel > 2) {
 						
 					}
-
-					//cacheStudents.put(u.getStudentid(), u);
 					extractedStudents.add(c);
 				}
 		} catch (NumberFormatException e) {
@@ -287,9 +282,6 @@ public class AnswerDAO implements DAOInterface<Answer> {
 		try {
 			while (rs.next()) {
 					a = retrieveById(rs.getInt("answer_id"),1);
-					//Question q = new QuestionDAO().retrieveById(rs.getInt("question_id"), 1);
-					//Person p = new PersonDAO().retrieve(rs.getInt("student_id"), 1);
-					//u.setLayerLevel(layerLevel);
 				}
 		} catch (NumberFormatException e) {
 			e.printStackTrace();

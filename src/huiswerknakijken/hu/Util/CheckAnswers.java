@@ -11,11 +11,6 @@ import java.util.ArrayList;
 
 public final class CheckAnswers {
 	
-	private static ArrayList<Answer> getAnswers(Question q){
-		AnswerDAO aDAO = new AnswerDAO();
-		return aDAO.retrieveAllByQuestion(q.getID(),1);
-	}
-	
 	public static Answer getCorrectAnswer(Question q){
 		AnswerDAO aDAO = new AnswerDAO();
 		return aDAO.retrieveCorrectByQuestion(q.getID(),1);

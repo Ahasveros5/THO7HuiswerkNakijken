@@ -1,9 +1,14 @@
 package huiswerknakijken.hu.Domain;
 
-import huiswerknakijken.hu.Domain.Person.UserRole;
-
 import java.util.ArrayList;
 
+
+/*Het Homework Object is een beetje apart.
+ * Het heeft 2 verschillende soorten varianten.
+ * 1. Het is een globaal huiswerk object, wat betekent dat de vragen, de naam, de leraar, de deadline, beschrijving en een lijst met alle studenten erin staan.
+ * 2. Het is een Student specifiek object, wat betekent dat er niet alleen de zelfde waarde als bij het globale huiswerk object in zitten, maar ook
+ * dat er een cijfer, de specifieke student van het huiswerk is, de status van het huiswerk en welke vraag die is er in staat.
+ */
 public class Homework {
 
 	private String name;
