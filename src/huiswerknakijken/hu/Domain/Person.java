@@ -2,7 +2,7 @@ package huiswerknakijken.hu.Domain;
 
 
 public class Person implements Comparable {
-	
+
 	public void print(){
 		System.out.println("Printing out Person:\n" + 
 		firstName + " " + lastName + "\n" + 
@@ -119,6 +119,20 @@ public class Person implements Comparable {
 	public int compareTo(Object compTo) {
 		int id = ((Person)compTo).getID();
 		return ID-id;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Person other = (Person) obj;
+		if (ID != other.ID)
+			return false;
+		return true;
 	}
 	
 	

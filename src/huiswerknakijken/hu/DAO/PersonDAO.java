@@ -352,7 +352,8 @@ public class PersonDAO implements DAOInterface<Person> {
 			statement.setInt(1, id);
 			ResultSet rs = statement.executeQuery();
 			ArrayList<Person> Person = resultSetExtractor(rs, layerLevel, connection);
-			retrievedStudent = Person.get(0);
+			if(Person.size() > 0)
+				retrievedStudent = Person.get(0);
 			statement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -419,6 +420,18 @@ public class PersonDAO implements DAOInterface<Person> {
 		}
 
 		return retrievedStudent;
+	}
+	
+	public ArrayList<Person> retrieveAllByClass(int classID, int layerLevel) {
+		Connection connection = OracleConnectionPool.getConnection();
+		ArrayList<Person> eU = retrieveAllByClass(classID, layerLevel, connection);
+		try {
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return eU;
 	}
 	
 	//Haalt alle studenten uit een klas op

@@ -7,7 +7,6 @@ import huiswerknakijken.hu.Domain.Course;
 import huiswerknakijken.hu.Domain.Homework;
 import huiswerknakijken.hu.Domain.Person;
 import huiswerknakijken.hu.Domain.Person.UserRole;
-import huiswerknakijken.hu.Domain.Student;
 
 import org.junit.After;
 import org.junit.Assert;

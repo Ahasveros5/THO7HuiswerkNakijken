@@ -244,25 +244,12 @@ public class CourseDAO implements DAOInterface<Course> {
 		try {
 			connection.setAutoCommit(false);
 			PersonDAO dao = new PersonDAO();
-/*			System.out.println("all before: \n"+s.getStudents().toString());
-			
-			System.out.println("temp: \n"+ temp.toString());
-			s.getStudents().removeAll(temp);
-			System.out.println("all after: \n"+s.getStudents().toString());
-			*/
 			List<Student> temp = dao.retrieveStudentsByCourse(s.getID(), 1,connection);
 			List<Person> temp2 = new ArrayList<Person>();
 			for(Person p : s.getStudents())
 				if(!temp.contains(p))
 					temp2.add(p);
 			
-			
-			/*for (Iterator<Person> it=s.getStudents().iterator(); it.hasNext();) {
-				if(it.hasNext())
-					for(Person p : temp)
-						if (it.next().getID() == p.getID())
-							it.remove(); // NOTE: Iterator's remove method, not ArrayList's, is used.
-			}*/
 			for(Person p : temp2){
 				System.out.println("Person: " + p.getID() + "|||| COURSE: " + s.getID());
 				addPerson(p,s,connection);

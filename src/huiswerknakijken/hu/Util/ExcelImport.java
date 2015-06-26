@@ -22,7 +22,6 @@ public class ExcelImport
     {
     	
     	List<Object> temp = new ArrayList<Object>();
-    	//f = new File("C:\\xampp\\tomcat\\temp\\Template Leerling informatie-1430476871960.xlsx");
     	InputStream is = new FileInputStream(f);
         try
         {

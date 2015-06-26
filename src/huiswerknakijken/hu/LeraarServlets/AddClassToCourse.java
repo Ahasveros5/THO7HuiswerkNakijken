@@ -31,7 +31,7 @@ public class AddClassToCourse extends HttpServlet {
 		
 		for(int i= 0; i<k.getStudents().size(); i++){
 			if(!students.contains(k.getStudents().get(i))){
-		students.add(k.getStudents().get(i));
+				students.add(k.getStudents().get(i));
 			}
 			else{
 				req.setAttribute("msgs", "Deze leerlingen zijn al toegevoegd");

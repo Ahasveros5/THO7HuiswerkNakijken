@@ -37,7 +37,7 @@ public class LeerlingImporteerServlet extends HttpServlet {
 		List<Object> users = ExcelImport.readFile(file);
 		PersonDAO dao = new PersonDAO();
 		Student s = null;
-		int i = -4;
+		int i = -5; //We set this to -5 so we loop through the excel Header words like: Studentnummer, Voornaam, Achternaam etc..
 		//Here we loop through the objects retrieved from the excel file
 		//We use 'i' to determine which value we retrieve:
 		//0 = studentID
@@ -46,25 +46,24 @@ public class LeerlingImporteerServlet extends HttpServlet {
 		//3 = Class name
 		//4 = Email
 		for (Object o : users){
+			System.out.println("i: " + i + " ||| o: " + o.toString());
 			if(i<0){
 				i++;
 				continue;
 			}
-			if(i == 0){
-				if (s == null){
+			if(i == 0){ //Nieuwe student aanmaken
 					s = new Student();
 					s.setID(Integer.parseInt((String) o));
 					s.setRole(UserRole.Student);
 					s.setPassword("");
-				}
 			}
 			
 			
-			if(i==1)
+			if(i==1) //Voornaam geven
 				s.setFirstName(o.toString());
-			else if(i==2)
+			else if(i==2) //Achternaam geven
 				s.setLastName(o.toString());
-			else if(i==3){
+			else if(i==3){//De klas vinden en als die niet bestaat een nieuwe aanmaken
 				ClassDAO cdao = new ClassDAO();
 				Klass c = cdao.retrieveByName(o.toString(), 1);
 				if (c == null){
@@ -73,11 +72,10 @@ public class LeerlingImporteerServlet extends HttpServlet {
 				}
 				s.setMainClass(c);		
 			}
-			else if(i==4)
+			else if(i==4) //Het email adres toevoegen en de student in de database zetten
 			{
-				System.out.println("FIX EXCEL FILE!");
 				s.setEmail(o.toString());
-				if (dao.retrieveByEmail(s.getEmail(), 0) == null)
+				if (dao.retrieve(s.getID(), 1) == null)
 					dao.addStudent(s);
 				i = -1;
 			}

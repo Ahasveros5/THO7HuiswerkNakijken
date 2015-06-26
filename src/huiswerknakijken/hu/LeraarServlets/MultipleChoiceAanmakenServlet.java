@@ -79,7 +79,7 @@ public class MultipleChoiceAanmakenServlet extends HttpServlet {
 			goedeAntwoord==0){
 			
 			req.setAttribute("msgs", "Vul alle velden in.");
-			rd = req.getRequestDispatcher("LeraarVraagAanmaken.jsp");
+			rd = req.getRequestDispatcher("MultipleChoiceAanmaken.jsp");
 		}else{
 			q = new Question();
 			q.setType(Type.Meerkeuze);

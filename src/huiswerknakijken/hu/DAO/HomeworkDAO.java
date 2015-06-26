@@ -36,6 +36,7 @@ import java.util.List;
  *\//Verderop in de methode gaan we alle personen personen uit de database halen
  *ArrayList<Homework> allHomework= dao.retrieveAll(1); //de '1' die wordt meegegeven is het 'layerLevel' met het layerLevel kan je verdere DAO
  *aanroepen verhinderen of juist toestaan. Bij de HomeworkDAO wordt hier wel gebruik van gemaakt, maar voor dit simpele voorbeeld houden we het bij 1.
+ *
  *Over het algemeen staat bij LayerLevel de '1' voor alleen de class die ik wil hebben (in dit geval dus Homework)
  *en elke keer als het getal van de LayerLevel omhoog gaat wordt er een laagje aan toegevoegd.
  *Als ik LayerLevel 2 pak dan krijg ik ook alle vragen die bij het huiswerk horen erbij.

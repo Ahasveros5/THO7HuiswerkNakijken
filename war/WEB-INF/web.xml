@@ -17,7 +17,7 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 
 	<servlet>
 		<servlet-name>LeerlingRegistratieServlet</servlet-name>
-		<servlet-class>huiswerknakijken.hu.Servlets.LeerlingRegistratieServlet
+		<servlet-class>huiswerknakijken.hu.OverigeServlets.LeerlingRegistratieServlet
 		</servlet-class>
 	</servlet>
 	<servlet-mapping>
@@ -27,7 +27,7 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 
 	<servlet>
 		<servlet-name>LeerlingImporteerServlet</servlet-name>
-		<servlet-class>huiswerknakijken.hu.Servlets.LeerlingImporteerServlet
+		<servlet-class>huiswerknakijken.hu.LeraarServlets.LeerlingImporteerServlet
 		</servlet-class>
 	</servlet>
 	<servlet-mapping>
@@ -37,7 +37,7 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	
 	<servlet>
 		<servlet-name>SpecifiekeLeerlingServlet</servlet-name>
-		<servlet-class>huiswerknakijken.hu.Servlets.SpecifiekeLeerlingServlet
+		<servlet-class>huiswerknakijken.hu.LeraarServlets.SpecifiekeLeerlingServlet
 		</servlet-class>
 	</servlet>
 	<servlet-mapping>
@@ -47,7 +47,7 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	
 	<servlet>
 		<servlet-name>LeerlingOverzichtServlet</servlet-name>
-		<servlet-class>huiswerknakijken.hu.Servlets.LeerlingOverzichtServlet
+		<servlet-class>huiswerknakijken.hu.LeerlingServlets.LeerlingOverzichtServlet
 		</servlet-class>
 	</servlet>
 	<servlet-mapping>
@@ -57,7 +57,7 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	
 	<servlet>
 		<servlet-name>HuiswerkMakenServlet</servlet-name>
-		<servlet-class>huiswerknakijken.hu.Servlets.HuiswerkMakenServlet
+		<servlet-class>huiswerknakijken.hu.LeerlingServlets.HuiswerkMakenServlet
 		</servlet-class>
 	</servlet>
 	<servlet-mapping>
@@ -68,7 +68,7 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 
 	<servlet>
 		<servlet-name>LeraarRegistratieServlet</servlet-name>
-		<servlet-class>huiswerknakijken.hu.Servlets.LeraarRegistratieServlet
+		<servlet-class>huiswerknakijken.hu.LeraarServlets.LeraarRegistratieServlet
 		</servlet-class>
 	</servlet>
 	<servlet-mapping>
@@ -79,7 +79,7 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 
 	<servlet>
 		<servlet-name>LoginServlet</servlet-name>
-		<servlet-class>huiswerknakijken.hu.Servlets.LoginServlet
+		<servlet-class>huiswerknakijken.hu.OverigeServlets.LoginServlet
 		</servlet-class>
 	</servlet>
 	<servlet-mapping>
@@ -89,7 +89,7 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	
 	<servlet>
 		<servlet-name>SearchLeerlingenServlet</servlet-name>
-		<servlet-class>huiswerknakijken.hu.Servlets.SearchLeerlingenServlet
+		<servlet-class>huiswerknakijken.hu.LeraarServlets.SearchLeerlingenServlet
 		</servlet-class>
 	</servlet>
 	<servlet-mapping>
@@ -99,7 +99,7 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	
 	<servlet>
 		<servlet-name>NieuwWachtwoordServlet</servlet-name>
-		<servlet-class>huiswerknakijken.hu.Servlets.NieuwWachtwoordServlet
+		<servlet-class>huiswerknakijken.hu.LeerlingServlets.NieuwWachtwoordServlet
 		</servlet-class>
 	</servlet>
 	<servlet-mapping>
@@ -110,7 +110,7 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 
 	<servlet>
 		<servlet-name>LogoutServlet</servlet-name>
-		<servlet-class>huiswerknakijken.hu.Servlets.LogoutServlet
+		<servlet-class>huiswerknakijken.hu.OverigeServlets.LogoutServlet
 		</servlet-class>
 	</servlet>
 	<servlet-mapping>
@@ -120,7 +120,7 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 
 	<servlet>
 		<servlet-name>MultipleChoiceAanmakenServlet</servlet-name>
-		<servlet-class>huiswerknakijken.hu.Servlets.MultipleChoiceAanmakenServlet
+		<servlet-class>huiswerknakijken.hu.LeraarServlets.MultipleChoiceAanmakenServlet
 		</servlet-class>
 	</servlet>
 	<servlet-mapping>
@@ -130,7 +130,7 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 
 	<servlet>
 		<servlet-name>HuiswerkAanmakenServlet</servlet-name>
-		<servlet-class>huiswerknakijken.hu.Servlets.HuiswerkAanmakenServlet
+		<servlet-class>huiswerknakijken.hu.LeraarServlets.HuiswerkAanmakenServlet
 		</servlet-class>
 	</servlet>
 	<servlet-mapping>
@@ -140,7 +140,7 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	
 	<servlet>
 		<servlet-name>HuiswerkAanmaken</servlet-name>
-		<servlet-class>huiswerknakijken.hu.Servlets.HuiswerkAanmaken
+		<servlet-class>huiswerknakijken.hu.LeraarServlets.HuiswerkAanmaken
 		</servlet-class>
 	</servlet>
 	<servlet-mapping>
@@ -150,7 +150,7 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	
 	<servlet>
 		<servlet-name>OpenVraagAanmakenServlet</servlet-name>
-		<servlet-class>huiswerknakijken.hu.Servlets.OpenVraagAanmakenServlet
+		<servlet-class>huiswerknakijken.hu.LeraarServlets.OpenVraagAanmakenServlet
 		</servlet-class>
 	</servlet>
 	<servlet-mapping>
@@ -160,7 +160,7 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 
 	<servlet>
 		<servlet-name>LeraarOverzichtServlet</servlet-name>
-		<servlet-class>huiswerknakijken.hu.Servlets.LeraarOverzichtServlet
+		<servlet-class>huiswerknakijken.hu.LeraarServlets.LeraarOverzichtServlet
 		</servlet-class>
 	</servlet>
 	<servlet-mapping>
@@ -170,7 +170,7 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 
 	<servlet>
 		<servlet-name>RemoveHuiswerkServlet</servlet-name>
-		<servlet-class>huiswerknakijken.hu.Servlets.RemoveHuiswerkServlet
+		<servlet-class>huiswerknakijken.hu.LeraarServlets.RemoveHuiswerkServlet
 		</servlet-class>
 	</servlet>
 	<servlet-mapping>
@@ -180,7 +180,7 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 
 	<servlet>
 		<servlet-name>HuiswerkOverzichtServlet</servlet-name>
-		<servlet-class>huiswerknakijken.hu.Servlets.HuiswerkOverzichtServlet
+		<servlet-class>huiswerknakijken.hu.LeraarServlets.HuiswerkOverzichtServlet
 		</servlet-class>
 	</servlet>
 	<servlet-mapping>
@@ -190,7 +190,7 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	
 		<servlet>
 		<servlet-name>HuiswerkNakijkenServlet</servlet-name>
-		<servlet-class>huiswerknakijken.hu.Servlets.HuiswerkNakijkenServlet
+		<servlet-class>huiswerknakijken.hu.LeraarServlets.HuiswerkNakijkenServlet
 		</servlet-class>
 	</servlet>
 	<servlet-mapping>
@@ -211,7 +211,7 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	
 	<servlet>
 		<servlet-name>OverzichtLeerlingenServlet</servlet-name>
-		<servlet-class>huiswerknakijken.hu.Servlets.OverzichtLeerlingenServlet
+		<servlet-class>huiswerknakijken.hu.LeraarServlets.OverzichtLeerlingenServlet
 		</servlet-class>
 	</servlet>
 	<servlet-mapping>
@@ -221,7 +221,7 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	
 	<servlet>
 		<servlet-name>KlasMakenServlet</servlet-name>
-		<servlet-class>huiswerknakijken.hu.Servlets.KlasMakenServlet
+		<servlet-class>huiswerknakijken.hu.LeraarServlets.KlasMakenServlet
 		</servlet-class>
 	</servlet>
 	<servlet-mapping>
@@ -231,7 +231,7 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	
 	<servlet>
 		<servlet-name>VakAanmakenServlet</servlet-name>
-		<servlet-class>huiswerknakijken.hu.Servlets.VakAanmakenServlet
+		<servlet-class>huiswerknakijken.hu.LeraarServlets.VakAanmakenServlet
 		</servlet-class>
 	</servlet>
 	<servlet-mapping>
@@ -241,7 +241,7 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	
 		<servlet>
 		<servlet-name>VakkenOverzichtServlet</servlet-name>
-		<servlet-class>huiswerknakijken.hu.Servlets.VakkenOverzichtServlet
+		<servlet-class>huiswerknakijken.hu.LeraarServlets.VakkenOverzichtServlet
 		</servlet-class>
 	</servlet>
 	<servlet-mapping>
@@ -251,7 +251,7 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	
 			<servlet>
 		<servlet-name>VakSpecifiek</servlet-name>
-		<servlet-class>huiswerknakijken.hu.Servlets.VakSpecifiek
+		<servlet-class>huiswerknakijken.hu.LeraarServlets.VakSpecifiek
 		</servlet-class>
 	</servlet>
 	<servlet-mapping>
@@ -261,7 +261,7 @@ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	
 				<servlet>
 		<servlet-name>AddClassToCourse</servlet-name>
-		<servlet-class>huiswerknakijken.hu.Servlets.AddClassToCourse
+		<servlet-class>huiswerknakijken.hu.LeraarServlets.AddClassToCourse
 		</servlet-class>
 	</servlet>
 	<servlet-mapping>

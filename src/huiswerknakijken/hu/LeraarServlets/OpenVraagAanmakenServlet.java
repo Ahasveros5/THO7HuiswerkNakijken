@@ -43,7 +43,7 @@ public class OpenVraagAanmakenServlet extends HttpServlet {
 			keywords.isEmpty()){
 			
 			req.setAttribute("msgs", "Vul alle velden in.");
-			rd = req.getRequestDispatcher("LeraarVraagAanmaken.jsp");
+			rd = req.getRequestDispatcher("OpenVraagAanmaken.jsp");
 		}else{
 			q = new Question();
 			q.setType(Type.Openvraag);
